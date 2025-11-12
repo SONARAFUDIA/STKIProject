@@ -1,0 +1,107 @@
+{
+  "Della": {
+    "raw_traits": [
+      "slender",
+      "quick",
+      "positive_context"
+    ],
+    "trait_frequency": {
+      "slender": 1,
+      "quick": 1,
+      "positive_context": 1
+    },
+    "classified_traits": {
+      "positive": [],
+      "negative": [],
+      "emotional": [],
+      "behavioral": [],
+      "other": [
+        "slender",
+        "quick",
+        "positive_context"
+      ]
+    },
+    "total_traits": 3,
+    "unique_traits": 3
+  },
+  "James Dillingham Young": {
+    "raw_traits": [],
+    "trait_frequency": {},
+    "classified_traits": {
+      "positive": [],
+      "negative": [],
+      "emotional": [],
+      "behavioral": [],
+      "other": []
+    },
+    "total_traits": 0,
+    "unique_traits": 0
+  },
+  "Jim": {
+    "raw_traits": [
+      "positive_context",
+      "late",
+      "positive_context",
+      "positive_context",
+      "positive_context"
+    ],
+    "trait_frequency": {
+      "positive_context": 4,
+      "late": 1
+    },
+    "classified_traits": {
+      "positive": [],
+      "negative": [],
+      "emotional": [],
+      "behavioral": [],
+      "other": [
+        "positive_context",
+        "late",
+        "positive_context",
+        "positive_context",
+        "positive_context"
+      ]
+    },
+    "total_traits": 5,
+    "unique_traits": 2
+  },
+  "Sheba": {
+    "raw_traits": [],
+    "trait_frequency": {},
+    "classified_traits": {
+      "positive": [],
+      "negative": [],
+      "emotional": [],
+      "behavioral": [],
+      "other": []
+    },
+    "total_traits": 0,
+    "unique_traits": 0
+  },
+  "Solomon": {
+    "raw_traits": [],
+    "trait_frequency": {},
+    "classified_traits": {
+      "positive": [],
+      "negative": [],
+      "emotional": [],
+      "behavioral": [],
+      "other": []
+    },
+    "total_traits": 0,
+    "unique_traits": 0
+  },
+  "Sofronie": {
+    "raw_traits": [],
+    "trait_frequency": {},
+    "classified_traits": {
+      "positive": [],
+      "negative": [],
+      "emotional": [],
+      "behavioral": [],
+      "other": []
+    },
+    "total_traits": 0,
+    "unique_traits": 0
+  }
+}
