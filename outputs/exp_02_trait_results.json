@@ -1,107 +1,569 @@
 {
-  "Della": {
-    "raw_traits": [
-      "slender",
-      "quick",
-      "positive_context"
-    ],
-    "trait_frequency": {
-      "slender": 1,
-      "quick": 1,
-      "positive_context": 1
-    },
-    "classified_traits": {
-      "positive": [],
-      "negative": [],
-      "emotional": [],
-      "behavioral": [],
-      "other": [
+  "owl_creek_bridge.txt": {
+    "Peyton Farquhar": {
+      "raw_traits": [
+        "dead",
+        "dead",
+        "dead"
+      ],
+      "trait_frequency": {
+        "dead": 3
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "dead",
+          "dead",
+          "dead"
+        ]
+      },
+      "total_traits": 3,
+      "unique_traits": 1
+    }
+  },
+  "the_gift_of_magi.txt": {
+    "Della": {
+      "raw_traits": [
         "slender",
+        "flat",
         "quick",
-        "positive_context"
-      ]
-    },
-    "total_traits": 3,
-    "unique_traits": 3
-  },
-  "James Dillingham Young": {
-    "raw_traits": [],
-    "trait_frequency": {},
-    "classified_traits": {
-      "positive": [],
-      "negative": [],
-      "emotional": [],
-      "behavioral": [],
-      "other": []
-    },
-    "total_traits": 0,
-    "unique_traits": 0
-  },
-  "Jim": {
-    "raw_traits": [
-      "positive_context",
-      "late",
-      "positive_context",
-      "positive_context",
-      "positive_context"
-    ],
-    "trait_frequency": {
-      "positive_context": 4,
-      "late": 1
-    },
-    "classified_traits": {
-      "positive": [],
-      "negative": [],
-      "emotional": [],
-      "behavioral": [],
-      "other": [
         "positive_context",
+        "little"
+      ],
+      "trait_frequency": {
+        "slender": 1,
+        "flat": 1,
+        "quick": 1,
+        "positive_context": 1,
+        "little": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "quick",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [],
+        "physical": [
+          "slender"
+        ],
+        "behavioral": [],
+        "other": [
+          "flat",
+          "little"
+        ]
+      },
+      "total_traits": 5,
+      "unique_traits": 5
+    },
+    "James Dillingham Young": {
+      "raw_traits": [
+        "unassuming"
+      ],
+      "trait_frequency": {
+        "unassuming": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "unassuming"
+        ]
+      },
+      "total_traits": 1,
+      "unique_traits": 1
+    },
+    "Jim": {
+      "raw_traits": [
+        "flat",
+        "positive_context",
+        "anxious",
         "late",
+        "happy",
         "positive_context",
         "positive_context",
         "positive_context"
-      ]
+      ],
+      "trait_frequency": {
+        "flat": 1,
+        "positive_context": 4,
+        "anxious": 1,
+        "late": 1,
+        "happy": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_context",
+          "happy",
+          "positive_context",
+          "positive_context",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [
+          "anxious"
+        ],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "flat",
+          "late"
+        ]
+      },
+      "total_traits": 8,
+      "unique_traits": 5
     },
-    "total_traits": 5,
-    "unique_traits": 2
+    "Sofronie": {
+      "raw_traits": [
+        "chilly"
+      ],
+      "trait_frequency": {
+        "chilly": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "chilly"
+        ]
+      },
+      "total_traits": 1,
+      "unique_traits": 1
+    }
   },
-  "Sheba": {
-    "raw_traits": [],
-    "trait_frequency": {},
-    "classified_traits": {
-      "positive": [],
-      "negative": [],
-      "emotional": [],
-      "behavioral": [],
-      "other": []
+  "the_tell_tale_heart.txt": {
+    "The Old Man": {
+      "raw_traits": [
+        "old",
+        "old",
+        "old",
+        "positive_action",
+        "positive_context",
+        "old",
+        "old",
+        "old",
+        "old",
+        "kinder",
+        "old",
+        "kinder",
+        "old",
+        "whole",
+        "kinder",
+        "old",
+        "whole",
+        "old",
+        "whole",
+        "impossible",
+        "old",
+        "old",
+        "old",
+        "negative_context",
+        "about",
+        "old",
+        "old",
+        "old",
+        "old",
+        "old",
+        "old",
+        "old",
+        "dead",
+        "old",
+        "dead",
+        "old",
+        "dead",
+        "dead",
+        "old",
+        "old",
+        "old",
+        "absent"
+      ],
+      "trait_frequency": {
+        "old": 26,
+        "positive_action": 1,
+        "positive_context": 1,
+        "kinder": 3,
+        "whole": 3,
+        "impossible": 1,
+        "negative_context": 1,
+        "about": 1,
+        "dead": 4,
+        "absent": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_action",
+          "positive_context"
+        ],
+        "negative": [
+          "negative_context"
+        ],
+        "emotional": [],
+        "physical": [
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old",
+          "old"
+        ],
+        "behavioral": [],
+        "other": [
+          "kinder",
+          "kinder",
+          "whole",
+          "kinder",
+          "whole",
+          "whole",
+          "impossible",
+          "about",
+          "dead",
+          "dead",
+          "dead",
+          "dead",
+          "absent"
+        ]
+      },
+      "total_traits": 42,
+      "unique_traits": 10
     },
-    "total_traits": 0,
-    "unique_traits": 0
+    "The Officers": {
+      "raw_traits": [
+        "perfect",
+        "positive_context",
+        "foul",
+        "satisfied",
+        "satisfied",
+        "positive_context"
+      ],
+      "trait_frequency": {
+        "perfect": 1,
+        "positive_context": 2,
+        "foul": 1,
+        "satisfied": 2
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_context",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "perfect",
+          "foul",
+          "satisfied",
+          "satisfied"
+        ]
+      },
+      "total_traits": 6,
+      "unique_traits": 4
+    }
   },
-  "Solomon": {
-    "raw_traits": [],
-    "trait_frequency": {},
-    "classified_traits": {
-      "positive": [],
-      "negative": [],
-      "emotional": [],
-      "behavioral": [],
-      "other": []
+  "the_yellow_wallpaper.txt": {
+    "John": {
+      "raw_traits": [
+        "mere",
+        "ordinary",
+        "ancestral",
+        "practical",
+        "practical",
+        "positive_context",
+        "more",
+        "worst",
+        "negative_context",
+        "angry",
+        "negative_context",
+        "negative_context",
+        "real",
+        "nervous",
+        "positive_context",
+        "absurd",
+        "negative_context",
+        "dear",
+        "dear",
+        "dear\\s+john",
+        "negative_context",
+        "lucky",
+        "positive_context",
+        "hard",
+        "asleep",
+        "asleep",
+        "negative_context",
+        "awake",
+        "awake",
+        "good",
+        "positive_context",
+        "little",
+        "afraid",
+        "negative_context",
+        "pleased",
+        "positive_context",
+        "queer",
+        "sure",
+        "sure"
+      ],
+      "trait_frequency": {
+        "mere": 1,
+        "ordinary": 1,
+        "ancestral": 1,
+        "practical": 2,
+        "positive_context": 5,
+        "more": 1,
+        "worst": 1,
+        "negative_context": 7,
+        "angry": 1,
+        "real": 1,
+        "nervous": 1,
+        "absurd": 1,
+        "dear": 2,
+        "dear\\s+john": 1,
+        "lucky": 1,
+        "hard": 1,
+        "asleep": 2,
+        "awake": 2,
+        "good": 1,
+        "little": 1,
+        "afraid": 1,
+        "pleased": 1,
+        "queer": 1,
+        "sure": 2
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_context",
+          "positive_context",
+          "dear",
+          "dear",
+          "positive_context",
+          "good",
+          "positive_context",
+          "positive_context"
+        ],
+        "negative": [
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context"
+        ],
+        "emotional": [
+          "angry",
+          "nervous"
+        ],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "mere",
+          "ordinary",
+          "ancestral",
+          "practical",
+          "practical",
+          "more",
+          "worst",
+          "real",
+          "absurd",
+          "dear\\s+john",
+          "lucky",
+          "hard",
+          "asleep",
+          "asleep",
+          "awake",
+          "awake",
+          "little",
+          "afraid",
+          "pleased",
+          "queer",
+          "sure",
+          "sure"
+        ]
+      },
+      "total_traits": 39,
+      "unique_traits": 24
     },
-    "total_traits": 0,
-    "unique_traits": 0
-  },
-  "Sofronie": {
-    "raw_traits": [],
-    "trait_frequency": {},
-    "classified_traits": {
-      "positive": [],
-      "negative": [],
-      "emotional": [],
-      "behavioral": [],
-      "other": []
+    "Mary": {
+      "raw_traits": [
+        "fortunate",
+        "good",
+        "positive_context"
+      ],
+      "trait_frequency": {
+        "fortunate": 1,
+        "good": 1,
+        "positive_context": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "good",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "fortunate"
+        ]
+      },
+      "total_traits": 3,
+      "unique_traits": 3
     },
-    "total_traits": 0,
-    "unique_traits": 0
+    "Henry": {
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "total_traits": 0,
+      "unique_traits": 0
+    },
+    "Julia": {
+      "raw_traits": [
+        "long"
+      ],
+      "trait_frequency": {
+        "long": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "long"
+        ]
+      },
+      "total_traits": 1,
+      "unique_traits": 1
+    },
+    "Nellie": {
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "total_traits": 0,
+      "unique_traits": 0
+    },
+    "Jennie": {
+      "raw_traits": [
+        "serious",
+        "good",
+        "good",
+        "few",
+        "ready",
+        "queer",
+        "inexplicable",
+        "professional",
+        "sure",
+        "negative_context"
+      ],
+      "trait_frequency": {
+        "serious": 1,
+        "good": 2,
+        "few": 1,
+        "ready": 1,
+        "queer": 1,
+        "inexplicable": 1,
+        "professional": 1,
+        "sure": 1,
+        "negative_context": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "good",
+          "good"
+        ],
+        "negative": [
+          "negative_context"
+        ],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "serious",
+          "few",
+          "ready",
+          "queer",
+          "inexplicable",
+          "professional",
+          "sure"
+        ]
+      },
+      "total_traits": 10,
+      "unique_traits": 9
+    },
+    "Weir Mitchell": {
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "total_traits": 0,
+      "unique_traits": 0
+    },
+    "Jane": {
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "total_traits": 0,
+      "unique_traits": 0
+    }
   }
 }

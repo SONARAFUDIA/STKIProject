@@ -1,4 +1,101 @@
 {
+  "data/raw/owl_creek_bridge.txt": {
+    "extraction": {
+      "all_entities": [
+        "Peyton Farquhar",
+        "Farquhar",
+        "Farquhar",
+        "Farquhar",
+        "Farquhar",
+        "Peyton Farquhar",
+        "Farquhar",
+        "Farquhar",
+        "Peyton Farquhar",
+        "Alabama",
+        "Federal",
+        "God",
+        "Peyton",
+        "Farquhar",
+        "Alabama",
+        "Southern",
+        "Corinth",
+        "South",
+        "Farquhar",
+        "Farquhar",
+        "Yanks",
+        "Owl",
+        "Creek",
+        "Owl",
+        "Creek",
+        "Farquhar",
+        "Federal",
+        "Peyton",
+        "Farquhar",
+        "Farquhar",
+        "Company",
+        "Niagara",
+        "The",
+        "Farquhar",
+        "Owl",
+        "Creek"
+      ],
+      "raw_frequency": {
+        "Peyton Farquhar": 3,
+        "Farquhar": 13,
+        "Alabama": 2,
+        "Federal": 2,
+        "God": 1,
+        "Peyton": 2,
+        "Southern": 1,
+        "Corinth": 1,
+        "South": 1,
+        "Yanks": 1,
+        "Owl": 3,
+        "Creek": 3,
+        "Company": 1,
+        "Niagara": 1,
+        "The": 1
+      },
+      "filtered_frequency": {
+        "Peyton Farquhar": 3,
+        "Farquhar": 13,
+        "Peyton": 2,
+        "Corinth": 1,
+        "Company": 1,
+        "Niagara": 1
+      },
+      "main_characters": {
+        "Peyton Farquhar": 18
+      },
+      "characters_with_context": {
+        "Peyton Farquhar": [
+          {
+            "sentence_id": 55,
+            "sentence": "II Peyton Farquhar was a well to do planter, of an old and highly respected Alabama family."
+          },
+          {
+            "sentence_id": 82,
+            "sentence": "III As Peyton Farquhar fell straight downward through the bridge he lost consciousness and was as one already dead."
+          },
+          {
+            "sentence_id": 199,
+            "sentence": "Peyton Farquhar was dead; his body, with a broken neck, swung gently from side to side beneath the timbers of the Owl Creek bridge."
+          }
+        ]
+      }
+    },
+    "statistics": {
+      "total_characters": 1,
+      "most_mentioned": [
+        "Peyton Farquhar",
+        18
+      ],
+      "average_mentions": 18.0,
+      "character_list": [
+        "Peyton Farquhar"
+      ]
+    }
+  },
   "data/raw/the_gift_of_magi.txt": {
     "extraction": {
       "all_entities": [
@@ -175,8 +272,6 @@
         "James Dillingham Youngs": 1,
         "Jims": 6,
         "Dellas": 4,
-        "Sheba": 2,
-        "Solomon": 2,
         "Sofronie": 3,
         "James": 4,
         "Day": 1,
@@ -188,7 +283,6 @@
         "Island": 1,
         "Please": 1,
         "Merry": 1,
-        "Ive": 1,
         "Eve": 1,
         "Dell": 1,
         "Combsthe": 1,
@@ -199,9 +293,7 @@
         "James Dillingham Young": 14,
         "Jim": 44,
         "Della": 21,
-        "Sofronie": 3,
-        "Sheba": 2,
-        "Solomon": 2
+        "Sofronie": 3
       },
       "characters_with_context": {
         "Della": [
@@ -378,18 +470,6 @@
             "sentence": "Instead of obeying, Jim tumbled down on the couch and put his hands under the back of his head and smiled."
           }
         ],
-        "Sheba": [
-          {
-            "sentence_id": 38,
-            "sentence": "Had the queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majestys jewels and gifts."
-          }
-        ],
-        "Solomon": [
-          {
-            "sentence_id": 39,
-            "sentence": "Had King Solomon been the janitor, with all his treasures piled up in the basement, Jim would have pulled out his watch every time he passed, just to see him pluck at his beard from envy."
-          }
-        ],
         "Sofronie": [
           {
             "sentence_id": 49,
@@ -399,19 +479,578 @@
       }
     },
     "statistics": {
-      "total_characters": 6,
+      "total_characters": 4,
       "most_mentioned": [
         "Jim",
         44
       ],
-      "average_mentions": 14.333333333333334,
+      "average_mentions": 20.5,
       "character_list": [
         "Della",
         "James Dillingham Young",
         "Jim",
-        "Sheba",
-        "Sofronie",
-        "Solomon"
+        "Sofronie"
+      ]
+    }
+  },
+  "data/raw/the_tell_tale_heart.txt": {
+    "extraction": {
+      "all_entities": [
+        "Evil",
+        "Eye",
+        "Death",
+        "Godno",
+        "Villains"
+      ],
+      "raw_frequency": {
+        "Evil": 1,
+        "Eye": 1,
+        "Death": 1,
+        "Godno": 1,
+        "Villains": 1
+      },
+      "filtered_frequency": {
+        "Evil": 1,
+        "Eye": 1,
+        "Death": 1,
+        "Godno": 1,
+        "Villains": 1
+      },
+      "main_characters": {
+        "Narrator (I)": 120,
+        "The Old Man": 17,
+        "The Officers": 6
+      },
+      "characters_with_context": {
+        "The Old Man": [
+          {
+            "sentence_id": 10,
+            "sentence": "I loved the old man."
+          },
+          {
+            "sentence_id": 17,
+            "sentence": "Whenever it fell upon me, my blood ran cold; and so by degreesvery graduallyI made up my mind to take the life of the old man, and thus rid myself of the eye forever."
+          },
+          {
+            "sentence_id": 23,
+            "sentence": "I was never kinder to the old man than during the whole week before I killed him."
+          },
+          {
+            "sentence_id": 31,
+            "sentence": "And this I did for seven long nightsevery night just at midnightbut I found the eye always closed; and so it was impossible to do the work; for it was not the old man who vexed me, but his Evil Eye."
+          },
+          {
+            "sentence_id": 42,
+            "sentence": "I had my head in, and was about to open the lantern, when my thumb slipped upon the tin fastening, and the old man sprang up in bed, crying outWhos there?"
+          },
+          {
+            "sentence_id": 51,
+            "sentence": "I knew what the old man felt, and pitied him, although I chuckled at heart."
+          },
+          {
+            "sentence_id": 89,
+            "sentence": "The old man was dead."
+          },
+          {
+            "sentence_id": 113,
+            "sentence": "The old man, I mentioned, was absent in the country."
+          }
+        ],
+        "The Officers": [
+          {
+            "sentence_id": 108,
+            "sentence": "There entered three men, who introduced themselves, with perfect suavity, as officers of the police."
+          },
+          {
+            "sentence_id": 109,
+            "sentence": "A shriek had been heard by a neighbour during the night; suspicion of foul play had been aroused; information had been lodged at the police office, and they the officers had been deputed to search the premises."
+          },
+          {
+            "sentence_id": 119,
+            "sentence": "The officers were satisfied."
+          },
+          {
+            "sentence_id": 129,
+            "sentence": "I gasped for breathand yet the officers heard it not."
+          }
+        ]
+      }
+    },
+    "statistics": {
+      "total_characters": 3,
+      "most_mentioned": [
+        "Narrator (I)",
+        120
+      ],
+      "average_mentions": 47.666666666666664,
+      "character_list": [
+        "Narrator (I)",
+        "The Officers",
+        "The Old Man"
+      ]
+    }
+  },
+  "data/raw/the_yellow_wallpaper.txt": {
+    "extraction": {
+      "all_entities": [
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "Mary",
+        "John",
+        "John",
+        "John",
+        "Henry",
+        "Julia",
+        "Johns",
+        "John",
+        "Nellie",
+        "Jennie",
+        "John",
+        "Weir Mitchell",
+        "John",
+        "John",
+        "John",
+        "Jennie",
+        "John",
+        "John",
+        "John",
+        "Henry",
+        "Julia",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "Jennie",
+        "John",
+        "John",
+        "Jennie",
+        "John",
+        "Jennie",
+        "Jennie",
+        "Johns",
+        "John",
+        "Ill",
+        "John",
+        "John",
+        "John",
+        "Jennie",
+        "John",
+        "John",
+        "Jennie",
+        "John",
+        "Jennie",
+        "Jennie",
+        "John",
+        "Jennie",
+        "Jennie",
+        "John",
+        "John dear!",
+        "Jane",
+        "John",
+        "John",
+        "English",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "Mary",
+        "John",
+        "John",
+        "John",
+        "Cousin",
+        "Henry",
+        "Julia",
+        "Johns",
+        "Fourth",
+        "July",
+        "Nellie",
+        "Weir",
+        "Mitchell",
+        "John",
+        "John",
+        "Jennie",
+        "Romanesque",
+        "John",
+        "Cousin",
+        "Henry",
+        "Julia",
+        "John",
+        "John",
+        "John",
+        "John",
+        "John",
+        "Jennie",
+        "John",
+        "Jennie",
+        "John",
+        "Ive",
+        "Jennie",
+        "Jennie",
+        "Johns",
+        "Ill",
+        "John",
+        "John",
+        "John",
+        "Jennie",
+        "John",
+        "Jennie",
+        "John",
+        "Jennie",
+        "Jennie",
+        "John",
+        "Open",
+        "Gods",
+        "Jane",
+        "Ive"
+      ],
+      "raw_frequency": {
+        "John": 69,
+        "Mary": 2,
+        "Henry": 4,
+        "Julia": 4,
+        "Johns": 4,
+        "Nellie": 2,
+        "Jennie": 21,
+        "Weir Mitchell": 1,
+        "Ill": 2,
+        "John Dear": 1,
+        "Jane": 2,
+        "English": 1,
+        "Cousin": 2,
+        "Fourth": 1,
+        "July": 1,
+        "Weir": 1,
+        "Mitchell": 1,
+        "Romanesque": 1,
+        "Ive": 2,
+        "Open": 1,
+        "Gods": 1
+      },
+      "filtered_frequency": {
+        "John": 69,
+        "Mary": 2,
+        "Henry": 4,
+        "Julia": 4,
+        "Johns": 4,
+        "Nellie": 2,
+        "Jennie": 21,
+        "Weir Mitchell": 1,
+        "John Dear": 1,
+        "Jane": 2,
+        "English": 1,
+        "Fourth": 1,
+        "Weir": 1,
+        "Mitchell": 1,
+        "Romanesque": 1,
+        "Open": 1,
+        "Gods": 1
+      },
+      "main_characters": {
+        "Weir Mitchell": 3,
+        "John": 74,
+        "Jennie": 21,
+        "Henry": 4,
+        "Julia": 4,
+        "Mary": 2,
+        "Nellie": 2,
+        "Jane": 2,
+        "Narrator (I)": 298
+      },
+      "characters_with_context": {
+        "John": [
+          {
+            "sentence_id": 0,
+            "sentence": "It is very seldom that mere ordinary people like John and myself secure ancestral halls for the summer."
+          },
+          {
+            "sentence_id": 5,
+            "sentence": "John laughs at me, of course, but one expects that in marriage."
+          },
+          {
+            "sentence_id": 6,
+            "sentence": "John is practical in the extreme."
+          },
+          {
+            "sentence_id": 8,
+            "sentence": "John is a physician, and perhapsI would not say it to a living soul, of course, but this is dead paper and a great relief to my mindperhaps that is one reason I do not get well faster."
+          },
+          {
+            "sentence_id": 18,
+            "sentence": "I sometimes fancy that in my condition if I had less opposition and more society and stimulusbut John says the very worst thing I can do is to think about my condition, and I confess it always makes me feel bad."
+          },
+          {
+            "sentence_id": 28,
+            "sentence": "I even said so to John one moonlight evening, but he said what I felt was a draught, and shut the window."
+          },
+          {
+            "sentence_id": 29,
+            "sentence": "I get unreasonably angry with John sometimes."
+          },
+          {
+            "sentence_id": 32,
+            "sentence": "But John says if I feel so I shall neglect proper self-control; so I take pains to control myself,before him, at least,and that makes me very tired."
+          },
+          {
+            "sentence_id": 35,
+            "sentence": "but John would not hear of it."
+          },
+          {
+            "sentence_id": 53,
+            "sentence": "There comes John, and I must put this away,he hates to have me write a word."
+          },
+          {
+            "sentence_id": 56,
+            "sentence": "John is away all day, and even some nights when his cases are serious."
+          },
+          {
+            "sentence_id": 59,
+            "sentence": "John does not know how much I really suffer."
+          },
+          {
+            "sentence_id": 63,
+            "sentence": "I meant to be such a help to John, such a real rest and comfort, and here I am a comparative burden already!"
+          },
+          {
+            "sentence_id": 68,
+            "sentence": "I suppose John never was nervous in his life."
+          },
+          {
+            "sentence_id": 81,
+            "sentence": "I always fancy I see people walking in these numerous paths and arbors, but John has cautioned me not to give way to fancy in the least."
+          },
+          {
+            "sentence_id": 86,
+            "sentence": "When I get really well John says we will ask Cousin Henry and Julia down for a long visit; but he says he would as soon put fire-works in my pillow-case as to let me have those stimulating people about now."
+          },
+          {
+            "sentence_id": 117,
+            "sentence": "John thought it might do me good to see a little company, so we just had mother and Nellie and the children down for a week."
+          },
+          {
+            "sentence_id": 121,
+            "sentence": "John says if I dont pick up faster he shall send me to Weir Mitchell in the fall."
+          },
+          {
+            "sentence_id": 123,
+            "sentence": "I had a friend who was in his hands once, and she says he is just like John and my brother, only more so!"
+          },
+          {
+            "sentence_id": 127,
+            "sentence": "Of course I dont when John is here, or anybody else, but when I am alone."
+          },
+          {
+            "sentence_id": 129,
+            "sentence": "John is kept in town very often by serious cases, and Jennie is good and lets me alone when I want her to."
+          },
+          {
+            "sentence_id": 149,
+            "sentence": "And I know John would think it absurd."
+          },
+          {
+            "sentence_id": 153,
+            "sentence": "John says I mustnt lose my strength, and has me take cod-liver oil and lots of tonics and things, to say nothing of ale and wine and rare meat."
+          },
+          {
+            "sentence_id": 159,
+            "sentence": "And dear John gathered me up in his arms, and just carried me upstairs and laid me on the bed, and sat by me and read to me till it tired my head."
+          },
+          {
+            "sentence_id": 166,
+            "sentence": "I never thought of it before, but it is lucky that John kept me here after all."
+          },
+          {
+            "sentence_id": 174,
+            "sentence": "I wonderI begin to thinkI wish John would take me away from here!"
+          },
+          {
+            "sentence_id": 175,
+            "sentence": "It is so hard to talk with John about my case, because he is so wise, and because he loves me so."
+          },
+          {
+            "sentence_id": 180,
+            "sentence": "John was asleep and I hated to waken him, so I kept still and watched the moonlight on that undulating wallpaper till I felt creepy."
+          },
+          {
+            "sentence_id": 182,
+            "sentence": "I got up softly and went to feel and see if the paper did move, and when I came back John was awake."
+          },
+          {
+            "sentence_id": 229,
+            "sentence": "John says it is good for me, and to sleep all I can."
+          },
+          {
+            "sentence_id": 233,
+            "sentence": "The fact is, I am getting a little afraid of John."
+          },
+          {
+            "sentence_id": 236,
+            "sentence": "I have watched John when he did not know I was looking, and come into the room suddenly on the most innocent excuses, and Ive caught him several times looking at the paper!"
+          },
+          {
+            "sentence_id": 246,
+            "sentence": "John is so pleased to see me improve!"
+          },
+          {
+            "sentence_id": 302,
+            "sentence": "I cant do it at night, for I know John would suspect something at once."
+          },
+          {
+            "sentence_id": 303,
+            "sentence": "And John is so queer now, that I dont want to irritate him."
+          },
+          {
+            "sentence_id": 314,
+            "sentence": "There are only two more days to get this paper off, and I believe John is beginning to notice."
+          },
+          {
+            "sentence_id": 319,
+            "sentence": "John knows I dont sleep very well at night, for all Im so quiet!"
+          },
+          {
+            "sentence_id": 323,
+            "sentence": "It only interests me, but I feel sure John and Jennie are secretly affected by it."
+          },
+          {
+            "sentence_id": 325,
+            "sentence": "John is to stay in town over night, and wont be out until this evening."
+          },
+          {
+            "sentence_id": 347,
+            "sentence": "I dont want to go out, and I dont want to have anybody come in, till John comes."
+          },
+          {
+            "sentence_id": 371,
+            "sentence": "Why, theres John at the door!"
+          }
+        ],
+        "Mary": [
+          {
+            "sentence_id": 65,
+            "sentence": "It is fortunate Mary is so good with the baby."
+          }
+        ],
+        "Henry": [
+          {
+            "sentence_id": 86,
+            "sentence": "When I get really well John says we will ask Cousin Henry and Julia down for a long visit; but he says he would as soon put fire-works in my pillow-case as to let me have those stimulating people about now."
+          },
+          {
+            "sentence_id": 155,
+            "sentence": "I tried to have a real earnest reasonable talk with him the other day, and tell him how I wish he would let me go and make a visit to Cousin Henry and Julia."
+          }
+        ],
+        "Julia": [
+          {
+            "sentence_id": 86,
+            "sentence": "When I get really well John says we will ask Cousin Henry and Julia down for a long visit; but he says he would as soon put fire-works in my pillow-case as to let me have those stimulating people about now."
+          },
+          {
+            "sentence_id": 155,
+            "sentence": "I tried to have a real earnest reasonable talk with him the other day, and tell him how I wish he would let me go and make a visit to Cousin Henry and Julia."
+          }
+        ],
+        "Nellie": [
+          {
+            "sentence_id": 117,
+            "sentence": "John thought it might do me good to see a little company, so we just had mother and Nellie and the children down for a week."
+          }
+        ],
+        "Jennie": [
+          {
+            "sentence_id": 119,
+            "sentence": "Jennie sees to everything now."
+          },
+          {
+            "sentence_id": 129,
+            "sentence": "John is kept in town very often by serious cases, and Jennie is good and lets me alone when I want her to."
+          },
+          {
+            "sentence_id": 200,
+            "sentence": "It is only three weeks more and then we will take a nice little trip of a few days while Jennie is getting the house ready."
+          },
+          {
+            "sentence_id": 234,
+            "sentence": "He seems very queer sometimes, and even Jennie has an inexplicable look."
+          },
+          {
+            "sentence_id": 237,
+            "sentence": "And Jennie too."
+          },
+          {
+            "sentence_id": 238,
+            "sentence": "I caught Jennie with her hand on it once."
+          },
+          {
+            "sentence_id": 316,
+            "sentence": "And I heard him ask Jennie a lot of professional questions about me."
+          },
+          {
+            "sentence_id": 323,
+            "sentence": "It only interests me, but I feel sure John and Jennie are secretly affected by it."
+          },
+          {
+            "sentence_id": 326,
+            "sentence": "Jennie wanted to sleep with methe sly thing!"
+          },
+          {
+            "sentence_id": 334,
+            "sentence": "Jennie looked at the wall in amazement, but I told her merrily that I did it out of pure spite at the vicious thing."
+          },
+          {
+            "sentence_id": 349,
+            "sentence": "Ive got a rope up here that even Jennie did not find."
+          },
+          {
+            "sentence_id": 368,
+            "sentence": "I wont, even if Jennie asks me to."
+          }
+        ],
+        "Weir Mitchell": [
+          {
+            "sentence_id": 121,
+            "sentence": "John says if I dont pick up faster he shall send me to Weir Mitchell in the fall."
+          }
+        ],
+        "Jane": [
+          {
+            "sentence_id": 386,
+            "sentence": "Ive got out at last, said I, in spite of you and Jane!"
+          }
+        ]
+      }
+    },
+    "statistics": {
+      "total_characters": 9,
+      "most_mentioned": [
+        "Narrator (I)",
+        298
+      ],
+      "average_mentions": 45.55555555555556,
+      "character_list": [
+        "Henry",
+        "Jane",
+        "Jennie",
+        "John",
+        "Julia",
+        "Mary",
+        "Narrator (I)",
+        "Nellie",
+        "Weir Mitchell"
       ]
     }
   }

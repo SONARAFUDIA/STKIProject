@@ -1,0 +1,390 @@
+{
+  "metadata": {
+    "filename": "the_gift_of_magi.txt",
+    "processed_at": "2025-11-12T15:57:17.340256",
+    "sentence_count": 156
+  },
+  "characters": {
+    "statistics": {
+      "total_characters": 6,
+      "most_mentioned": [
+        "Jim",
+        44
+      ],
+      "average_mentions": 14.333333333333334,
+      "character_list": [
+        "Della",
+        "James Dillingham Young",
+        "Jim",
+        "Sheba",
+        "Sofronie",
+        "Solomon"
+      ]
+    },
+    "details": {
+      "James Dillingham Young": 14,
+      "Jim": 44,
+      "Della": 21,
+      "Sofronie": 3,
+      "Sheba": 2,
+      "Solomon": 2
+    }
+  },
+  "traits": {
+    "Della": {
+      "character": "Della",
+      "raw_traits": [
+        "slender",
+        "flat",
+        "quick",
+        "positive_context",
+        "little"
+      ],
+      "trait_frequency": {
+        "slender": 1,
+        "flat": 1,
+        "quick": 1,
+        "positive_context": 1,
+        "little": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "quick",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [],
+        "physical": [
+          "slender"
+        ],
+        "behavioral": [],
+        "other": [
+          "flat",
+          "little"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Della, being slender, had mastered the art.",
+          "traits": [
+            "slender"
+          ]
+        },
+        {
+          "sentence": "Had the queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majestys jewels and gifts.",
+          "traits": [
+            "flat"
+          ]
+        },
+        {
+          "sentence": "Give it to me quick, said Della.",
+          "traits": [
+            "quick",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "And then Della leaped up like a little singed cat and cried, Oh, oh!",
+          "traits": [
+            "little"
+          ]
+        }
+      ]
+    },
+    "James Dillingham Young": {
+      "character": "James Dillingham Young",
+      "raw_traits": [
+        "unassuming"
+      ],
+      "trait_frequency": {
+        "unassuming": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "unassuming"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Now, when the income was shrunk to 20, though, they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called Jim and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della.",
+          "traits": [
+            "unassuming"
+          ]
+        }
+      ]
+    },
+    "Jim": {
+      "character": "Jim",
+      "raw_traits": [
+        "flat",
+        "positive_context",
+        "anxious",
+        "late",
+        "happy",
+        "positive_context",
+        "positive_context",
+        "positive_context"
+      ],
+      "trait_frequency": {
+        "flat": 1,
+        "positive_context": 4,
+        "anxious": 1,
+        "late": 1,
+        "happy": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_context",
+          "happy",
+          "positive_context",
+          "positive_context",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [
+          "anxious"
+        ],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "flat",
+          "late"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Now, when the income was shrunk to 20, though, they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called Jim and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della.",
+          "traits": [
+            "flat"
+          ]
+        },
+        {
+          "sentence": "It surely had been made for Jim and no one else.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "With that chain on his watch Jim might be properly anxious about the time in any company.",
+          "traits": [
+            "anxious"
+          ]
+        },
+        {
+          "sentence": "Jim was never late.",
+          "traits": [
+            "late"
+          ]
+        },
+        {
+          "sentence": "Jim, and lets be happy.",
+          "traits": [
+            "happy",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Out of his trance Jim seemed quickly to wake.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Jim had not yet seen his beautiful present.",
+          "traits": [
+            "positive_context"
+          ]
+        }
+      ]
+    },
+    "Sheba": {
+      "character": "Sheba",
+      "raw_traits": [
+        "flat"
+      ],
+      "trait_frequency": {
+        "flat": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "flat"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Had the queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majestys jewels and gifts.",
+          "traits": [
+            "flat"
+          ]
+        }
+      ]
+    },
+    "Solomon": {
+      "character": "Solomon",
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "evidence_sentences": []
+    },
+    "Sofronie": {
+      "character": "Sofronie",
+      "raw_traits": [
+        "chilly"
+      ],
+      "trait_frequency": {
+        "chilly": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "chilly"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Madame, large, too white, chilly, hardly looked the Sofronie.",
+          "traits": [
+            "chilly"
+          ]
+        }
+      ]
+    }
+  },
+  "relations": {
+    "summary": {
+      "total_relations": 4,
+      "cooccurrence_pairs": 3
+    },
+    "details": [
+      {
+        "character1": "Della",
+        "character2": "Jim",
+        "cooccurrence_count": 36,
+        "proximity_count": 35,
+        "direct_count": 1,
+        "relation_types": [
+          "social",
+          "romantic",
+          "professional"
+        ],
+        "strength": 1.0
+      },
+      {
+        "character1": "James Dillingham Young",
+        "character2": "Jim",
+        "cooccurrence_count": 6,
+        "proximity_count": 5,
+        "direct_count": 1,
+        "relation_types": [
+          "social",
+          "romantic"
+        ],
+        "strength": 0.6666666666666667
+      },
+      {
+        "character1": "Della",
+        "character2": "James Dillingham Young",
+        "cooccurrence_count": 9,
+        "proximity_count": 8,
+        "direct_count": 1,
+        "relation_types": [
+          "professional"
+        ],
+        "strength": 0.6166666666666667
+      },
+      {
+        "character1": "Della",
+        "character2": "Sofronie",
+        "cooccurrence_count": 2,
+        "proximity_count": 2,
+        "direct_count": 0,
+        "relation_types": [
+          "professional"
+        ],
+        "strength": 0.21666666666666667
+      }
+    ]
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "Della",
+        "label": "Della"
+      },
+      {
+        "id": "James Dillingham Young",
+        "label": "James Dillingham Young"
+      },
+      {
+        "id": "Jim",
+        "label": "Jim"
+      },
+      {
+        "id": "Sofronie",
+        "label": "Sofronie"
+      }
+    ],
+    "edges": [
+      {
+        "source": "Della",
+        "target": "Jim",
+        "weight": 1.0,
+        "types": [
+          "social",
+          "romantic",
+          "professional"
+        ],
+        "count": 36
+      },
+      {
+        "source": "James Dillingham Young",
+        "target": "Jim",
+        "weight": 0.6666666666666667,
+        "types": [
+          "social",
+          "romantic"
+        ],
+        "count": 6
+      },
+      {
+        "source": "Della",
+        "target": "James Dillingham Young",
+        "weight": 0.6166666666666667,
+        "types": [
+          "professional"
+        ],
+        "count": 9
+      },
+      {
+        "source": "Della",
+        "target": "Sofronie",
+        "weight": 0.21666666666666667,
+        "types": [
+          "professional"
+        ],
+        "count": 2
+      }
+    ]
+  }
+}

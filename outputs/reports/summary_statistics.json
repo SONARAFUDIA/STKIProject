@@ -1,0 +1,10 @@
+{
+  "total_documents": 1,
+  "documents": {
+    "the_gift_of_magi": {
+      "sentences": 156,
+      "characters": 6,
+      "relations": 4
+    }
+  }
+}

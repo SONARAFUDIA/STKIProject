@@ -90,11 +90,11 @@ def analyze_all_documents():
     print("="*60)
     
     documents = [
-        'data/raw/the_tell_tale_heart.txt',
+        # 'data/raw/the_tell_tale_heart.txt',
         'data/raw/the_gift_of_magi.txt',
-        'data/raw/the_yellow_wallpaper.txt',
-        'data/raw/the_lottery.txt',
-        'data/raw/owl_creek_bridge.txt'
+        # 'data/raw/the_yellow_wallpaper.txt',
+        # 'data/raw/the_lottery.txt',
+        # 'data/raw/owl_creek_bridge.txt'
     ]
     
     all_results = {}

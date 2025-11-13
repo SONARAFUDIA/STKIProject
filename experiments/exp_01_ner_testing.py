@@ -22,8 +22,10 @@ def test_ner_extraction():
     
     # File yang akan ditest
     test_files = [
-        # 'data/raw/the_tell_tale_heart.txt',
-        'data/raw/the_gift_of_magi.txt'
+        'data/raw/owl_creek_bridge.txt',
+        'data/raw/the_gift_of_magi.txt',
+        'data/raw/the_tell_tale_heart.txt',
+        'data/raw/the_yellow_wallpaper.txt',
     ]
     
     results = {}

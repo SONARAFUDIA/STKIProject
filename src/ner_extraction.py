@@ -46,33 +46,45 @@ class CharacterExtractor:
             # Religious/Mythological
             'god', 'lord', 'christ', 'jesus',
             
-            # Story elements
-            'magi', 'there', 'here'
+            # Story elements & places
+            'magi', 'there', 'here',
+            
+            # ADDED: Geographic/Political terms
+            'alabama', 'federal', 'southern', 'northern', 'south', 'north',
+            'east', 'west', 'yankee', 'yanks', 'confederate',
+            
+            # ADDED: Common false positives
+            'owl', 'creek', 'bridge', 'dear', 'ill', 'ive', 'im', 'id', 
+            'youre', 'hes', 'shes', 'theyre', 'weve', 'ive',
+            'cousin', 'mother', 'father', 'brother', 'sister',
+            
+            # ADDED: Historical/mythological references
+            'sheba', 'solomon', 'magi', 'wise men'
         }
         
-        # Words that are likely part of names but not standalone characters
+        # Name parts that shouldn't be standalone
         self.name_parts_only = {
-            'young', 'jr', 'sr', 'iii', 'iv', 'von', 'van', 'de', 'la', 'le'
+            'young', 'jr', 'sr', 'iii', 'iv', 'von', 'van', 'de', 'la', 'le',
+            'dear'  # "John dear" -> just "John"
         }
         
-    def extract_characters(self, text, sentences, min_mentions=2):
+    def extract_characters(self, text, sentences, min_mentions=2, detect_narrator=True):
         """
-        Ekstraksi karakter dengan prioritas nama lengkap
+        Ekstraksi karakter dengan ALWAYS detect narrator untuk cerita orang pertama
         """
         print("\n[Character Extraction] Starting hybrid extraction...")
         
-        # Method 1: spaCy NER
+        # Standard extraction
         ner_characters = self._extract_via_ner(text)
         print(f"  ✓ NER found {len(ner_characters)} character mentions")
         
-        # Method 2: Pattern Matching
         pattern_characters = self._extract_via_patterns_strict(text, sentences)
         print(f"  ✓ Pattern matching found {len(pattern_characters)} character mentions")
         
-        # Gabungkan
+        # Combine
         all_mentions = ner_characters + pattern_characters
         
-        # Normalisasi
+        # Normalize
         normalized_mentions = []
         for name in all_mentions:
             normalized = self._normalize_name(name)
@@ -84,32 +96,48 @@ class CharacterExtractor:
         # Count frequency
         raw_freq = Counter(normalized_mentions)
         
-        # Filter blacklist dan standalone name parts
+        # Filter
         filtered_freq = {}
         for name, count in raw_freq.items():
             name_lower = name.lower()
             
-            # Skip blacklist
             if name_lower in self.non_character_words:
                 continue
             
-            # Skip standalone name parts (kecuali frekuensi tinggi)
             if name_lower in self.name_parts_only and count < 5:
                 continue
             
-            # Skip common words
             if not self._is_common_word(name):
                 filtered_freq[name] = count
         
         print(f"  ✓ After filtering: {len(filtered_freq)} unique characters")
         
-        # CRITICAL: Merge dengan prioritas nama lengkap
+        # Merge variants
         merged_freq = self._merge_with_full_name_priority(filtered_freq)
         print(f"  ✓ After merging: {len(merged_freq)} final characters")
         
         # Filter by min_mentions
         main_characters = {char: count for char, count in merged_freq.items()
-                          if count >= min_mentions}
+                        if count >= min_mentions}
+        
+        # ALWAYS detect narrator for first-person narratives (for consistency)
+        if detect_narrator:
+            narrator_data = self._detect_narrator(text, sentences)
+            if narrator_data:
+                narrator_count = narrator_data.get('Narrator (I)', 0)
+                
+                # If significant first-person usage (20+ mentions), add narrator
+                if narrator_count >= 20:
+                    if 'Narrator (I)' not in main_characters:
+                        main_characters['Narrator (I)'] = narrator_count
+                        print(f"  ✓ First-person narrator detected: {narrator_count} mentions of 'I'")
+                    
+                    # Also add other role-based characters if found
+                    for role, count in narrator_data.items():
+                        if role != 'Narrator (I)' and count >= min_mentions:
+                            if role not in main_characters:
+                                main_characters[role] = count
+                                print(f"  ✓ Role-based character detected: {role} ({count} mentions)")
         
         # Get contexts
         characters_with_context = self._add_context(sentences, main_characters)
@@ -121,6 +149,42 @@ class CharacterExtractor:
             'main_characters': main_characters,
             'characters_with_context': characters_with_context
         }
+
+    def _detect_narrator(self, text, sentences):
+        """
+        Detect unnamed first-person narrator dan karakter lain berdasarkan role
+        """
+        text_lower = text.lower()
+        
+        # Count first-person pronouns
+        first_person_count = len(re.findall(r'\bi\b', text_lower))
+        
+        if first_person_count < 20:
+            return {}
+        
+        # Detect narrator and other role-based characters
+        characters = {}
+        
+        # Narrator (first person)
+        characters['Narrator (I)'] = first_person_count
+        
+        # Look for role descriptions
+        role_patterns = {
+            'The Old Man': [r'\bold man\b', r'\bthe old man\b'],
+            'The Officers': [r'\bofficers?\b', r'\bpolice\b'],
+            'The Neighbor': [r'\bneighbou?rs?\b']
+        }
+        
+        for role, patterns in role_patterns.items():
+            count = 0
+            for pattern in patterns:
+                matches = re.findall(pattern, text_lower)
+                count += len(matches)
+            
+            if count >= 3:
+                characters[role] = count
+        
+        return characters if len(characters) > 0 else {}
     
     def _extract_via_ner(self, text):
         """
@@ -238,19 +302,34 @@ class CharacterExtractor:
     
     def _merge_with_full_name_priority(self, character_freq):
         """
-        Merge dengan PRIORITAS pada nama lengkap
-        Nama lengkap (multi-word) diprioritaskan daripada single word
+        Merge dengan PRIORITAS pada nama lengkap, dengan cleaning tambahan
         """
+        # STEP 0: Pre-clean names (remove common suffixes)
+        cleaned_freq = {}
+        for name, count in character_freq.items():
+            # Remove "dear" suffix
+            cleaned_name = re.sub(r'\s+dear$', '', name, flags=re.IGNORECASE).strip()
+            
+            # If name becomes empty or too short, skip
+            if len(cleaned_name) < 2:
+                continue
+            
+            # Accumulate counts if same name after cleaning
+            if cleaned_name in cleaned_freq:
+                cleaned_freq[cleaned_name] += count
+            else:
+                cleaned_freq[cleaned_name] = count
+        
+        # Separate full names vs single names
+        full_names = {name: count for name, count in cleaned_freq.items() 
+                    if len(name.split()) > 1}
+        single_names = {name: count for name, count in cleaned_freq.items() 
+                    if len(name.split()) == 1}
+        
         merged = {}
         processed = set()
         
-        # Separate full names vs single names
-        full_names = {name: count for name, count in character_freq.items() 
-                      if len(name.split()) > 1}
-        single_names = {name: count for name, count in character_freq.items() 
-                       if len(name.split()) == 1}
-        
-        # STEP 1: Process full names first (they have priority)
+        # STEP 1: Process full names first
         for full_name, count in sorted(full_names.items(), key=lambda x: x[1], reverse=True):
             if full_name in processed:
                 continue
@@ -295,7 +374,7 @@ class CharacterExtractor:
             total_count = count
             processed.add(single_name)
             
-            # Find variants of this single name
+            # Find variants (including possessives)
             for other_single, other_count in single_names.items():
                 if other_single in processed:
                     continue
@@ -308,20 +387,27 @@ class CharacterExtractor:
             merged[canonical] = total_count
         
         return merged
-    
+
     def _is_name_variant(self, name1, name2):
         """
-        Check if two names are variants
+        Check if two names are variants - IMPROVED
         """
         n1_lower = name1.lower()
         n2_lower = name2.lower()
         
+        # Exact match
         if n1_lower == n2_lower:
             return True
         
-        # Possessive/plural
+        # Possessive/plural: "John" vs "Johns"
         if n1_lower + 's' == n2_lower or n2_lower + 's' == n1_lower:
             return True
+        
+        # Possessive with apostrophe removed: "john" vs "johns"
+        if n1_lower == n2_lower.rstrip('s') or n2_lower == n1_lower.rstrip('s'):
+            # Only if difference is exactly 1 's'
+            if abs(len(n1_lower) - len(n2_lower)) == 1:
+                return True
         
         # Substring match (min 4 chars, reasonable length difference)
         if len(n1_lower) >= 4 and len(n2_lower) >= 4:
@@ -334,11 +420,12 @@ class CharacterExtractor:
         parts2 = n2_lower.split()
         
         if len(parts1) > 0 and len(parts2) > 0:
+            # First name match (min 4 chars to avoid false positives)
             if parts1[0] == parts2[0] and len(parts1[0]) >= 4:
                 return True
         
         return False
-    
+        
     def _add_context(self, sentences, characters):
         """
         Add context
