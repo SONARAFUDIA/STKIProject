@@ -91,7 +91,7 @@ class RelationExtractor:
     
     def _direct_cooccurrence(self, characters, sentences):
         """
-        Direct co-occurrence: sama-sama muncul di kalimat yang sama
+        Direct co-occurrence dengan special handling untuk special characters
         """
         cooccurrence = defaultdict(lambda: {'count': 0, 'sentences': []})
         char_list = list(characters.keys())
@@ -102,13 +102,25 @@ class RelationExtractor:
             
             for char in char_list:
                 char_lower = char.lower()
-                if char_lower in sent_lower:
+                
+                # SPECIAL: Narrator (I)
+                if char_lower == "narrator (i)":
+                    if re.search(r'\bi\b', sent_lower):
+                        present.add(char)
+                # SPECIAL: Role names like "The Old Man"
+                elif char_lower.startswith('the '):
+                    role_name = char_lower.replace('the ', '')
+                    if role_name in sent_lower:
+                        present.add(char)
+                # Regular names
+                elif char_lower in sent_lower:
                     present.add(char)
                 elif ' ' in char_lower:
                     first_name = char_lower.split()[0]
                     if first_name in sent_lower and len(first_name) >= 4:
                         present.add(char)
             
+            # Count pairs
             for char1, char2 in itertools.combinations(present, 2):
                 pair = tuple(sorted([char1, char2]))
                 cooccurrence[pair]['count'] += 1
@@ -118,7 +130,7 @@ class RelationExtractor:
     
     def _proximity_based(self, characters, sentences, window=5):
         """
-        Proximity-based: karakter muncul dalam window N kalimat
+        Proximity-based dengan special handling untuk Narrator (I)
         """
         proximity = defaultdict(lambda: {'count': 0, 'method': 'proximity'})
         char_list = list(characters.keys())
@@ -131,12 +143,31 @@ class RelationExtractor:
             
             for char in char_list:
                 char_lower = char.lower()
-                if char_lower in sent_lower:
-                    last_appearance[char].append(sent_id)
-                elif ' ' in char_lower:
-                    first_name = char_lower.split()[0]
-                    if first_name in sent_lower and len(first_name) >= 4:
+                found = False
+                
+                # SPECIAL: Handle "Narrator (I)"
+                if char_lower == "narrator (i)":
+                    # Look for first-person pronoun "I"
+                    if re.search(r'\bi\b', sent_lower):
                         last_appearance[char].append(sent_id)
+                        found = True
+                # SPECIAL: Handle "The X" role names
+                elif char_lower.startswith('the '):
+                    role_name = char_lower.replace('the ', '')
+                    if role_name in sent_lower:
+                        last_appearance[char].append(sent_id)
+                        found = True
+                # Regular names
+                else:
+                    if char_lower in sent_lower:
+                        last_appearance[char].append(sent_id)
+                        found = True
+                    elif ' ' in char_lower:
+                        # For multi-word names, check first name
+                        first_name = char_lower.split()[0]
+                        if first_name in sent_lower and len(first_name) >= 4:
+                            last_appearance[char].append(sent_id)
+                            found = True
         
         # Find characters that appear within window of each other
         for char1, char2 in itertools.combinations(char_list, 2):

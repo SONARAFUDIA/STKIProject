@@ -48,37 +48,46 @@ class TraitExtractor:
     
     def extract_traits(self, character_name, character_contexts):
         """
-        Ekstraksi watak karakter dari konteks kemunculannya
+        Ekstraksi watak karakter dari konteks - ENHANCED for narrator
         """
         all_traits = []
         trait_sentences = []
+        
+        # SPECIAL: For "Narrator (I)", extract from first-person perspective
+        is_narrator = character_name.lower() == "narrator (i)"
         
         for context in character_contexts:
             sentence = context['sentence']
             doc = self.nlp(sentence)
             
-            # Method 1: Adjacent adjectives
-            traits_found = self._find_adjacent_adjectives(doc, character_name)
+            if is_narrator:
+                # For narrator, extract traits from "I am/was/feel ADJECTIVE"
+                traits_found = self._extract_narrator_traits(doc, sentence)
+            else:
+                # Regular character trait extraction
+                # Method 1: Adjacent adjectives
+                traits_found = self._find_adjacent_adjectives(doc, character_name)
+                
+                # Method 2: Pattern matching
+                pattern_traits = self._pattern_matching(sentence, character_name)
+                traits_found.extend(pattern_traits)
+                
+                # Method 3: Possessive descriptions
+                possessive_traits = self._possessive_descriptions(sentence, character_name)
+                traits_found.extend(possessive_traits)
+                
+                # Method 4: Action-based trait inference
+                action_traits = self._action_based_traits(doc, character_name)
+                traits_found.extend(action_traits)
+                
+                # Method 5: Descriptive phrases
+                descriptive_traits = self._descriptive_phrases(sentence, character_name)
+                traits_found.extend(descriptive_traits)
             
-            # Method 2: Pattern matching (CHARACTER is/was/seems ADJECTIVE)
-            pattern_traits = self._pattern_matching(sentence, character_name)
-            
-            # Method 3: Possessive descriptions (CHARACTER's ADJECTIVE NOUN)
-            possessive_traits = self._possessive_descriptions(sentence, character_name)
-            
-            # Method 4: Action-based trait inference
-            action_traits = self._action_based_traits(doc, character_name)
-            
-            # Method 5: Descriptive phrases
-            descriptive_traits = self._descriptive_phrases(sentence, character_name)
-            
-            # Method 6: Sentiment analysis
+            # Method 6: Sentiment analysis (untuk semua)
             sentiment_trait = self._analyze_sentiment(sentence)
             
-            # Combine all
-            combined_traits = (traits_found + pattern_traits + possessive_traits + 
-                             action_traits + descriptive_traits)
-            
+            combined_traits = traits_found
             if sentiment_trait:
                 combined_traits.append(sentiment_trait)
             
@@ -99,6 +108,49 @@ class TraitExtractor:
             'classified_traits': trait_summary,
             'evidence_sentences': trait_sentences
         }
+
+    def _extract_narrator_traits(self, doc, sentence):
+        """
+        Extract traits specifically for first-person narrator
+        """
+        traits = []
+        sent_lower = sentence.lower()
+        
+        # Pattern 1: "I am/was/feel ADJECTIVE"
+        patterns = [
+            r'\bi\s+(?:am|was|feel|felt|became)\s+(\w+)',
+            r'\bi\s+(?:seem|seemed|appear|appeared|look|looked)\s+(\w+)',
+            r'\bi\s+(?:get|got|grow|grew)\s+(\w+)',
+        ]
+        
+        for pattern in patterns:
+            matches = re.findall(pattern, sent_lower)
+            for match in matches:
+                # Verify it's an adjective
+                test_doc = self.nlp(match)
+                if len(test_doc) > 0 and test_doc[0].pos_ == 'ADJ':
+                    traits.append(match.lower())
+        
+        # Pattern 2: "I'm so/very/quite ADJECTIVE"
+        intensity_pattern = r'\bi\'?m\s+(?:so|very|quite|too|really)\s+(\w+)'
+        matches = re.findall(intensity_pattern, sent_lower)
+        for match in matches:
+            test_doc = self.nlp(match)
+            if len(test_doc) > 0 and test_doc[0].pos_ == 'ADJ':
+                traits.append(match.lower())
+        
+        # Pattern 3: Find adjectives near "I" in the parse tree
+        for token in doc:
+            if token.text.lower() == 'i':
+                # Look at nearby adjectives (within 5 tokens)
+                start = max(0, token.i - 5)
+                end = min(len(doc), token.i + 6)
+                
+                for j in range(start, end):
+                    if doc[j].pos_ == 'ADJ':
+                        traits.append(doc[j].text.lower())
+        
+        return traits
     
     def _find_adjacent_adjectives(self, doc, character_name):
         """

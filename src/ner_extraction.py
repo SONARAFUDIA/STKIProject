@@ -428,7 +428,7 @@ class CharacterExtractor:
         
     def _add_context(self, sentences, characters):
         """
-        Add context
+        Add context for each character - ENHANCED untuk handle special names
         """
         character_contexts = defaultdict(list)
         
@@ -438,16 +438,39 @@ class CharacterExtractor:
             for character in characters.keys():
                 char_lower = character.lower()
                 
+                # SPECIAL: Handle "Narrator (I)" - look for "I" pronoun
+                if char_lower == "narrator (i)":
+                    # Count "I" as standalone word
+                    pattern = r'\bi\b'
+                    if re.search(pattern, sent_lower):
+                        character_contexts[character].append({
+                            'sentence_id': idx,
+                            'sentence': sentence
+                        })
+                    continue
+                
+                # SPECIAL: Handle role-based characters like "The Old Man"
+                if char_lower.startswith('the '):
+                    # Remove "the" and search for the rest
+                    role_name = char_lower.replace('the ', '')
+                    pattern = r'\b' + re.escape(role_name) + r'\b'
+                    if re.search(pattern, sent_lower):
+                        character_contexts[character].append({
+                            'sentence_id': idx,
+                            'sentence': sentence
+                        })
+                    continue
+                
+                # Regular character names - direct mention
                 # For multi-word names, check if all words present
                 if ' ' in char_lower:
-                    # Check if all parts of name appear in sentence
                     parts = char_lower.split()
                     if all(re.search(r'\b' + re.escape(part) + r'\b', sent_lower) for part in parts):
                         character_contexts[character].append({
                             'sentence_id': idx,
                             'sentence': sentence
                         })
-                        continue
+                    continue
                 
                 # For single names
                 pattern = r'\b' + re.escape(char_lower) + r'\b'
