@@ -16,10 +16,10 @@ import matplotlib.pyplot as plt
 
 def test_relation_extraction():
     """
-    Eksperimen untuk testing ekstraksi hubungan - UPDATED VERSION
+    Eksperimen untuk testing ekstraksi hubungan - INDONESIAN VERSION
     """
     print("="*60)
-    print("EKSPERIMEN 3: TESTING RELATION EXTRACTION (ENHANCED)")
+    print("EKSPERIMEN 3: TESTING RELATION EXTRACTION (BAHASA INDONESIA)")
     print("="*60)
     
     # Inisialisasi
@@ -29,10 +29,11 @@ def test_relation_extraction():
     
     # Test files
     test_files = [
-        'owl_creek_bridge.txt',
-        'the_gift_of_magi.txt',
-        'the_tell_tale_heart.txt',
-        'the_yellow_wallpaper.txt',
+        'senja_di_ujung_kios.txt',
+        'rapat_warung_yopi_yang_batal.txt',
+        'aroma_kayu_cendana.txt',
+        'asing_di_cermin_itu.txt',
+        'garis_putus-putus.txt',
     ]
     
     all_results = {}
@@ -41,21 +42,25 @@ def test_relation_extraction():
         filepath = os.path.join(PROJECT_ROOT, 'data/raw', filename)
         
         if not os.path.exists(filepath):
-            print(f"\n⚠️  File not found: {filepath}")
+            print(f"\n⚠️  File tidak ditemukan: {filepath}")
+            continue
+        
+        if os.path.getsize(filepath) == 0:
+            print(f"\n⚠️  File kosong, dilewati: {filename}")
             continue
         
         print(f"\n{'='*60}")
-        print(f"📖 Processing: {filename}")
+        print(f"📖 Memproses: {filename}")
         print(f"{'='*60}")
         
         try:
             # Preprocessing
             print("\n[1/3] Preprocessing...")
             preprocessed = preprocessor.preprocess_document(filepath)
-            print(f"  ✓ {preprocessed['sentence_count']} sentences extracted")
+            print(f"  ✓ {preprocessed['sentence_count']} kalimat diekstrak")
             
             # Extract characters
-            print("\n[2/3] Extracting characters...")
+            print("\n[2/3] Ekstraksi tokoh...")
             char_extraction = char_extractor.extract_characters(
                 preprocessed['cleaned_text'],
                 preprocessed['sentences'],
@@ -63,41 +68,41 @@ def test_relation_extraction():
             )
             
             if len(char_extraction['main_characters']) < 2:
-                print(f"  ⚠️  Only {len(char_extraction['main_characters'])} character(s) found.")
-                print("  ⚠️  Need at least 2 characters for relation extraction. Skipping.")
+                print(f"  ⚠️  Hanya {len(char_extraction['main_characters'])} tokoh ditemukan.")
+                print("  ⚠️  Butuh minimal 2 tokoh untuk ekstraksi relasi. Melewati.")
                 continue
             
-            print(f"  ✓ {len(char_extraction['main_characters'])} characters found")
-            print(f"  Characters: {', '.join(char_extraction['main_characters'].keys())}")
+            print(f"  ✓ {len(char_extraction['main_characters'])} tokoh ditemukan")
+            print(f"  Tokoh: {', '.join(char_extraction['main_characters'].keys())}")
             
             # Extract relations
-            print("\n[3/3] Extracting relations...")
+            print("\n[3/3] Ekstraksi relasi...")
             relations = rel_extractor.extract_relations(
                 char_extraction['main_characters'],
                 preprocessed['sentences']
             )
             
-            print(f"\n📊 Relation Analysis:")
-            print(f"  ✓ Direct co-occurrence pairs: {len(relations.get('cooccurrence', {}))}")
-            print(f"  ✓ Proximity pairs: {len(relations.get('proximity_pairs', {}))}")
-            print(f"  ✓ Specific relations: {len(relations.get('specific_relations', []))}")
-            print(f"  ✓ Possessive relations: {len(relations.get('possessive_relations', []))}")
-            print(f"  ✓ Merged relations: {len(relations['merged_relations'])}")
+            print(f"\n📊 Analisis Relasi:")
+            print(f"  ✓ Pasangan co-occurrence langsung: {len(relations.get('cooccurrence', {}))}")
+            print(f"  ✓ Pasangan proximity: {len(relations.get('proximity_pairs', {}))}")
+            print(f"  ✓ Relasi spesifik: {len(relations.get('specific_relations', []))}")
+            print(f"  ✓ Relasi possessive: {len(relations.get('possessive_relations', []))}")
+            print(f"  ✓ Relasi merged: {len(relations['merged_relations'])}")
             
             # Display details
             if relations['merged_relations']:
-                print("\n🔗 Detected Relations:")
+                print("\n🔗 Relasi yang Terdeteksi:")
                 for i, rel in enumerate(relations['merged_relations'][:10], 1):
                     print(f"\n  {i}. {rel['character1']} ↔ {rel['character2']}")
-                    print(f"     Primary Relation: {rel['primary_relation']}")
-                    print(f"     All Relations: {', '.join(rel['all_relations'])}")
-                    print(f"     Confidence: {rel['confidence']:.2f}")
-                    print(f"     Strength: {rel['strength']:.2f}")
+                    print(f"     Relasi Utama: {rel['primary_relation']}")
+                    print(f"     Semua Relasi: {', '.join(rel['all_relations'])}")
+                    print(f"     Kepercayaan: {rel['confidence']:.2f}")
+                    print(f"     Kekuatan: {rel['strength']:.2f}")
                     print(f"     Co-occurrence: {rel['cooccurrence_count']}x")
                     print(f"     Proximity: {rel['proximity_count']}x")
-                    print(f"     Source: {rel['source']}")
+                    print(f"     Sumber: {rel['source']}")
             else:
-                print("\n  ⚠️  No relations detected")
+                print("\n  ⚠️  Tidak ada relasi terdeteksi")
             
             # Visualize graph
             if len(relations['merged_relations']) > 0:
@@ -119,7 +124,7 @@ def test_relation_extraction():
             all_results[filename] = json_results
             
         except Exception as e:
-            print(f"\n❌ Error processing {filename}: {str(e)}")
+            print(f"\n❌ Kesalahan memproses {filename}: {str(e)}")
             import traceback
             traceback.print_exc()
     
@@ -133,28 +138,28 @@ def test_relation_extraction():
             json.dump(all_results, f, indent=2, ensure_ascii=False)
         
         print("\n" + "="*60)
-        print(f"✅ Results saved to: {output_file}")
+        print(f"✅ Hasil tersimpan di: {output_file}")
         print("="*60)
         
         # Enhanced Summary
-        print("\n📊 ENHANCED SUMMARY:")
+        print("\n📊 RINGKASAN LENGKAP:")
         print("="*60)
         for filename, results in all_results.items():
             summary = results['summary']
             print(f"\n📖 {filename}:")
-            print(f"  Characters: {summary['total_characters']}")
-            print(f"  Relations detected: {summary['total_relations']}")
-            print(f"  Proximity pairs: {summary.get('proximity_pairs', 0)}")
-            print(f"  Specific relations: {summary.get('specific_relations', 0)}")
+            print(f"  Tokoh: {summary['total_characters']}")
+            print(f"  Relasi terdeteksi: {summary['total_relations']}")
+            print(f"  Pasangan proximity: {summary.get('proximity_pairs', 0)}")
+            print(f"  Relasi spesifik: {summary.get('specific_relations', 0)}")
             
             if summary['total_relations'] > 0:
-                # Show top relation with details
+                # Show top relation dengan details
                 top_rel = results['relations'][0]
-                print(f"\n  🔗 Top Relation:")
+                print(f"\n  🔗 Relasi Teratas:")
                 print(f"     {top_rel['character1']} ↔ {top_rel['character2']}")
-                print(f"     Type: {top_rel['primary_relation']}")
-                print(f"     Confidence: {top_rel['confidence']:.2f}")
-                print(f"     Strength: {top_rel['strength']:.2f}")
+                print(f"     Tipe: {top_rel['primary_relation']}")
+                print(f"     Kepercayaan: {top_rel['confidence']:.2f}")
+                print(f"     Kekuatan: {top_rel['strength']:.2f}")
                 
                 # Show all detected relation types
                 all_relation_types = set()
@@ -162,27 +167,27 @@ def test_relation_extraction():
                     all_relation_types.update(rel['all_relations'])
                 
                 if all_relation_types:
-                    print(f"\n  📋 All Relation Types Detected:")
+                    print(f"\n  📋 Semua Tipe Relasi yang Terdeteksi:")
                     for rel_type in sorted(all_relation_types):
                         count = sum(1 for rel in results['relations'] 
                                    if rel_type in rel['all_relations'])
                         print(f"     - {rel_type}: {count}x")
         
         print("\n" + "="*60)
-        print("✅ ANALYSIS COMPLETE!")
+        print("✅ ANALISIS SELESAI!")
         print("="*60)
     else:
-        print("\n⚠️  No results to save")
+        print("\n⚠️  Tidak ada hasil untuk disimpan")
 
     return all_results
 
 def visualize_relation_graph(graph_data, filename):
     """
-    Visualisasi graph relasi - ENHANCED VERSION
+    Visualisasi graph relasi - Indonesian version
     """
     try:
         if not graph_data['nodes'] or not graph_data['edges']:
-            print(f"\n  ⚠️  No relations to visualize for {filename}")
+            print(f"\n  ⚠️  Tidak ada relasi untuk divisualisasikan: {filename}")
             return
         
         G = nx.Graph()
@@ -206,15 +211,15 @@ def visualize_relation_graph(graph_data, filename):
         plt.figure(figsize=(16, 12))
         pos = nx.spring_layout(G, k=2.5, iterations=50, seed=42)
         
-        # Draw nodes with different colors based on character type
+        # Draw nodes dengan warna berbeda
         node_colors = []
         for node in G.nodes():
-            if 'narrator' in node.lower():
-                node_colors.append('#FF6B6B')  # Red for narrator
-            elif 'the ' in node.lower():
-                node_colors.append('#4ECDC4')  # Teal for role-based
+            if 'narator' in node.lower() or 'aku' in node.lower():
+                node_colors.append('#FF6B6B')  # Red untuk narrator
+            elif any(honor in node.lower() for honor in ['pak', 'bu', 'mas', 'mbak']):
+                node_colors.append('#4ECDC4')  # Teal untuk dengan gelar
             else:
-                node_colors.append('#95E1D3')  # Light green for named characters
+                node_colors.append('#95E1D3')  # Light green untuk nama biasa
         
         nx.draw_networkx_nodes(
             G, pos, 
@@ -226,14 +231,14 @@ def visualize_relation_graph(graph_data, filename):
         )
         
         # Draw labels
-        nx.draw_networkx_labels(G, pos, font_size=10, font_weight='bold')
+        nx.draw_networkx_labels(G, pos, font_size=10, font_weight='bold', font_family='sans-serif')
         
-        # Draw edges with varying thickness and color
+        # Draw edges
         edges = G.edges()
         weights = [G[u][v]['weight'] for u, v in edges]
         confidences = [G[u][v].get('confidence', 0.5) for u, v in edges]
         
-        # Normalize weights for visual display
+        # Normalize weights
         max_weight = max(weights) if weights else 1
         normalized_weights = [w/max_weight * 6 + 1 for w in weights]
         
@@ -241,11 +246,11 @@ def visualize_relation_graph(graph_data, filename):
         edge_colors = []
         for conf in confidences:
             if conf >= 0.8:
-                edge_colors.append('#2ECC71')  # Green for high confidence
+                edge_colors.append('#2ECC71')  # Green untuk high confidence
             elif conf >= 0.6:
-                edge_colors.append('#F39C12')  # Orange for medium
+                edge_colors.append('#F39C12')  # Orange untuk medium
             else:
-                edge_colors.append('#E74C3C')  # Red for low
+                edge_colors.append('#E74C3C')  # Red untuk low
         
         nx.draw_networkx_edges(
             G, pos, 
@@ -254,14 +259,14 @@ def visualize_relation_graph(graph_data, filename):
             edge_color=edge_colors
         )
         
-        # Add edge labels with relation type
+        # Add edge labels
         edge_labels = {}
         for edge_data in graph_data['edges']:
             edge_key = (edge_data['source'], edge_data['target'])
             relation = edge_data['relation']
             confidence = edge_data.get('confidence', 0)
             
-            # Shorten relation name if too long
+            # Shorten relation name
             if len(relation) > 15:
                 relation = relation[:12] + '...'
             
@@ -275,10 +280,10 @@ def visualize_relation_graph(graph_data, filename):
             bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8)
         )
         
-        # Title with enhanced info
+        # Title
         plt.title(
-            f"Character Relation Graph: {filename}\n"
-            f"({len(G.nodes())} characters, {len(G.edges())} relations)",
+            f"Graf Hubungan Tokoh: {filename}\n"
+            f"({len(G.nodes())} tokoh, {len(G.edges())} relasi)",
             fontsize=16, 
             fontweight='bold',
             pad=20
@@ -287,12 +292,12 @@ def visualize_relation_graph(graph_data, filename):
         # Legend
         from matplotlib.patches import Patch
         legend_elements = [
-            Patch(facecolor='#95E1D3', edgecolor='black', label='Named Character'),
-            Patch(facecolor='#4ECDC4', edgecolor='black', label='Role-based Character'),
-            Patch(facecolor='#FF6B6B', edgecolor='black', label='Narrator'),
-            Patch(facecolor='#2ECC71', label='High Confidence (≥0.8)'),
-            Patch(facecolor='#F39C12', label='Medium Confidence (0.6-0.8)'),
-            Patch(facecolor='#E74C3C', label='Low Confidence (<0.6)')
+            Patch(facecolor='#95E1D3', edgecolor='black', label='Nama Tokoh'),
+            Patch(facecolor='#4ECDC4', edgecolor='black', label='Tokoh dengan Gelar'),
+            Patch(facecolor='#FF6B6B', edgecolor='black', label='Narator'),
+            Patch(facecolor='#2ECC71', label='Kepercayaan Tinggi (≥0.8)'),
+            Patch(facecolor='#F39C12', label='Kepercayaan Sedang (0.6-0.8)'),
+            Patch(facecolor='#E74C3C', label='Kepercayaan Rendah (<0.6)')
         ]
         plt.legend(handles=legend_elements, loc='upper left', fontsize=9)
         
@@ -308,11 +313,11 @@ def visualize_relation_graph(graph_data, filename):
             f"relation_graph_{filename.replace('.txt', '.png')}"
         )
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
-        print(f"  ✓ Graph saved: {output_path}")
+        print(f"  ✓ Graf tersimpan: {output_path}")
         plt.close()
         
     except Exception as e:
-        print(f"\n  ⚠️  Warning: Could not create visualization for {filename}: {str(e)}")
+        print(f"\n  ⚠️  Tidak bisa membuat visualisasi untuk {filename}: {str(e)}")
         import traceback
         traceback.print_exc()
 

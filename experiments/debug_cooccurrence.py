@@ -8,15 +8,23 @@ from src.preprocessing import TextPreprocessor
 from src.ner_extraction import CharacterExtractor
 import re
 
-def debug_character_cooccurrence():
+def debug_character_cooccurrence(filename='rapat_warung_yopi_yang_batal.txt'):
     """
-    Debug kenapa co-occurrence count rendah
+    Debug kenapa co-occurrence count rendah - Versi Indonesia
     """
     print("="*70)
-    print("DEBUG: Character Co-occurrence")
+    print(f"DEBUG: Character Co-occurrence - {filename}")
     print("="*70)
     
-    filepath = os.path.join(PROJECT_ROOT, 'data/raw/the_gift_of_magi.txt')
+    filepath = os.path.join(PROJECT_ROOT, f'data/raw/{filename}')
+    
+    if not os.path.exists(filepath):
+        print(f"❌ File tidak ditemukan: {filepath}")
+        return
+    
+    if os.path.getsize(filepath) == 0:
+        print(f"❌ File kosong: {filepath}")
+        return
     
     preprocessor = TextPreprocessor()
     char_extractor = CharacterExtractor()
@@ -28,54 +36,113 @@ def debug_character_cooccurrence():
         min_mentions=2
     )
     
-    # Manual check
-    della_jim_together = 0
-    della_sentences = []
-    jim_sentences = []
-    both_sentences = []
+    characters = list(char_extraction['main_characters'].keys())
     
-    for i, sentence in enumerate(preprocessed['sentences']):
-        sent_lower = sentence.lower()
-        
-        has_della = bool(re.search(r'\bdella\b', sent_lower))
-        has_jim = bool(re.search(r'\bjim\b', sent_lower))
-        
-        if has_della:
-            della_sentences.append(i)
-        if has_jim:
-            jim_sentences.append(i)
-        if has_della and has_jim:
-            della_jim_together += 1
-            both_sentences.append((i, sentence))
+    if len(characters) < 2:
+        print(f"⚠️  Hanya {len(characters)} tokoh ditemukan. Butuh minimal 2 untuk co-occurrence.")
+        return
     
-    print(f"\n📊 Manual Count:")
-    print(f"  Sentences with 'Della': {len(della_sentences)}")
-    print(f"  Sentences with 'Jim': {len(jim_sentences)}")
-    print(f"  Sentences with BOTH: {della_jim_together}")
+    print(f"\n📊 Tokoh yang Dianalisis: {', '.join(characters)}")
     
-    print(f"\n📝 Sample sentences with both characters:")
-    for i, (sent_id, sentence) in enumerate(both_sentences[:5], 1):
-        print(f"\n  {i}. [Sentence {sent_id}]")
-        print(f"     {sentence[:100]}...")
+    # Manual check untuk setiap pasangan
+    print(f"\n🔍 Manual Co-occurrence Check:")
+    
+    for i in range(len(characters)):
+        for j in range(i + 1, len(characters)):
+            char1 = characters[i]
+            char2 = characters[j]
+            
+            print(f"\n  Pasangan: {char1} ↔ {char2}")
+            print(f"  {'-'*60}")
+            
+            # Count manual
+            together_count = 0
+            char1_sentences = []
+            char2_sentences = []
+            both_sentences = []
+            
+            for idx, sentence in enumerate(preprocessed['sentences']):
+                sent_lower = sentence.lower()
+                
+                # Prepare search patterns
+                char1_lower = char1.lower()
+                char2_lower = char2.lower()
+                
+                # Remove honorifics untuk search
+                char1_base = char1_lower.replace('pak ', '').replace('bu ', '').replace('mas ', '').replace('mbak ', '')
+                char2_base = char2_lower.replace('pak ', '').replace('bu ', '').replace('mas ', '').replace('mbak ', '')
+                
+                # Check presence
+                has_char1 = bool(re.search(r'\b' + re.escape(char1_base) + r'\b', sent_lower))
+                has_char2 = bool(re.search(r'\b' + re.escape(char2_base) + r'\b', sent_lower))
+                
+                if has_char1:
+                    char1_sentences.append(idx)
+                if has_char2:
+                    char2_sentences.append(idx)
+                if has_char1 and has_char2:
+                    together_count += 1
+                    both_sentences.append((idx, sentence))
+            
+            print(f"    Kalimat dengan '{char1}': {len(char1_sentences)}")
+            print(f"    Kalimat dengan '{char2}': {len(char2_sentences)}")
+            print(f"    Kalimat dengan KEDUANYA: {together_count}")
+            
+            if both_sentences:
+                print(f"\n    Sample kalimat dengan kedua tokoh (max 3):")
+                for k, (sent_id, sentence) in enumerate(both_sentences[:3], 1):
+                    print(f"\n      {k}. [Kalimat {sent_id}]")
+                    print(f"         {sentence[:120]}...")
     
     # Check context detection
-    print(f"\n🔍 Context Detection from CharacterExtractor:")
-    della_contexts = char_extraction['characters_with_context'].get('Della', [])
-    jim_contexts = char_extraction['characters_with_context'].get('Jim', [])
-    
-    print(f"  Della contexts: {len(della_contexts)}")
-    print(f"  Jim contexts: {len(jim_contexts)}")
+    print(f"\n🔍 Context Detection dari CharacterExtractor:")
+    for char, contexts in char_extraction['characters_with_context'].items():
+        print(f"\n  {char}: {len(contexts)} konteks")
+        if contexts:
+            print(f"    Sample konteks pertama:")
+            print(f"      Sentence ID: {contexts[0]['sentence_id']}")
+            print(f"      Text: {contexts[0]['sentence'][:100]}...")
     
     # Find overlap
-    della_sent_ids = set(ctx['sentence_id'] for ctx in della_contexts)
-    jim_sent_ids = set(ctx['sentence_id'] for ctx in jim_contexts)
-    overlap = della_sent_ids & jim_sent_ids
+    print(f"\n📊 Overlap Analysis:")
+    if len(characters) >= 2:
+        char1 = characters[0]
+        char2 = characters[1]
+        
+        char1_contexts = char_extraction['characters_with_context'].get(char1, [])
+        char2_contexts = char_extraction['characters_with_context'].get(char2, [])
+        
+        char1_sent_ids = set(ctx['sentence_id'] for ctx in char1_contexts)
+        char2_sent_ids = set(ctx['sentence_id'] for ctx in char2_contexts)
+        overlap = char1_sent_ids & char2_sent_ids
+        
+        print(f"  {char1} sentence IDs: {len(char1_sent_ids)}")
+        print(f"  {char2} sentence IDs: {len(char2_sent_ids)}")
+        print(f"  Overlapping contexts: {len(overlap)}")
+        
+        if overlap:
+            print(f"  Overlapping sentence IDs: {sorted(list(overlap))[:10]}")
+
+def test_multiple_stories():
+    """
+    Test beberapa cerita
+    """
+    test_files = [
+        'rapat_warung_yopi_yang_batal.txt',  # Multiple characters
+        'aroma_kayu_cendana.txt',             # Elara & Sandi
+        'senja_di_ujung_kios.txt',            # Pak Suroto & wanita
+    ]
     
-    print(f"  Overlapping contexts: {len(overlap)}")
-    
-    if len(overlap) < della_jim_together:
-        print(f"\n⚠️  PROBLEM: Manual count ({della_jim_together}) > Context overlap ({len(overlap)})")
-        print(f"  → Context detection is missing some occurrences!")
+    for filename in test_files:
+        filepath = os.path.join(PROJECT_ROOT, f'data/raw/{filename}')
+        if os.path.exists(filepath) and os.path.getsize(filepath) > 0:
+            debug_character_cooccurrence(filename)
+            print("\n" + "="*70 + "\n")
 
 if __name__ == "__main__":
-    debug_character_cooccurrence()
+    import sys
+    
+    if len(sys.argv) > 1:
+        debug_character_cooccurrence(sys.argv[1])
+    else:
+        test_multiple_stories()
