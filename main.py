@@ -1,5 +1,6 @@
 """
-Main script untuk menjalankan sistem ekstraksi informasi karakter
+Script utama untuk menjalankan sistem ekstraksi informasi karakter
+pada karya sastra berbahasa Indonesia
 """
 
 import os
@@ -27,14 +28,14 @@ def setup_directories():
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
     
-    print("✅ Directories setup complete")
+    print("✅ Setup direktori selesai")
 
 def process_single_document(filepath, save_reports=True):
     """
     Proses satu dokumen lengkap
     """
     print(f"\n{'='*70}")
-    print(f"PROCESSING: {os.path.basename(filepath)}")
+    print(f"MEMPROSES: {os.path.basename(filepath)}")
     print(f"{'='*70}")
     
     # Inisialisasi
@@ -45,42 +46,42 @@ def process_single_document(filepath, save_reports=True):
     report_gen = ReportGenerator()
     
     try:
-        # Step 1: Preprocessing
-        print("\n[STEP 1/4] Text Preprocessing...")
+        # Langkah 1: Preprocessing
+        print("\n[LANGKAH 1/4] Preprocessing Teks...")
         preprocessed = preprocessor.preprocess_document(filepath)
-        print(f"  ✓ Cleaned text: {len(preprocessed['cleaned_text'])} characters")
-        print(f"  ✓ Sentences extracted: {preprocessed['sentence_count']}")
+        print(f"  ✓ Teks dibersihkan: {len(preprocessed['cleaned_text'])} karakter")
+        print(f"  ✓ Kalimat diekstrak: {preprocessed['sentence_count']}")
         
-        # Step 2: Character Extraction
-        print("\n[STEP 2/4] Character Extraction (NER)...")
+        # Langkah 2: Ekstraksi Tokoh
+        print("\n[LANGKAH 2/4] Ekstraksi Tokoh (NER)...")
         char_results = char_extractor.extract_characters(
             preprocessed['cleaned_text'],
             preprocessed['sentences']
         )
         char_stats = char_extractor.get_character_statistics(char_results)
-        print(f"  ✓ Total characters found: {char_stats['total_characters']}")
+        print(f"  ✓ Total tokoh ditemukan: {char_stats['total_characters']}")
         
         if char_stats['most_mentioned']:
-            print(f"  ✓ Most mentioned: {char_stats['most_mentioned'][0]} ({char_stats['most_mentioned'][1]}x)")
+            print(f"  ✓ Paling sering disebut: {char_stats['most_mentioned'][0]} ({char_stats['most_mentioned'][1]}x)")
         
-        # Step 3: Trait Extraction
-        print("\n[STEP 3/4] Character Trait Extraction...")
+        # Langkah 3: Ekstraksi Watak
+        print("\n[LANGKAH 3/4] Ekstraksi Watak Tokoh...")
         trait_results = {}
         for character, contexts in char_results['characters_with_context'].items():
-            print(f"  → Analyzing {character}...")
+            print(f"  → Menganalisis {character}...")
             traits = trait_extractor.extract_traits(character, contexts)
             trait_results[character] = traits
-            print(f"    ✓ {len(set(traits['raw_traits']))} unique traits found")
+            print(f"    ✓ {len(set(traits['raw_traits']))} watak unik ditemukan")
         
-        # Step 4: Relation Extraction
-        print("\n[STEP 4/4] Relation Extraction...")
+        # Langkah 4: Ekstraksi Hubungan
+        print("\n[LANGKAH 4/4] Ekstraksi Hubungan Antar Tokoh...")
         relation_results = rel_extractor.extract_relations(
             char_results['main_characters'],
             preprocessed['sentences']
         )
-        print(f"  ✓ Relations detected: {len(relation_results['merged_relations'])}")
+        print(f"  ✓ Hubungan terdeteksi: {len(relation_results['merged_relations'])}")
         
-        # Compile results
+        # Kompilasi hasil
         from datetime import datetime
         full_results = {
             'metadata': {
@@ -104,32 +105,32 @@ def process_single_document(filepath, save_reports=True):
             }
         }
         
-        # Save reports if requested
+        # Simpan laporan jika diminta
         if save_reports:
             doc_name = os.path.basename(filepath).replace('.txt', '')
             
-            # JSON report
-            json_path = f'outputs/reports/{doc_name}_full_report.json'
+            # Laporan JSON
+            json_path = f'outputs/reports/{doc_name}_laporan_lengkap.json'
             save_processed_data(full_results, json_path)
             
-            # Markdown report
-            md_path = f'outputs/reports/{doc_name}_report.md'
+            # Laporan Markdown
+            md_path = f'outputs/reports/{doc_name}_laporan.md'
             report_gen.generate_markdown_report(full_results, md_path)
-            print(f"\n✅ Markdown report: {md_path}")
+            print(f"\n✅ Laporan Markdown: {md_path}")
             
-            # HTML report
-            html_path = f'outputs/reports/{doc_name}_report.html'
+            # Laporan HTML
+            html_path = f'outputs/reports/{doc_name}_laporan.html'
             report_gen.generate_html_report(full_results, html_path)
-            print(f"✅ HTML report: {html_path}")
+            print(f"✅ Laporan HTML: {html_path}")
         
         print(f"\n{'='*70}")
-        print("✅ PROCESSING COMPLETE")
+        print("✅ PEMROSESAN SELESAI")
         print(f"{'='*70}\n")
         
         return full_results
         
     except Exception as e:
-        print(f"\n❌ ERROR: {str(e)}")
+        print(f"\n❌ KESALAHAN: {str(e)}")
         import traceback
         traceback.print_exc()
         return None
@@ -139,57 +140,66 @@ def process_all_documents():
     Proses semua dokumen dalam folder data/raw
     """
     print("\n" + "="*70)
-    print("BATCH PROCESSING: ALL DOCUMENTS")
+    print("PEMROSESAN BATCH: SEMUA DOKUMEN")
     print("="*70)
     
     documents = [
-        'data/raw/the_tell_tale_heart.txt',
-        'data/raw/the_gift_of_magi.txt',
-        'data/raw/the_yellow_wallpaper.txt',
-        'data/raw/the_lottery.txt',
-        'data/raw/owl_creek_bridge.txt'
+        'data/raw/senja_di_ujung_kios.txt',
+        'data/raw/rapat_warung_yopi_yang_batal.txt',
+        'data/raw/aroma_kayu_cendana.txt',
+        'data/raw/asing_di_cermin_itu.txt',
+        'data/raw/garis_putus-putus.txt'
     ]
     
     all_results = {}
     successful = 0
     failed = 0
+    skipped = 0
     
     for doc_path in documents:
-        if os.path.exists(doc_path):
-            result = process_single_document(doc_path, save_reports=True)
-            if result:
-                doc_name = os.path.basename(doc_path).replace('.txt', '')
-                all_results[doc_name] = result
-                successful += 1
-            else:
-                failed += 1
+        if not os.path.exists(doc_path):
+            print(f"\n⚠️  File tidak ditemukan: {doc_path}")
+            failed += 1
+            continue
+        
+        # Check if file is empty
+        if os.path.getsize(doc_path) == 0:
+            print(f"\n⚠️  File kosong, dilewati: {doc_path}")
+            skipped += 1
+            continue
+            
+        result = process_single_document(doc_path, save_reports=True)
+        if result:
+            doc_name = os.path.basename(doc_path).replace('.txt', '')
+            all_results[doc_name] = result
+            successful += 1
         else:
-            print(f"\n⚠️  File not found: {doc_path}")
             failed += 1
     
-    # Save combined results
+    # Simpan hasil gabungan
     if all_results:
-        combined_path = 'outputs/reports/all_documents_combined.json'
+        combined_path = 'outputs/reports/semua_dokumen_gabungan.json'
         save_processed_data(all_results, combined_path)
-        print(f"\n✅ Combined results: {combined_path}")
+        print(f"\n✅ Hasil gabungan: {combined_path}")
     
-    # Summary
+    # Ringkasan
     print("\n" + "="*70)
-    print("BATCH PROCESSING SUMMARY")
+    print("RINGKASAN PEMROSESAN BATCH")
     print("="*70)
-    print(f"✅ Successful: {successful}")
-    print(f"❌ Failed: {failed}")
-    print(f"📊 Total: {successful + failed}")
+    print(f"✅ Berhasil: {successful}")
+    print(f"⚠️  Dilewati (kosong): {skipped}")
+    print(f"❌ Gagal: {failed}")
+    print(f"📊 Total: {successful + failed + skipped}")
     print("="*70 + "\n")
     
     return all_results
 
 def main():
     """
-    Main function dengan command line interface
+    Fungsi utama dengan command line interface
     """
     parser = argparse.ArgumentParser(
-        description='Sistem Ekstraksi Informasi Karakter dalam Karya Sastra'
+        description='Sistem Ekstraksi Informasi Karakter dalam Karya Sastra Indonesia'
     )
     
     parser.add_argument(
@@ -213,18 +223,22 @@ def main():
     
     args = parser.parse_args()
     
-    # Setup directories
+    # Setup direktori
     setup_directories()
     
     if args.mode == 'single':
         if not args.file:
-            print("❌ Error: --file required for single mode")
+            print("❌ Kesalahan: --file diperlukan untuk mode single")
             return
         
         if not os.path.exists(args.file):
-            print(f"❌ Error: File not found: {args.file}")
+            print(f"❌ Kesalahan: File tidak ditemukan: {args.file}")
             return
         
+        if os.path.getsize(args.file) == 0:
+            print(f"❌ Kesalahan: File kosong: {args.file}")
+            return
+            
         process_single_document(args.file, save_reports=True)
     
     elif args.mode == 'batch':
@@ -232,7 +246,7 @@ def main():
     
     elif args.mode == 'experiment':
         if not args.experiment:
-            print("❌ Error: --experiment required for experiment mode")
+            print("❌ Kesalahan: --experiment diperlukan untuk mode experiment")
             return
         
         if args.experiment == 'ner':
