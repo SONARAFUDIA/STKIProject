@@ -10,33 +10,42 @@ import json
 
 def test_ner_extraction():
     """
-    Eksperimen untuk testing ekstraksi tokoh dengan NER
+    Eksperimen untuk testing ekstraksi tokoh dengan NER - Versi Indonesia
     """
     print("="*60)
-    print("EKSPERIMEN 1: TESTING NER EXTRACTION")
+    print("EKSPERIMEN 1: TESTING NER EXTRACTION (BAHASA INDONESIA)")
     print("="*60)
     
     # Inisialisasi
     preprocessor = TextPreprocessor()
     extractor = CharacterExtractor()
     
-    # File yang akan ditest
+    # File yang akan ditest - cerita bahasa Indonesia
     test_files = [
-        'data/raw/owl_creek_bridge.txt',
-        'data/raw/the_gift_of_magi.txt',
-        'data/raw/the_tell_tale_heart.txt',
-        'data/raw/the_yellow_wallpaper.txt',
+        'data/raw/senja_di_ujung_kios.txt',
+        'data/raw/rapat_warung_yopi_yang_batal.txt',
+        'data/raw/aroma_kayu_cendana.txt',
+        'data/raw/asing_di_cermin_itu.txt',
+        'data/raw/garis_putus-putus.txt',
     ]
     
     results = {}
     
     for filepath in test_files:
-        print(f"\n📖 Processing: {filepath}")
+        if not os.path.exists(filepath):
+            print(f"\n⚠️  File tidak ditemukan: {filepath}")
+            continue
+            
+        if os.path.getsize(filepath) == 0:
+            print(f"\n⚠️  File kosong, dilewati: {filepath}")
+            continue
+        
+        print(f"\n📖 Memproses: {filepath}")
         print("-"*60)
         
         # Preprocessing
         preprocessed = preprocessor.preprocess_document(filepath)
-        print(f"✓ Sentences extracted: {preprocessed['sentence_count']}")
+        print(f"✓ Kalimat diekstrak: {preprocessed['sentence_count']}")
         
         # NER Extraction
         extraction = extractor.extract_characters(
@@ -47,13 +56,15 @@ def test_ner_extraction():
         # Statistics
         stats = extractor.get_character_statistics(extraction)
         
-        print(f"✓ Characters found: {stats['total_characters']}")
-        print(f"✓ Most mentioned: {stats['most_mentioned']}")
+        print(f"✓ Tokoh ditemukan: {stats['total_characters']}")
+        if stats['most_mentioned']:
+            print(f"✓ Paling sering disebut: {stats['most_mentioned'][0]} ({stats['most_mentioned'][1]}x)")
         
         # Tampilkan detail
-        print("\n📋 Main Characters:")
-        for char, count in extraction['main_characters'].items():
-            print(f"  - {char}: {count} mentions")
+        print("\n📋 Tokoh Utama:")
+        for char, count in sorted(extraction['main_characters'].items(), 
+                                   key=lambda x: x[1], reverse=True):
+            print(f"  - {char}: {count} sebutan")
         
         # Simpan hasil
         results[filepath] = {
@@ -62,10 +73,34 @@ def test_ner_extraction():
         }
     
     # Save ke file
-    with open('outputs/exp_01_ner_results.json', 'w') as f:
-        json.dump(results, f, indent=2, default=str)
+    output_dir = 'outputs'
+    os.makedirs(output_dir, exist_ok=True)
     
-    print("\n✅ Results saved to: outputs/exp_01_ner_results.json")
+    output_file = os.path.join(output_dir, 'exp_01_ner_results.json')
+    
+    # Convert for JSON serialization
+    json_results = {}
+    for filepath, data in results.items():
+        json_results[filepath] = {
+            'main_characters': data['extraction']['main_characters'],
+            'statistics': data['statistics'],
+            'total_entities_found': len(data['extraction']['all_entities'])
+        }
+    
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(json_results, f, indent=2, ensure_ascii=False)
+    
+    print("\n" + "="*60)
+    print(f"✅ Hasil tersimpan di: {output_file}")
+    print("="*60)
+    
+    # Summary
+    print("\n📊 RINGKASAN:")
+    total_chars = sum(len(r['extraction']['main_characters']) for r in results.values())
+    print(f"  Total file diproses: {len(results)}")
+    print(f"  Total tokoh terdeteksi: {total_chars}")
+    print(f"  Rata-rata tokoh per cerita: {total_chars/len(results):.1f}")
+    
     return results
 
 if __name__ == "__main__":

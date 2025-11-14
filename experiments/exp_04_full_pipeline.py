@@ -14,10 +14,10 @@ from datetime import datetime
 
 def full_pipeline_analysis(filepath):
     """
-    Pipeline lengkap untuk satu dokumen
+    Pipeline lengkap untuk satu dokumen - Versi Indonesia
     """
     print(f"\n{'='*60}")
-    print(f"ANALYZING: {os.path.basename(filepath)}")
+    print(f"MENGANALISIS: {os.path.basename(filepath)}")
     print(f"{'='*60}")
     
     # Inisialisasi semua modul
@@ -29,38 +29,37 @@ def full_pipeline_analysis(filepath):
     # STEP 1: Preprocessing
     print("\n[1/4] Preprocessing...")
     preprocessed = preprocessor.preprocess_document(filepath)
-    print(f"  ✓ {preprocessed['sentence_count']} sentences extracted")
+    print(f"  ✓ {preprocessed['sentence_count']} kalimat diekstrak")
     
     # STEP 2: Character Extraction
-    print("\n[2/4] Extracting characters...")
+    print("\n[2/4] Ekstraksi tokoh...")
     char_results = char_extractor.extract_characters(
         preprocessed['cleaned_text'],
         preprocessed['sentences']
     )
     char_stats = char_extractor.get_character_statistics(char_results)
-    print(f"  ✓ {char_stats['total_characters']} main characters found")
+    print(f"  ✓ {char_stats['total_characters']} tokoh utama ditemukan")
     
     # STEP 3: Trait Extraction
-    print("\n[3/4] Extracting character traits...")
+    print("\n[3/4] Ekstraksi watak tokoh...")
     trait_results = {}
     for character, contexts in char_results['characters_with_context'].items():
         traits = trait_extractor.extract_traits(character, contexts)
         trait_results[character] = traits
-        print(f"  ✓ {character}: {len(traits['raw_traits'])} traits extracted")
+        print(f"  ✓ {character}: {len(traits['raw_traits'])} watak diekstrak")
     
     # STEP 4: Relation Extraction
-    print("\n[4/4] Extracting relations...")
+    print("\n[4/4] Ekstraksi hubungan...")
     relation_results = rel_extractor.extract_relations(
         char_results['main_characters'],
         preprocessed['sentences']
     )
-    print(f"  ✓ {len(relation_results['merged_relations'])} relations found")
+    print(f"  ✓ {len(relation_results['merged_relations'])} hubungan ditemukan")
     
     # Compile full report
     full_report = {
         'metadata': {
             'filename': os.path.basename(filepath),
-            'processed_at': datetime.now().isoformat,
             'processed_at': datetime.now().isoformat(),
             'sentence_count': preprocessed['sentence_count']
         },
@@ -83,48 +82,59 @@ def full_pipeline_analysis(filepath):
 
 def analyze_all_documents():
     """
-    Analisis semua dokumen dalam folder data/raw
+    Analisis semua dokumen dalam folder data/raw - Versi Indonesia
     """
     print("\n" + "="*60)
-    print("FULL PIPELINE ANALYSIS - ALL DOCUMENTS")
+    print("ANALISIS PIPELINE LENGKAP - SEMUA DOKUMEN")
     print("="*60)
     
     documents = [
-        # 'data/raw/the_tell_tale_heart.txt',
-        'data/raw/the_gift_of_magi.txt',
-        # 'data/raw/the_yellow_wallpaper.txt',
-        # 'data/raw/the_lottery.txt',
-        # 'data/raw/owl_creek_bridge.txt'
+        'data/raw/senja_di_ujung_kios.txt',
+        'data/raw/rapat_warung_yopi_yang_batal.txt',
+        'data/raw/aroma_kayu_cendana.txt',
+        'data/raw/asing_di_cermin_itu.txt',
+        'data/raw/garis_putus-putus.txt',
     ]
     
     all_results = {}
     
     for doc in documents:
-        if os.path.exists(doc):
-            result = full_pipeline_analysis(doc)
-            doc_name = os.path.basename(doc).replace('.txt', '')
-            all_results[doc_name] = result
+        if not os.path.exists(doc):
+            print(f"\n⚠️  File tidak ditemukan: {doc}")
+            continue
+        
+        if os.path.getsize(doc) == 0:
+            print(f"\n⚠️  File kosong, dilewati: {doc}")
+            continue
             
-            # Save individual report
-            output_file = f'outputs/reports/{doc_name}_analysis.json'
-            with open(output_file, 'w', encoding='utf-8') as f:
-                json.dump(result, f, indent=2, ensure_ascii=False)
-            print(f"\n✅ Saved: {output_file}")
-        else:
-            print(f"\n⚠️  File not found: {doc}")
+        result = full_pipeline_analysis(doc)
+        doc_name = os.path.basename(doc).replace('.txt', '')
+        all_results[doc_name] = result
+        
+        # Save individual report
+        output_dir = 'outputs/reports'
+        os.makedirs(output_dir, exist_ok=True)
+        
+        output_file = f'{output_dir}/{doc_name}_analisis.json'
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(result, f, indent=2, ensure_ascii=False)
+        print(f"\n✅ Tersimpan: {output_file}")
     
     # Save combined report
-    combined_output = 'outputs/reports/all_documents_analysis.json'
-    with open(combined_output, 'w', encoding='utf-8') as f:
-        json.dump(all_results, f, indent=2, ensure_ascii=False)
-    
-    print("\n" + "="*60)
-    print(f"✅ ALL ANALYSIS COMPLETE")
-    print(f"✅ Combined report saved: {combined_output}")
-    print("="*60)
-    
-    # Generate summary statistics
-    generate_summary_statistics(all_results)
+    if all_results:
+        combined_output = 'outputs/reports/semua_dokumen_analisis.json'
+        with open(combined_output, 'w', encoding='utf-8') as f:
+            json.dump(all_results, f, indent=2, ensure_ascii=False)
+        
+        print("\n" + "="*60)
+        print(f"✅ ANALISIS SELESAI")
+        print(f"✅ Laporan gabungan tersimpan: {combined_output}")
+        print("="*60)
+        
+        # Generate summary statistics
+        generate_summary_statistics(all_results)
+    else:
+        print("\n⚠️  Tidak ada file yang berhasil diproses")
     
     return all_results
 
@@ -132,7 +142,7 @@ def generate_summary_statistics(all_results):
     """
     Generate statistik ringkasan dari semua dokumen
     """
-    print("\n📊 SUMMARY STATISTICS")
+    print("\n📊 STATISTIK RINGKASAN")
     print("-"*60)
     
     summary = {
@@ -148,25 +158,30 @@ def generate_summary_statistics(all_results):
         }
         
         print(f"\n📖 {doc_name}:")
-        print(f"   Sentences: {result['metadata']['sentence_count']}")
-        print(f"   Characters: {result['characters']['statistics']['total_characters']}")
-        print(f"   Relations: {result['relations']['summary']['total_relations']}")
+        print(f"   Kalimat: {result['metadata']['sentence_count']}")
+        print(f"   Tokoh: {result['characters']['statistics']['total_characters']}")
+        print(f"   Hubungan: {result['relations']['summary']['total_relations']}")
     
     # Overall statistics
-    total_chars = sum(d['characters'] for d in summary['documents'].values())
-    total_relations = sum(d['relations'] for d in summary['documents'].values())
-    avg_chars = total_chars / len(all_results)
-    
-    print(f"\n📈 OVERALL:")
-    print(f"   Total Characters: {total_chars}")
-    print(f"   Total Relations: {total_relations}")
-    print(f"   Avg Characters per Document: {avg_chars:.1f}")
+    if all_results:
+        total_chars = sum(d['characters'] for d in summary['documents'].values())
+        total_relations = sum(d['relations'] for d in summary['documents'].values())
+        avg_chars = total_chars / len(all_results)
+        
+        print(f"\n📈 KESELURUHAN:")
+        print(f"   Total Tokoh: {total_chars}")
+        print(f"   Total Hubungan: {total_relations}")
+        print(f"   Rata-rata Tokoh per Dokumen: {avg_chars:.1f}")
     
     # Save summary
-    with open('outputs/reports/summary_statistics.json', 'w') as f:
-        json.dump(summary, f, indent=2)
+    output_dir = 'outputs/reports'
+    os.makedirs(output_dir, exist_ok=True)
     
-    print("\n✅ Summary saved: outputs/reports/summary_statistics.json")
+    summary_file = f'{output_dir}/ringkasan_statistik.json'
+    with open(summary_file, 'w', encoding='utf-8') as f:
+        json.dump(summary, f, indent=2, ensure_ascii=False)
+    
+    print(f"\n✅ Ringkasan tersimpan: {summary_file}")
 
 if __name__ == "__main__":
     # Create necessary directories
