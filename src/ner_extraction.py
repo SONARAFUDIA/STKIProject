@@ -1,94 +1,198 @@
-import spacy
+"""
+Character Extraction using Stanza NLP - Indonesian Version
+COMPLETE REWRITE dari spaCy ke Stanza
+"""
+
+import stanza
 from collections import Counter, defaultdict
 import re
 
 class CharacterExtractor:
-    def __init__(self, model='id_core_news_md'):
+    def __init__(self):
         """
-        Inisialisasi dengan model spaCy Indonesia
-        Fallback ke model English jika Indonesian tidak tersedia
+        Inisialisasi dengan Stanza Indonesian model
         """
-        try:
-            self.nlp = spacy.load(model)
-            print(f"✓ Model spaCy loaded: {model}")
-        except OSError:
-            print(f"⚠️  Model '{model}' tidak ditemukan. Mencoba 'id_core_news_sm'...")
-            try:
-                self.nlp = spacy.load('id_core_news_sm')
-                print("✓ Model spaCy loaded: id_core_news_sm")
-            except OSError:
-                print("⚠️  Model Indonesia tidak tersedia. Menggunakan 'en_core_web_sm'")
-                print("   Jalankan: python -m spacy download id_core_news_md")
-                self.nlp = spacy.load('en_core_web_sm')
+        print("🔧 Initializing Stanza Indonesian NLP...")
         
-        # Expanded blacklist untuk bahasa Indonesia
-        self.non_character_words = {
-            # Kata ganti
-            'dia', 'ia', 'mereka', 'kami', 'kita', 'saya', 'aku', 'kamu', 'anda',
-            'ku', 'mu', 'nya', 'kau',
+        try:
+            # Initialize Stanza pipeline (NO NER - not available for Indonesian)
+            # Use POS tagging instead for better name detection
+            self.nlp = stanza.Pipeline(
+                'id',  # Indonesian
+                processors='tokenize,pos',  # Only tokenize and POS
+                verbose=False,
+                download_method=None
+            )
+            print("✅ Stanza Indonesian model loaded (POS tagging)")
             
-            # Kata sambung & preposisi
+        except Exception as e:
+            print(f"❌ Error loading Stanza model: {e}")
+            print("⚠️  Please run: python install_stanza.py")
+            raise
+        
+        # Comprehensive Indonesian blacklist
+        self.non_character_words = {
+            # Pronouns
+            'dia', 'ia', 'mereka', 'kami', 'kita', 'saya', 'aku', 'kamu', 'anda',
+            'ku', 'mu', 'nya', 'kau', 'engkau',
+            
+            # Conjunctions & Prepositions
             'dan', 'atau', 'tetapi', 'tapi', 'namun', 'karena', 'sebab',
             'untuk', 'bagi', 'kepada', 'pada', 'di', 'ke', 'dari', 'oleh', 'dengan',
             'dalam', 'luar', 'atas', 'bawah', 'antara', 'hingga', 'sampai',
-            'yang', 'ini', 'itu', 'tersebut',
+            'yang', 'ini', 'itu', 'tersebut', 'begitu', 'begini',
             
-            # Kata kerja bantu
+            # Common particles
             'adalah', 'ialah', 'merupakan', 'yaitu', 'yakni',
             'ada', 'tidak', 'bukan', 'belum', 'sudah', 'telah', 'akan', 'sedang',
+            'juga', 'pun', 'lah', 'kah', 'hanya', 'saja', 'cuma',
+            'sangat', 'amat', 'sekali', 'lebih', 'paling', 'terlalu',
+            'masih', 'lagi', 'selalu', 'sering', 'kadang', 'jarang',
             
-            # Kata keterangan waktu
-            'hari', 'minggu', 'bulan', 'tahun', 'pagi', 'siang', 'sore', 'malam',
+            # Question words
+            'apa', 'siapa', 'kapan', 'dimana', 'kemana', 'mengapa', 'kenapa', 'bagaimana',
+            'mana', 'berapa',
+            
+            # Time & Numbers
+            'hari', 'minggu', 'bulan', 'tahun', 'jam', 'menit', 'detik',
+            'pagi', 'siang', 'sore', 'malam', 'subuh', 'maghrib',
             'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu',
             'januari', 'februari', 'maret', 'april', 'mei', 'juni',
             'juli', 'agustus', 'september', 'oktober', 'november', 'desember',
             'kemarin', 'sekarang', 'besok', 'lusa', 'dulu', 'nanti',
-            
-            # Kata tanya
-            'apa', 'siapa', 'kapan', 'dimana', 'kemana', 'mengapa', 'kenapa', 'bagaimana',
-            
-            # Angka
             'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan',
             'sembilan', 'sepuluh', 'ratus', 'ribu', 'juta', 'miliar',
             
-            # Tempat umum (bukan nama orang)
-            'jakarta', 'bandung', 'surabaya', 'yogyakarta', 'bali',
-            'indonesia', 'jawa', 'sumatera', 'kalimantan',
+            # Common nouns (NOT names)
+            'rumah', 'gedung', 'kantor', 'sekolah', 'tempat', 'ruang',
             'warung', 'kafe', 'restoran', 'toko', 'pasar', 'mall',
+            'jalan', 'gang', 'lorong', 'pintu', 'jendela', 'dinding',
+            'meja', 'kursi', 'lantai', 'atap', 'lemari',
             
-            # Kata umum lainnya
-            'sebuah', 'suatu', 'para', 'semua', 'setiap', 'masing', 'tiap',
-            'lah', 'kah', 'pun', 'saja', 'hanya', 'cuma',
-            'sangat', 'amat', 'sekali', 'lebih', 'paling',
+            # Body parts (common false positives)
+            'wajah', 'mata', 'hidung', 'mulut', 'tangan', 'kaki',
+            'kepala', 'badan', 'tubuh', 'kulit', 'rambut',
             
-            # False positives umum
-            'tuhan', 'allah', 'tuan', 'nyonya',
+            # Adjectives that appear capitalized
+            'besar', 'kecil', 'tinggi', 'rendah', 'panjang', 'pendek',
+            'baik', 'buruk', 'bagus', 'jelek', 'cantik', 'tampan',
+            
+            # Common verbs (stem forms)
+            'ada', 'datang', 'pergi', 'pulang', 'tiba', 'sampai',
+            'lihat', 'dengar', 'rasa', 'cium', 'sentuh',
+            'duduk', 'berdiri', 'jalan', 'lari', 'tidur', 'bangun',
+            
+            # Sentence starters (often capitalized)
+            'setelah', 'sebelum', 'ketika', 'saat', 'waktu',
+            'kemudian', 'lalu', 'lantas', 'selanjutnya',
+            'namun', 'tetapi', 'tapi', 'akan', 'jadi', 'maka',
+            
+            # Geographic (not person names)
+            'jakarta', 'bandung', 'surabaya', 'yogyakarta', 'bali',
+            'indonesia', 'jawa', 'sumatera', 'kalimantan', 'sulawesi',
+            
+            # Religious/mythological
+            'tuhan', 'allah', 'yesus', 'nabi', 'rasul', 'malaikat',
+            
+            # Other common false positives
+            'soal', 'masalah', 'hal', 'perkara', 'urusan',
+            'kali', 'kalinya', 'sekali', 'dua kali',
+            'maaf', 'tolong', 'silakan', 'terima kasih',
         }
         
-        # Indonesian honorifics (bukan nama standalone)
+        # Indonesian honorifics (titles, not standalone names)
         self.indonesian_honorifics = {
             'pak', 'bu', 'bapak', 'ibu', 'mas', 'mbak', 'bang', 'kang',
             'tante', 'om', 'kakak', 'adik', 'mbah', 'eyang', 'nek', 'kek',
             'haji', 'hajjah', 'ustadz', 'ustadzah', 'kyai',
             'raden', 'gusti', 'sultan', 'pangeran', 'putri',
             'dokter', 'dr', 'prof', 'profesor', 'drs', 'ir',
+            'tuan', 'nyonya', 'nona', 'neng', 'dik',
         }
         
+        # Common non-name POS tags
+        self.non_name_pos = {
+            'VERB', 'ADV', 'ADP', 'DET', 'CCONJ', 'SCONJ',
+            'PRON', 'NUM', 'PART', 'INTJ'
+        }
+        
+        # CRITICAL: Common verbs/nouns that appear at start of false positive names
+        self.common_prefix_words = {
+            # Verbs commonly before names
+            'wajah', 'kata', 'ucap', 'jawab', 'tanya', 'sergah', 'sahut',
+            'balas', 'timpal', 'tutur', 'beritahu', 'bilang',
+            
+            # Action verbs
+            'lihat', 'dengar', 'rasa', 'pikir', 'ingat', 'lupa',
+            
+            # Possessives
+            'milik', 'punya', 'kepunyaan',
+            
+            # Other common starters
+            'soal', 'masalah', 'hal', 'perkara', 'urusan',
+            'ide', 'gagasan', 'rencana', 'konsep',
+        }
+        
+        # CRITICAL: Common nouns that should NEVER be names
+        self.common_nouns_blacklist = {
+            # Physical objects
+            'cermin', 'jendela', 'pintu', 'meja', 'kursi', 'lemari',
+            'gelas', 'piring', 'sendok', 'garpu', 'pisau',
+            
+            # Abstract nouns
+            'ide', 'gagasan', 'pikiran', 'perasaan', 'emosi',
+            'senyum', 'tawa', 'tangis', 'isak', 'sedu',
+            'dering', 'bunyi', 'suara', 'bisik', 'desah',
+            'hening', 'sunyi', 'senyap', 'diam',
+            
+            # Emotions/States
+            'senang', 'sedih', 'marah', 'takut', 'bingung',
+            'gembira', 'kecewa', 'lelah', 'capek',
+            
+            # Time/Events
+            'revisi', 'final', 'meeting', 'rapat', 'pertemuan',
+            'acara', 'kegiatan', 'agenda',
+            
+            # Titles/Descriptions
+            'sang', 'si', 'para', 'kaum',
+            
+            # Body parts
+            'mata', 'hidung', 'mulut', 'telinga', 'tangan', 'kaki',
+            
+            # Places (not person names)
+            'warung', 'kafe', 'toko', 'pasar', 'rumah', 'gedung',
+            
+            # Roles (use with caution)
+            'klien', 'client', 'customer', 'pelanggan',
+            'donatur', 'donor', 'sponsor',
+        }
+        
+        # CRITICAL: Nickname patterns (3-char names that might be nicknames)
+        self.known_nicknames = {
+            'rin': 'rina',
+            'san': 'sandi',
+            'bim': 'bima',
+            'ani': 'anita',
+            'adi': 'aditya',
+            'rio': 'mario',
+        }
+    
     def extract_characters(self, text, sentences, min_mentions=2, detect_narrator=True):
         """
-        Ekstraksi karakter dengan support bahasa Indonesia
+        Ekstraksi karakter menggunakan Stanza NER + Pattern Matching
         """
-        print("\n[Character Extraction] Memulai hybrid extraction...")
+        print("\n[Character Extraction] Memulai Stanza-based extraction...")
         
-        # Standard extraction
-        ner_characters = self._extract_via_ner(text)
-        print(f"  ✓ NER menemukan {len(ner_characters)} sebutan karakter")
+        # Step 1: POS-based extraction (using Stanza POS tags)
+        pos_based_characters = self._extract_via_pos_tagging(text)
+        print(f"  ✓ POS-based extraction menemukan {len(pos_based_characters)} sebutan karakter")
         
-        pattern_characters = self._extract_via_patterns_indonesian(text, sentences)
+        # Step 2: Pattern-based extraction (backup)
+        pattern_characters = self._extract_via_patterns_indonesian(sentences)
         print(f"  ✓ Pattern matching menemukan {len(pattern_characters)} sebutan karakter")
         
         # Combine
-        all_mentions = ner_characters + pattern_characters
+        all_mentions = pos_based_characters + pattern_characters
         
         # Normalize
         normalized_mentions = []
@@ -102,41 +206,24 @@ class CharacterExtractor:
         # Count frequency
         raw_freq = Counter(normalized_mentions)
         
-        # Filter
-        filtered_freq = {}
-        for name, count in raw_freq.items():
-            name_lower = name.lower()
-            
-            # Skip blacklisted words
-            if name_lower in self.non_character_words:
-                continue
-            
-            # Skip standalone honorifics
-            if name_lower in self.indonesian_honorifics and count < 5:
-                continue
-            
-            # Skip very common words
-            if not self._is_common_word_indonesian(name):
-                filtered_freq[name] = count
-        
+        # CRITICAL: Filter with quality checks
+        filtered_freq = self._filter_with_quality_checks(raw_freq)
         print(f"  ✓ Setelah filtering: {len(filtered_freq)} karakter unik")
         
-        # Merge variants (Indonesian-aware)
-        merged_freq = self._merge_indonesian_names(filtered_freq)
+        # Merge variants (with strict rules)
+        merged_freq = self._merge_indonesian_names_strict(filtered_freq)
         print(f"  ✓ Setelah merging: {len(merged_freq)} karakter final")
         
         # Filter by min_mentions
         main_characters = {char: count for char, count in merged_freq.items()
                           if count >= min_mentions}
         
-        # Detect narrator untuk cerita orang pertama
+        # Detect narrator for first-person narratives
         if detect_narrator:
             narrator_data = self._detect_narrator_indonesian(text, sentences)
             if narrator_data:
                 narrator_count = narrator_data.get('Narator (Aku)', 0)
-                
-                # Jika penggunaan orang pertama signifikan
-                if narrator_count >= 15:  # Threshold lebih rendah untuk Indonesia
+                if narrator_count >= 15:
                     if 'Narator (Aku)' not in main_characters:
                         main_characters['Narator (Aku)'] = narrator_count
                         print(f"  ✓ Narator orang pertama terdeteksi: {narrator_count} sebutan 'aku'")
@@ -151,81 +238,285 @@ class CharacterExtractor:
             'main_characters': main_characters,
             'characters_with_context': characters_with_context
         }
-
-    def _detect_narrator_indonesian(self, text, sentences):
+    
+    def _extract_via_pos_tagging(self, text):
         """
-        Detect unnamed first-person narrator (orang pertama)
+        Extract names using POS tagging (PROPN = Proper Noun = Names)
+        This is MORE ACCURATE than NER for Indonesian!
         """
-        text_lower = text.lower()
+        characters = []
         
-        # Count first-person pronouns
-        aku_count = len(re.findall(r'\baku\b', text_lower))
-        saya_count = len(re.findall(r'\bsaya\b', text_lower))
-        
-        first_person_count = aku_count + saya_count
-        
-        if first_person_count < 15:  # Threshold untuk Indonesia
-            return {}
-        
-        # Narator terdeteksi
-        characters = {
-            'Narator (Aku)': first_person_count
-        }
+        try:
+            # Process dengan Stanza
+            doc = self.nlp(text)
+            
+            # Extract PROPN (Proper Nouns) = potential names
+            for sentence in doc.sentences:
+                current_name = []
+                
+                for word in sentence.words:
+                    # PROPN = Proper Noun (names, places, etc)
+                    if word.upos == 'PROPN':
+                        current_name.append(word.text)
+                    else:
+                        # End of name sequence
+                        if current_name:
+                            full_name = ' '.join(current_name)
+                            
+                            # Quality check
+                            if self._is_quality_name(full_name):
+                                characters.append(full_name)
+                            
+                            current_name = []
+                
+                # Handle name at end of sentence
+                if current_name:
+                    full_name = ' '.join(current_name)
+                    if self._is_quality_name(full_name):
+                        characters.append(full_name)
+            
+        except Exception as e:
+            print(f"  ⚠️  Stanza POS error: {e}")
         
         return characters
     
-    def _extract_via_ner(self, text):
+    def _is_quality_name(self, name):
         """
-        Ekstraksi menggunakan spaCy NER
+        Quality check untuk nama yang dideteksi dari POS
         """
-        doc = self.nlp(text)
-        return [ent.text for ent in doc.ents if ent.label_ == 'PERSON']
+        if not name or len(name) < 2:
+            return False
+        
+        # Max 4 words
+        if len(name.split()) > 4:
+            return False
+        
+        # Not in blacklist
+        if name.lower() in self.non_character_words:
+            return False
+        
+        # Not pure honorific
+        if name.lower() in self.indonesian_honorifics:
+            return False
+        
+        # Check if contains blacklisted words
+        words = name.lower().split()
+        for word in words:
+            if word in ['yang', 'ini', 'itu', 'untuk', 'dengan', 'adalah']:
+                return False
+        
+        return True
     
-    def _extract_via_patterns_indonesian(self, text, sentences):
+    def _extract_via_patterns_indonesian(self, sentences):
         """
-        Pattern matching dengan filter untuk nama Indonesia
+        Pattern matching untuk backup Stanza NER
         """
         characters = []
         
         for sentence in sentences:
             words = sentence.split()
             
-            for i, word in enumerate(words):
-                # Skip first word (biasanya bukan nama)
-                if i == 0:
+            # Pattern 1: Capitalized words di tengah kalimat (bukan awal)
+            for i in range(1, len(words)):  # Skip first word
+                word = words[i]
+                
+                # Basic checks
+                if not word or len(word) < 3:
                     continue
                 
-                if not word or not word[0].isupper():
+                if not word[0].isupper():
                     continue
                 
-                clean_word = re.sub(r'[^\w\s]', '', word)
+                clean_word = re.sub(r'[^\w\s-]', '', word)
                 
-                if not clean_word or len(clean_word) < 2:  # Min 2 huruf untuk Indonesia
+                if not clean_word or clean_word.isupper():
                     continue
                 
-                if clean_word.isupper():  # Skip ALL CAPS
-                    continue
-                
+                # Check if likely a name
                 if self._is_likely_indonesian_name(clean_word):
                     characters.append(clean_word)
             
-            # Check untuk nama dengan honorifics (Pak Suroto, Bu Ani)
+            # Pattern 2: Honorific + Name (Pak Suroto, Bu Ani)
             for i in range(len(words) - 1):
-                word1 = re.sub(r'[^\w\s]', '', words[i]).lower()
-                word2 = re.sub(r'[^\w\s]', '', words[i + 1])
+                word1_clean = re.sub(r'[^\w\s]', '', words[i]).lower()
+                word2_clean = re.sub(r'[^\w\s]', '', words[i + 1])
                 
-                if word1 in self.indonesian_honorifics and word2 and word2[0].isupper():
-                    if len(word2) >= 3:  # Min 3 huruf untuk nama sesudah gelar
-                        full_name = f"{words[i].capitalize()} {word2}"
+                if (word1_clean in self.indonesian_honorifics and 
+                    word2_clean and 
+                    word2_clean[0].isupper() and 
+                    len(word2_clean) >= 3):
+                    
+                    # CRITICAL: Check if word2 is NOT a verb/common word
+                    if not self._is_common_word_indonesian(word2_clean):
+                        full_name = f"{words[i].capitalize()} {word2_clean}"
                         characters.append(full_name)
         
         return characters
     
+    def _filter_with_quality_checks(self, raw_freq):
+        """
+        CRITICAL: Filter dengan quality checks yang ketat
+        """
+        filtered = {}
+        
+        for name, count in raw_freq.items():
+            name_lower = name.lower()
+            
+            # Check 1: Blacklist
+            if name_lower in self.non_character_words:
+                continue
+            
+            # Check 2: Standalone honorifics
+            if name_lower in self.indonesian_honorifics:
+                if count < 5:  # Only keep if very frequent
+                    continue
+            
+            # Check 3: Max word length (names rarely >4 words)
+            if len(name.split()) > 4:
+                continue
+            
+            # Check 4: Contains lowercase words in middle (likely not a name)
+            words = name.split()
+            if len(words) > 1:
+                # Check middle words (not first, not last)
+                middle_words = words[1:-1] if len(words) > 2 else []
+                has_lowercase_middle = any(
+                    w.islower() and w not in self.indonesian_honorifics 
+                    for w in middle_words
+                )
+                if has_lowercase_middle:
+                    # Exception: "dan" might appear in some names
+                    if 'dan' not in name_lower:
+                        continue
+            
+            # Check 5: Contains blacklisted words
+            contains_blacklist = any(
+                blacklisted in name_lower 
+                for blacklisted in ['yang', 'ini', 'itu', 'adalah', 'untuk', 'dengan']
+            )
+            if contains_blacklist:
+                continue
+            
+            # Check 6: Starts with common verbs/particles
+            first_word = words[0].lower()
+            if first_word in ['setelah', 'kemudian', 'lalu', 'ketika', 'saat', 'jika']:
+                continue
+            
+            # Passed all checks
+            filtered[name] = count
+        
+        return filtered
+    
+    def _merge_indonesian_names_strict(self, character_freq):
+        """
+        Merge dengan STRICT rules untuk avoid false positives
+        """
+        # Separate by type
+        with_honorifics = {}
+        full_names = {}
+        single_names = {}
+        
+        for name, count in character_freq.items():
+            words = name.split()
+            
+            if len(words) > 1 and words[0].lower() in self.indonesian_honorifics:
+                with_honorifics[name] = count
+            elif len(words) > 1:
+                full_names[name] = count
+            else:
+                single_names[name] = count
+        
+        merged = {}
+        processed = set()
+        
+        # STEP 1: Process names dengan honorifics FIRST (highest priority)
+        for name_with_honor, count in sorted(with_honorifics.items(), 
+                                            key=lambda x: x[1], reverse=True):
+            if name_with_honor in processed:
+                continue
+            
+            canonical = name_with_honor
+            total_count = count
+            processed.add(name_with_honor)
+            
+            # Extract base name
+            words = name_with_honor.split()
+            base_name = ' '.join(words[1:])
+            base_lower = base_name.lower()
+            
+            # Merge with exact matching single names only
+            for single_name, single_count in single_names.items():
+                if single_name in processed:
+                    continue
+                
+                if single_name.lower() == base_lower:
+                    total_count += single_count
+                    processed.add(single_name)
+                    print(f"    → Merging '{single_name}' ke '{canonical}'")
+            
+            merged[canonical] = total_count
+        
+        # STEP 2: Process full names (no honorifics)
+        for full_name, count in sorted(full_names.items(), 
+                                       key=lambda x: x[1], reverse=True):
+            if full_name in processed:
+                continue
+            
+            canonical = full_name
+            total_count = count
+            processed.add(full_name)
+            
+            # STRICT: Only merge if single name is FIRST or LAST word of full name
+            words = full_name.split()
+            first_word = words[0].lower()
+            last_word = words[-1].lower() if len(words) > 1 else ""
+            
+            for single_name, single_count in single_names.items():
+                if single_name in processed:
+                    continue
+                
+                single_lower = single_name.lower()
+                
+                # Only merge if exact match with first or last word
+                if single_lower == first_word or single_lower == last_word:
+                    total_count += single_count
+                    processed.add(single_name)
+                    print(f"    → Merging '{single_name}' ke '{canonical}'")
+            
+            merged[canonical] = total_count
+        
+        # STEP 3: Remaining single names
+        for single_name, count in sorted(single_names.items(), 
+                                        key=lambda x: x[1], reverse=True):
+            if single_name in processed:
+                continue
+            
+            merged[single_name] = count
+            processed.add(single_name)
+        
+        return merged
+    
+    def _detect_narrator_indonesian(self, text, sentences):
+        """
+        Detect first-person narrator
+        """
+        text_lower = text.lower()
+        
+        aku_count = len(re.findall(r'\baku\b', text_lower))
+        saya_count = len(re.findall(r'\bsaya\b', text_lower))
+        
+        first_person_count = aku_count + saya_count
+        
+        if first_person_count < 15:
+            return {}
+        
+        return {'Narator (Aku)': first_person_count}
+    
     def _is_likely_indonesian_name(self, word):
         """
-        Heuristic untuk nama Indonesia
+        Check if word is likely an Indonesian name
         """
-        if len(word) < 2:  # Min 2 huruf
+        if len(word) < 3:
             return False
         
         if word.isupper():
@@ -237,19 +528,19 @@ class CharacterExtractor:
         if any(char.isdigit() for char in word):
             return False
         
-        # Allow hyphenated names
+        # Allow hyphens
         if not re.match(r'^[A-Z][a-z]+(?:-[A-Z][a-z]+)?$', word):
             return False
         
-        # Skip jika terlalu pendek dan bukan nama umum
-        if len(word) <= 2 and word.lower() not in ['lia', 'ari', 'ani', 'adi']:
+        # Check blacklist
+        if word.lower() in self.non_character_words:
             return False
         
         return True
     
     def _is_valid_name_indonesian(self, name):
         """
-        Validasi nama Indonesia
+        Validate name
         """
         if not name or len(name) < 2:
             return False
@@ -264,36 +555,19 @@ class CharacterExtractor:
     
     def _is_common_word_indonesian(self, word):
         """
-        Cek common word Indonesia
+        Check if word is common (not a name)
         """
-        word_lower = word.lower()
-        
-        if word_lower in self.non_character_words:
-            return True
-        
-        # Common patterns
-        common_patterns = [
-            r'^dan$', r'^atau$', r'^yang$', r'^ini$', r'^itu$',
-            r'^untuk$', r'^dengan$', r'^pada$', r'^dari$'
-        ]
-        
-        for pattern in common_patterns:
-            if re.match(pattern, word_lower):
-                return True
-        
-        return False
+        return word.lower() in self.non_character_words
     
     def _normalize_name_indonesian(self, name):
         """
-        Normalisasi nama Indonesia
+        Normalize Indonesian name
         """
         if not name:
             return ""
         
-        # Remove possessive suffix (-nya, -mu, -ku)
+        # Remove possessive
         name = re.sub(r'(nya|mu|ku)$', '', name, flags=re.IGNORECASE)
-        
-        # Remove English possessive ('s)
         name = re.sub(r"'s$", "", name)
         
         # Remove punctuation at end
@@ -311,152 +585,11 @@ class CharacterExtractor:
             else:
                 capitalized.append(word.capitalize())
         
-        name = ' '.join(capitalized)
-        
-        return name.strip()
+        return ' '.join(capitalized).strip()
     
-    def _merge_indonesian_names(self, character_freq):
-        """
-        Merge dengan awareness untuk pola nama Indonesia
-        Prioritas: Nama lengkap dengan gelar > Nama lengkap > Nama tunggal
-        """
-        # Separate berdasarkan jenis
-        with_honorifics = {}
-        full_names = {}
-        single_names = {}
-        
-        for name, count in character_freq.items():
-            name_lower = name.lower()
-            words = name.split()
-            
-            # Has honorific?
-            if len(words) > 1 and words[0].lower() in self.indonesian_honorifics:
-                with_honorifics[name] = count
-            elif len(words) > 1:
-                full_names[name] = count
-            else:
-                single_names[name] = count
-        
-        merged = {}
-        processed = set()
-        
-        # STEP 1: Process names dengan honorifics first (highest priority)
-        for name_with_honor, count in sorted(with_honorifics.items(), key=lambda x: x[1], reverse=True):
-            if name_with_honor in processed:
-                continue
-            
-            canonical = name_with_honor
-            total_count = count
-            processed.add(name_with_honor)
-            
-            # Extract base name (tanpa honorific)
-            words = name_with_honor.split()
-            base_name = ' '.join(words[1:]) if len(words) > 1 else name_with_honor
-            base_lower = base_name.lower()
-            
-            # Merge dengan single names yang match
-            for single_name, single_count in single_names.items():
-                if single_name in processed:
-                    continue
-                
-                if single_name.lower() == base_lower:
-                    total_count += single_count
-                    processed.add(single_name)
-                    print(f"    → Merging '{single_name}' ke '{canonical}'")
-            
-            # Merge dengan full names yang match
-            for full_name, full_count in full_names.items():
-                if full_name in processed:
-                    continue
-                
-                if full_name.lower() == base_lower:
-                    total_count += full_count
-                    processed.add(full_name)
-                    print(f"    → Merging '{full_name}' ke '{canonical}'")
-            
-            merged[canonical] = total_count
-        
-        # STEP 2: Process full names tanpa honorifics
-        for full_name, count in sorted(full_names.items(), key=lambda x: x[1], reverse=True):
-            if full_name in processed:
-                continue
-            
-            canonical = full_name
-            total_count = count
-            processed.add(full_name)
-            
-            # Find matching single names
-            words = full_name.lower().split()
-            
-            for single_name, single_count in single_names.items():
-                if single_name in processed:
-                    continue
-                
-                single_lower = single_name.lower()
-                
-                # If single name adalah bagian dari full name
-                if single_lower in words:
-                    total_count += single_count
-                    processed.add(single_name)
-                    print(f"    → Merging '{single_name}' ke '{canonical}'")
-            
-            merged[canonical] = total_count
-        
-        # STEP 3: Process remaining single names
-        for single_name, count in sorted(single_names.items(), key=lambda x: x[1], reverse=True):
-            if single_name in processed:
-                continue
-            
-            canonical = single_name
-            total_count = count
-            processed.add(single_name)
-            
-            # Check for variants
-            for other_single, other_count in single_names.items():
-                if other_single in processed:
-                    continue
-                
-                if self._are_indonesian_name_variants(canonical, other_single):
-                    total_count += other_count
-                    processed.add(other_single)
-                    print(f"    → Merging '{other_single}' ke '{canonical}'")
-            
-            merged[canonical] = total_count
-        
-        return merged
-
-    def _are_indonesian_name_variants(self, name1, name2):
-        """
-        Check if two Indonesian names are variants
-        """
-        n1_lower = name1.lower()
-        n2_lower = name2.lower()
-        
-        # Exact match
-        if n1_lower == n2_lower:
-            return True
-        
-        # Possessive variants: "Rina" vs "Rinanya"
-        if n1_lower + 'nya' == n2_lower or n2_lower + 'nya' == n1_lower:
-            return True
-        
-        if n1_lower + 'mu' == n2_lower or n2_lower + 'mu' == n1_lower:
-            return True
-        
-        if n1_lower + 'ku' == n2_lower or n2_lower + 'ku' == n1_lower:
-            return True
-        
-        # Substring match (min 4 chars)
-        if len(n1_lower) >= 4 and len(n2_lower) >= 4:
-            if n1_lower in n2_lower or n2_lower in n1_lower:
-                if abs(len(n1_lower) - len(n2_lower)) <= 3:
-                    return True
-        
-        return False
-        
     def _add_context_indonesian(self, sentences, characters):
         """
-        Add context for each character - Indonesian version
+        Add context for each character
         """
         character_contexts = defaultdict(list)
         
@@ -466,11 +599,9 @@ class CharacterExtractor:
             for character in characters.keys():
                 char_lower = character.lower()
                 
-                # SPECIAL: Handle "Narator (Aku)"
+                # Handle "Narator (Aku)"
                 if char_lower == "narator (aku)":
-                    # Look for "aku" or "saya"
-                    pattern = r'\b(aku|saya)\b'
-                    if re.search(pattern, sent_lower):
+                    if re.search(r'\b(aku|saya)\b', sent_lower):
                         character_contexts[character].append({
                             'sentence_id': idx,
                             'sentence': sentence
@@ -480,8 +611,8 @@ class CharacterExtractor:
                 # Handle names with honorifics
                 if ' ' in char_lower:
                     words = char_lower.split()
-                    # Check if all words present in sentence
-                    if all(re.search(r'\b' + re.escape(word) + r'\b', sent_lower) for word in words):
+                    if all(re.search(r'\b' + re.escape(word) + r'\b', sent_lower) 
+                          for word in words):
                         character_contexts[character].append({
                             'sentence_id': idx,
                             'sentence': sentence

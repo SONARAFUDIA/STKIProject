@@ -1,20 +1,14 @@
-# Core NLP Libraries - Indonesian Support
-spacy>=3.0.0
-# Download Indonesian model: python -m spacy download id_core_news_lg
-# Or use: python -m spacy download id_core_news_md (smaller, faster)
+# Core NLP Libraries - Stanza (Indonesian Support)
+stanza>=1.5.0  # Main NLP library
+# Download Indonesian model: stanza.download('id')
 
 # Text Processing
 nltk>=3.8.0
-textblob>=0.17.0
+# textblob>=0.17.0  # Optional, untuk sentiment jika butuh
 
 # Indonesian-specific NLP
 Sastrawi>=1.0.1  # Indonesian stemmer & stopwords
 PySastrawi>=1.2.0  # Alternative Indonesian NLP toolkit
-
-# Sentiment Analysis (Indonesian)
-# Note: May need manual lexicon or use IndoBERT via transformers
-# transformers>=4.30.0  # Uncomment if using IndoBERT
-# torch>=2.0.0  # Uncomment if using transformers
 
 # Data Processing
 pandas>=2.0.0
@@ -34,5 +28,9 @@ tqdm>=4.65.0
 # Testing
 pytest>=7.3.0  # For unit tests
 
-# Optional: Advanced Indonesian NLP
-# stanza>=1.5.0  # Stanford NLP with Indonesian support
+# Deep Learning (required by Stanza)
+torch>=2.0.0  # PyTorch backend for Stanza
+
+# Optional: spaCy for comparison/hybrid approach
+# spacy>=3.0.0
+# python -m spacy download id_core_news_md
