@@ -1,6 +1,6 @@
 """
-FINAL FIX: Proximity-based relation detection
-Replace src/relation_extraction.py with this code
+INDONESIAN VERSION: Relation Extraction with Indonesian Patterns
+Complete rewrite untuk bahasa Indonesia
 """
 
 import spacy
@@ -10,151 +10,198 @@ import re
 
 class RelationExtractor:
     def __init__(self):
-        self.nlp = spacy.load('en_core_web_lg')
+        """
+        Inisialisasi dengan pattern bahasa Indonesia
+        """
+        try:
+            self.nlp = spacy.load('id_core_news_md')
+        except OSError:
+            try:
+                self.nlp = spacy.load('id_core_news_sm')
+            except OSError:
+                self.nlp = spacy.load('en_core_web_sm')
         
-        # Specific relation patterns
+        # COMPLETE REWRITE: Indonesian relation patterns
         self.specific_relation_patterns = {
-            'parent-child': [
-                r'\b(?:mother|father|parent|mom|dad|mama|papa)\s+(?:of|to)\b',
-                r'\b(?:son|daughter|child|children)\s+(?:of|to)\b',
-                r'\bmy\s+(?:mother|father|parent|son|daughter|child)\b',
-                r'\bher\s+(?:mother|father|parent|son|daughter|child)\b',
-                r'\bhis\s+(?:mother|father|parent|son|daughter|child)\b',
-                r'\bgave birth to\b', r'\braised\b', r'\bborn to\b'
+            # KELUARGA - Family Relations
+            'orang-tua-anak': [
+                r'\b(?:ibu|bapak|ayah|mama|papa|bunda|ayahanda|ibunda)\b',
+                r'\b(?:anak|putra|putri|putera|puteri)\b',
+                r'\bibunya\b', r'\bayahnya\b', r'\borang tuanya\b',
+                r'\banak(?:nya|mu|ku)\b',
+                r'\bmelahirkan\b', r'\bmengandung\b', r'\bmembesarkan\b',
             ],
-            'siblings': [
-                r'\bmy\s+(?:brother|sister|sibling)\b',
-                r'\bher\s+(?:brother|sister|sibling)\b',
-                r'\bhis\s+(?:brother|sister|sibling)\b',
-                r'\btwin\b', r'\bolder brother\b', r'\byounger sister\b'
+            'kakak-adik': [
+                r'\bkakak\b', r'\badik\b', r'\babang\b', r'\bayang\b',
+                r'\bkakaknya\b', r'\badiknya\b',
+                r'\bkakak (?:laki-laki|perempuan)\b',
+                r'\badik (?:laki-laki|perempuan)\b',
+                r'\bsaudara kandung\b', r'\bsaudara\b',
             ],
-            'spouse': [
-                r'\b(?:husband|wife|spouse)\b',
-                r'\bmarried to\b', r'\bwedding\b', r'\bbride|groom\b',
-                r'\bhis wife\b', r'\bher husband\b',
-                r'\bmy wife\b', r'\bmy husband\b'
+            'suami-istri': [
+                r'\bsuami\b', r'\bistri\b', r'\bsuaminya\b', r'\bistrinya\b',
+                r'\bpasangan\b', r'\bpasangan hidup\b',
+                r'\bmenikah dengan\b', r'\bnikah dengan\b',
+                r'\bpernikahan\b', r'\bperkawinan\b',
+                r'\bmempelai\b', r'\bpengantin\b',
             ],
-            'extended-family': [
-                r'\b(?:uncle|aunt|cousin|nephew|niece)\b',
-                r'\b(?:grandfather|grandmother|grandparent)\b',
-                r'\b(?:grandson|granddaughter|grandchild)\b'
+            'keluarga-besar': [
+                r'\bnenek\b', r'\bkakek\b', r'\bmbah\b', r'\beyang\b',
+                r'\bcucu\b', r'\bpaman\b', r'\bbibi\b', r'\btante\b', r'\bom\b',
+                r'\bkeponakan\b', r'\bsepupu\b', r'\bkemenakan\b',
             ],
-            'married-couple': [
-                r'\bmarried\b', r'\bhusband and wife\b', r'\bspouse\b',
-                r'\bwedding\b', r'\bmarriage\b',
-                r'\bhis wife\b', r'\bher husband\b',
-                r'\btheir home\b', r'\btheir marriage\b',
-                r'\bmarried life\b', r'\bmarried couple\b'
+            
+            # ROMANTIS - Romantic Relations
+            'kekasih': [
+                r'\bpacar\b', r'\bpacarnya\b', r'\bkekasih\b', r'\bkekasihnya\b',
+                r'\bcinta\b', r'\bmencintai\b', r'\bdicintai\b',
+                r'\bsayang\b', r'\bmenyayangi\b', r'\bdisayangi\b',
+                r'\byang tersayang\b', r'\byang tercinta\b',
+                r'\bberpacaran\b', r'\bpacaran\b',
             ],
-            'lovers': [
-                r'\blover\b', r'\bboyfriend|girlfriend\b', r'\bsweetheart\b',
-                r'\bdating\b', r'\bin love with\b',
-                r'\bdarling\b', r'\bhoney\b', r'\bbeloved\b',
-                r'\bmy love\b', r'\bI love\b', r'\bshe loves\b', r'\bhe loves\b'
+            'tertarik-romantis': [
+                r'\bsuka\b', r'\bmenyukai\b', r'\bdisukai\b',
+                r'\bterpesona\b', r'\bterpukau\b', r'\btertarik\b',
+                r'\bmengagumi\b', r'\bmengidolakan\b',
+                r'\bnaksir\b', r'\bcrush\b', r'\bgebetan\b',
             ],
-            'romantic-interest': [
-                r'\bcrush\b', r'\badmire[sd]?\b',
-                r'\baffection for\b', r'\bfond of\b',
-                r'\btreasure\b', r'\bprecious\b',
-                r'\badore[sd]?\b', r'\bcherish\b'
+            
+            # PERTEMANAN - Friendship
+            'sahabat': [
+                r'\bsahabat\b', r'\bsahabatnya\b', r'\bsahabat karib\b',
+                r'\bsahabat dekat\b', r'\bsahabat baik\b',
+                r'\bbersahabat\b', r'\bpersahabatan\b',
             ],
-            'close-friends': [
-                r'\bbest friend\b', r'\bclose friend\b',
-                r'\binseparable\b', r'\bconfidant\b'
+            'teman': [
+                r'\bteman\b', r'\btemannya\b', r'\bteman dekat\b',
+                r'\bteman akrab\b', r'\bteman baik\b',
+                r'\bberteman\b', r'\bpertemanan\b',
+                r'\bkawan\b', r'\bsohib\b', r'\bbestie\b',
             ],
-            'acquaintances': [
-                r'\bacquaintance\b', r'\bknow each other\b', r'\bmet\b'
+            'kenalan': [
+                r'\bkenalan\b', r'\bberkenalan\b',
+                r'\bkenal\b', r'\bmengenal\b', r'\bdikenal\b',
+                r'\bbertemu\b', r'\bpertemuan\b',
             ],
-            'companions': [
-                r'\bcompanion\b', r'\bcomrade\b', r'\bally\b', r'\bpartner\b'
+            
+            # PROFESIONAL - Professional Relations
+            'atasan-bawahan': [
+                r'\batasan\b', r'\bbos\b', r'\bpimpinan\b', r'\bmanajer\b',
+                r'\bbawahan\b', r'\bkaryawan\b', r'\bpegawai\b', r'\bstaf\b',
+                r'\bmemimpin\b', r'\bdipimpin\b',
+                r'\bmengawasi\b', r'\bdiawasi\b',
+                r'\bbekerja untuk\b', r'\bbekerja di bawah\b',
             ],
-            'employer-employee': [
-                r'\bboss\b', r'\bemployer\b', r'\bemployee\b',
-                r'\bworks for\b', r'\bhired\b'
+            'rekan-kerja': [
+                r'\brekan kerja\b', r'\brekan\b', r'\bkolega\b',
+                r'\bbekerja bersama\b', r'\bsatu kantor\b',
+                r'\bsatu tim\b', r'\bsatu divisi\b',
+                r'\bpartner kerja\b', r'\bmitra kerja\b',
             ],
-            'colleagues': [
-                r'\bcolleague\b', r'\bcoworker\b',
-                r'\bwork together\b', r'\bteammate\b'
+            'partner-bisnis': [
+                r'\bpartner bisnis\b', r'\bmitra bisnis\b',
+                r'\bpartner usaha\b', r'\bsekutu bisnis\b',
+                r'\bkerjasama bisnis\b', r'\bkolaborasi\b',
             ],
-            'business-partners': [
-                r'\bbusiness partner\b', r'\bpartnership\b', r'\bjoint venture\b'
+            'pelanggan-penjual': [
+                r'\bpelanggan\b', r'\bpembeli\b', r'\bkonsumen\b',
+                r'\bpenjual\b', r'\bpedagang\b', r'\btukang\b',
+                r'\bmembeli dari\b', r'\bmenjual kepada\b',
+                r'\btransaksi\b', r'\bberdagang\b',
             ],
-            'customer-merchant': [
-                r'\b(?:customer|client)\b', r'\b(?:merchant|seller|vendor)\b',
-                r'\bbought from\b', r'\bsold to\b', 
-                r'\bpurchased from\b', r'\bsold (?:it|them) to\b'
+            
+            # PERMUSUHAN - Antagonistic Relations
+            'musuh': [
+                r'\bmusuh\b', r'\bmusuhnya\b', r'\blawan\b',
+                r'\bmemusuhi\b', r'\bdibenci\b', r'\bmembenci\b',
+                r'\bpermusuhan\b', r'\bdendam\b', r'\bberdendam\b',
             ],
-            'enemies': [
-                r'\benemy\b', r'\bhate[sd]?\b', r'\bfoe\b', r'\badversary\b'
+            'rival': [
+                r'\brival\b', r'\bpesaing\b', r'\bsaingan\b',
+                r'\bbersaing\b', r'\bpersaingan\b', r'\bkompetisi\b',
+                r'\bberlomba\b', r'\bmenantang\b',
             ],
-            'rivals': [
-                r'\brival\b', r'\bcompete\b', r'\bcompetition\b', r'\bcontest\b'
+            'korban-pelaku': [
+                r'\bkorban\b', r'\bpelaku\b', r'\bpenjahat\b',
+                r'\bmenyakiti\b', r'\bdisakiti\b',
+                r'\bmembunuh\b', r'\bdibunuh\b',
+                r'\bmenganiaya\b', r'\bdianiaya\b',
+                r'\bmelukai\b', r'\bdilukai\b',
             ],
-            'victim-perpetrator': [
-                r'\bvictim\b', r'\battacker\b', r'\bkilled\b',
-                r'\bmurdered\b', r'\bhurt\b', r'\bharmed\b'
+            'bertentangan': [
+                r'\bbertentangan\b', r'\bmelawan\b', r'\bdilawan\b',
+                r'\bmenentang\b', r'\bditentang\b',
+                r'\bkonflik\b', r'\bpertengkaran\b', r'\bbertengkar\b',
             ],
-            'opposing-sides': [
-                r'\bagainst\b', r'\boppose[sd]?\b',
-                r'\bconfronted\b', r'\bfight\b'
+            
+            # SOSIAL LAINNYA - Other Social Relations
+            'tetangga': [
+                r'\btetangga\b', r'\btetangganya\b',
+                r'\bbertetangga\b', r'\bsebelah rumah\b',
+                r'\bdi sebelah\b', r'\brumah sebelah\b',
             ],
-            'neighbors': [
-                r'\bneighbor\b', r'\bnext door\b', r'\blive nearby\b'
+            'guru-murid': [
+                r'\bguru\b', r'\bpengajar\b', r'\bdosen\b',
+                r'\bmurid\b', r'\bsiswa\b', r'\bmahasiswa\b', r'\bpelajar\b',
+                r'\bmengajar\b', r'\bdiajar\b', r'\bbelajar dari\b',
+                r'\bmentori\b', r'\bbimbingan\b',
             ],
-            'teacher-student': [
-                r'\bteacher\b', r'\bstudent\b', r'\bpupil\b',
-                r'\bmentor\b', r'\btaught\b', r'\blearned from\b'
+            'tuan-pembantu': [
+                r'\bmajikan\b', r'\btuan rumah\b', r'\bnyonya rumah\b',
+                r'\bpembantu\b', r'\basisten\b', r'\bpelayan\b',
+                r'\bmelayani\b', r'\bdilayani\b',
             ],
-            'master-servant': [
-                r'\bmaster\b', r'\bservant\b', r'\bserve[sd]?\b', r'\bslave\b'
-            ]
         }
         
-        # Possessive pronouns mapping
+        # Possessive pronouns mapping Indonesia
         self.possessive_mapping = {
-            'his': 'male',
-            'her': 'female',
-            'their': 'plural'
+            'nya': 'third_person',
+            'mu': 'second_person',
+            'ku': 'first_person',
         }
         
+        # Non-story characters (mythological, religious, etc)
         self.non_story_characters = {
-            'sheba', 'solomon', 'magi', 'wise men', 'king solomon',
-            'queen of sheba', 'god', 'jesus', 'moses'
+            'tuhan', 'allah', 'yesus', 'nabi', 'rasul',
+            'malaikat', 'iblis', 'setan', 'jin',
+            'dewa', 'dewi', 'bidadari',
         }
     
     def extract_relations(self, characters, sentences):
-        """Extract relations with PROXIMITY detection"""
+        """
+        Extract relations dengan Indonesian pattern detection
+        """
         story_characters = {char: count for char, count in characters.items()
                            if char.lower() not in self.non_story_characters}
         
         if len(story_characters) < 2:
-            print("  ⚠️  Not enough characters for relation extraction")
+            print("  ⚠️  Tidak cukup tokoh untuk ekstraksi relasi")
             return self._empty_result()
         
-        print(f"\n  [Enhanced Relation Extraction] Analyzing {len(story_characters)} characters...")
+        print(f"\n  [Enhanced Relation Extraction] Menganalisis {len(story_characters)} tokoh...")
         
         # Build character mention index
         char_mentions = self._index_character_mentions(story_characters, sentences)
         
-        # Step 1: Co-occurrence (exact same sentence)
+        # Step 1: Co-occurrence (kalimat yang sama)
         cooccurrence = self._detect_cooccurrence(story_characters, sentences)
-        print(f"    ✓ Co-occurrence pairs: {len(cooccurrence)}")
+        print(f"    ✓ Pasangan co-occurrence: {len(cooccurrence)}")
         
-        # Step 2: Proximity detection (within N sentences)
+        # Step 2: Proximity detection (dalam N kalimat)
         proximity_pairs = self._detect_proximity_pairs(char_mentions, window=10)
-        print(f"    ✓ Proximity pairs: {len(proximity_pairs)}")
+        print(f"    ✓ Pasangan proximity: {len(proximity_pairs)}")
         
         # Step 3: Detect relations in proximity contexts
         specific_relations = self._detect_relations_in_proximity(
             proximity_pairs, sentences, char_mentions
         )
-        print(f"    ✓ Specific relations detected: {len(specific_relations)}")
+        print(f"    ✓ Relasi spesifik terdeteksi: {len(specific_relations)}")
         
-        # Step 4: Possessive pronoun inference
-        possessive_relations = self._detect_possessive_relations(
+        # Step 4: Possessive pronoun inference (nya, mu, ku)
+        possessive_relations = self._detect_possessive_relations_indonesian(
             story_characters, sentences, char_mentions
         )
-        print(f"    ✓ Possessive relations: {len(possessive_relations)}")
+        print(f"    ✓ Relasi possessive: {len(possessive_relations)}")
         
         # Merge all
         all_relations = specific_relations + possessive_relations
@@ -177,20 +224,24 @@ class RelationExtractor:
         }
     
     def _index_character_mentions(self, characters, sentences):
-        """Build index of where each character is mentioned"""
+        """
+        Build index dimana setiap karakter disebut
+        """
         mentions = defaultdict(list)
         
         for sent_id, sentence in enumerate(sentences):
             sent_lower = sentence.lower()
             
             for char in characters.keys():
-                if self._is_character_in_sentence(char, sent_lower):
+                if self._is_character_in_sentence_indonesian(char, sent_lower):
                     mentions[char].append(sent_id)
         
         return dict(mentions)
     
     def _detect_proximity_pairs(self, char_mentions, window=10):
-        """Detect character pairs that appear within N sentences of each other"""
+        """
+        Detect pasangan karakter yang muncul dalam N kalimat berdekatan
+        """
         proximity = defaultdict(lambda: {'count': 0, 'sentence_pairs': []})
         
         chars = list(char_mentions.keys())
@@ -211,7 +262,9 @@ class RelationExtractor:
         return dict(proximity)
     
     def _detect_relations_in_proximity(self, proximity_pairs, sentences, char_mentions):
-        """Detect relations in sentences near where characters appear"""
+        """
+        Detect relations dalam kalimat yang dekat dengan kemunculan karakter
+        """
         relations = []
         
         for pair, data in proximity_pairs.items():
@@ -220,23 +273,26 @@ class RelationExtractor:
             # Get all sentences in proximity
             sent_ids = set()
             for sent1, sent2 in data['sentence_pairs']:
-                # Include sentences in between and around
+                # Include sentences in between dan sekitarnya
                 start = min(sent1, sent2) - 2
                 end = max(sent1, sent2) + 3
                 sent_ids.update(range(max(0, start), min(len(sentences), end)))
             
-            # Check these sentences for relation patterns
+            # Check untuk relation patterns
             relation_evidence = defaultdict(list)
             
             for sent_id in sent_ids:
                 sentence = sentences[sent_id]
                 sent_lower = sentence.lower()
                 
-                # Check if either character is mentioned
-                has_char1 = char1.lower() in sent_lower or self._get_first_name(char1).lower() in sent_lower
-                has_char2 = char2.lower() in sent_lower or self._get_first_name(char2).lower() in sent_lower
+                # Check apakah salah satu karakter ada di kalimat
+                char1_base = self._get_base_name(char1).lower()
+                char2_base = self._get_base_name(char2).lower()
                 
-                # Only check if at least one character is in this sentence
+                has_char1 = char1_base in sent_lower or char1.lower() in sent_lower
+                has_char2 = char2_base in sent_lower or char2.lower() in sent_lower
+                
+                # Check jika minimal satu karakter ada
                 if has_char1 or has_char2:
                     for relation_type, patterns in self.specific_relation_patterns.items():
                         for pattern in patterns:
@@ -269,25 +325,38 @@ class RelationExtractor:
         
         return relations
     
-    def _detect_possessive_relations(self, characters, sentences, char_mentions):
-        """Detect relations from possessive pronouns (his wife, her husband, etc.)"""
+    def _detect_possessive_relations_indonesian(self, characters, sentences, char_mentions):
+        """
+        Detect relations dari possessive pronouns Indonesia (-nya, -mu, -ku)
+        """
         relations = []
         
-        # Possessive patterns
+        # Possessive patterns untuk relasi keluarga & romantis
         possessive_patterns = {
-            'spouse': [
-                (r'\bhis\s+wife\b', 'male_spouse'),
-                (r'\bher\s+husband\b', 'female_spouse'),
+            'suami-istri': [
+                (r'\bsuaminya\b', 'istri_suami'),
+                (r'\bistrinya\b', 'suami_istri'),
             ],
-            'romantic': [
-                (r'\bhis\s+(?:love|darling|treasure|precious)\b', 'male_romantic'),
-                (r'\bher\s+(?:love|darling|treasure|precious)\b', 'female_romantic'),
-            ]
+            'orang-tua-anak': [
+                (r'\bibunya\b', 'anak_ibu'),
+                (r'\bayahnya\b', 'anak_ayah'),
+                (r'\borang tuanya\b', 'anak_ortu'),
+                (r'\banaknya\b', 'ortu_anak'),
+            ],
+            'kekasih': [
+                (r'\bpacarnya\b', 'pacar'),
+                (r'\bkekasihnya\b', 'kekasih'),
+                (r'\bsayangnya\b', 'kesayangan'),
+            ],
+            'sahabat': [
+                (r'\bsahabatnya\b', 'sahabat'),
+                (r'\btemannya\b', 'teman'),
+            ],
         }
         
         for char in characters.keys():
             char_lower = char.lower()
-            char_first = self._get_first_name(char).lower()
+            char_base = self._get_base_name(char).lower()
             
             # Get sentences where this character appears
             sent_ids = char_mentions.get(char, [])
@@ -296,7 +365,7 @@ class RelationExtractor:
                 sentence = sentences[sent_id]
                 sent_lower = sentence.lower()
                 
-                # Check for possessive patterns NEAR this character
+                # Check for possessive patterns
                 for relation_type, patterns in possessive_patterns.items():
                     for pattern, pattern_name in patterns:
                         matches = list(re.finditer(pattern, sent_lower))
@@ -308,9 +377,9 @@ class RelationExtractor:
                                     continue
                                 
                                 other_lower = other_char.lower()
-                                other_first = self._get_first_name(other_char).lower()
+                                other_base = self._get_base_name(other_char).lower()
                                 
-                                # Check if other character is nearby
+                                # Check if other character nearby (±5 kalimat)
                                 nearby_sent_ids = range(
                                     max(0, sent_id - 5),
                                     min(len(sentences), sent_id + 6)
@@ -318,7 +387,7 @@ class RelationExtractor:
                                 
                                 other_nearby = any(
                                     other_lower in sentences[sid].lower() or 
-                                    other_first in sentences[sid].lower()
+                                    other_base in sentences[sid].lower()
                                     for sid in nearby_sent_ids
                                 )
                                 
@@ -330,14 +399,16 @@ class RelationExtractor:
                                         'relation_type': relation_type,
                                         'evidence_count': len(matches),
                                         'evidence': [{'sentence': sentence, 'pattern': pattern_name}],
-                                        'confidence': 0.80,
+                                        'confidence': 0.75,
                                         'source': 'possessive'
                                     })
         
         return relations
     
     def _detect_cooccurrence(self, characters, sentences):
-        """Detect exact co-occurrence (both in same sentence)"""
+        """
+        Detect exact co-occurrence (kedua tokoh di kalimat yang sama)
+        """
         cooccurrence = defaultdict(lambda: {
             'count': 0, 'sentences': [], 'contexts': []
         })
@@ -349,7 +420,7 @@ class RelationExtractor:
             present = []
             
             for char in char_list:
-                if self._is_character_in_sentence(char, sent_lower):
+                if self._is_character_in_sentence_indonesian(char, sent_lower):
                     present.append(char)
             
             for char1, char2 in itertools.combinations(present, 2):
@@ -361,39 +432,54 @@ class RelationExtractor:
         return dict(cooccurrence)
     
     def _merge_and_rank_relations(self, all_relations, cooccurrence, proximity_pairs):
-        """Merge and rank relations - PRIORITIZE personal relationships"""
+        """
+        Merge and rank relations - PRIORITASKAN hubungan personal
+        """
         relations_by_pair = defaultdict(lambda: {
             'relations': [], 
             'cooccurrence_count': 0,
             'proximity_count': 0
         })
         
-        # Relation type priority (higher = more important)
+        # Relation type priority (Indonesia-specific)
         relation_priority = {
-            'victim-perpetrator': 11,  # HIGHEST for crime/violence stories
-            'married-couple': 10,
-            'spouse': 10,
-            'lovers': 9,
-            'romantic-interest': 8,
-            'parent-child': 9,
-            'siblings': 8,
-            'close-friends': 7,
-            'extended-family': 6,
-            'companions': 5,
-            'acquaintances': 4,
-            'colleagues': 3,
-            'customer-merchant': 1,  # LOW priority
-            'neighbors': 3,
-            'enemies': 6,
-            'rivals': 5,
-            'opposing-sides': 5
+            # HIGHEST: Violence & Crime
+            'korban-pelaku': 12,
+            
+            # HIGH: Close personal relationships
+            'suami-istri': 11,
+            'orang-tua-anak': 11,
+            'kekasih': 10,
+            'kakak-adik': 10,
+            'sahabat': 9,
+            'keluarga-besar': 8,
+            
+            # MEDIUM: Social relationships
+            'tertarik-romantis': 7,
+            'teman': 7,
+            'guru-murid': 6,
+            'tetangga': 5,
+            
+            # LOW: Professional (biasanya tidak emotional)
+            'rekan-kerja': 4,
+            'atasan-bawahan': 4,
+            'partner-bisnis': 3,
+            
+            # VERY LOW: Transactional
+            'pelanggan-penjual': 2,
+            'kenalan': 2,
+            
+            # Antagonistic
+            'musuh': 8,
+            'rival': 6,
+            'bertentangan': 5,
         }
         
         for rel in all_relations:
             pair = tuple(sorted([rel['character1'], rel['character2']]))
             
-            # Add priority boost to confidence for important relations
-            priority = relation_priority.get(rel['relation_type'], 2)
+            # Add priority boost
+            priority = relation_priority.get(rel['relation_type'], 3)
             adjusted_confidence = min(rel['confidence'] + (priority * 0.02), 0.98)
             
             relations_by_pair[pair]['relations'].append({
@@ -455,47 +541,68 @@ class RelationExtractor:
         merged.sort(key=lambda x: x['strength'], reverse=True)
         return merged
     
-    def _get_first_name(self, full_name):
-        """Get first name from full name"""
-        return full_name.split()[0] if ' ' in full_name else full_name
+    def _get_base_name(self, full_name):
+        """
+        Get base name (tanpa gelar) dari full name
+        """
+        # Remove Indonesian honorifics
+        honorifics = ['pak', 'bu', 'bapak', 'ibu', 'mas', 'mbak', 'bang', 'kang']
+        words = full_name.split()
+        
+        if len(words) > 1 and words[0].lower() in honorifics:
+            return ' '.join(words[1:])
+        
+        return full_name
     
-    def _is_character_in_sentence(self, character, sentence_lower):
-        """Check if character in sentence"""
+    def _is_character_in_sentence_indonesian(self, character, sentence_lower):
+        """
+        Check apakah karakter ada di kalimat (Indonesian-aware)
+        """
         char_lower = character.lower()
         
-        if char_lower == "narrator (i)":
-            return bool(re.search(r'\bi\b', sentence_lower))
+        # SPECIAL: Handle "Narator (Aku)"
+        if char_lower == "narator (aku)":
+            return bool(re.search(r'\b(aku|saya)\b', sentence_lower))
         
-        if char_lower.startswith('the '):
-            role = char_lower.replace('the ', '')
-            return role in sentence_lower
-        
-        if char_lower in sentence_lower:
-            return True
-        
+        # Handle names dengan gelar
         if ' ' in char_lower:
-            first_name = char_lower.split()[0]
-            if len(first_name) >= 3:
-                return first_name in sentence_lower
+            # Check if all words present
+            words = char_lower.split()
+            if all(word in sentence_lower for word in words):
+                return True
+            
+            # Check base name only (tanpa gelar)
+            base_name = self._get_base_name(character).lower()
+            if base_name in sentence_lower:
+                return True
+        
+        # Single name - check dengan word boundary
+        pattern = r'\b' + re.escape(char_lower) + r'\b'
+        if re.search(pattern, sentence_lower):
+            return True
         
         return False
     
     def _calculate_proximity_confidence(self, evidence_count, proximity_count, has_both):
-        """Calculate confidence for proximity-based detection"""
+        """
+        Calculate confidence untuk proximity-based detection
+        """
         base = min(evidence_count / 2.0, 0.85)
         
-        # Boost if both characters in same evidence sentence
+        # Boost jika kedua karakter di kalimat yang sama
         if has_both:
             base = min(base + 0.1, 0.95)
         
-        # Boost based on proximity frequency
+        # Boost berdasarkan proximity frequency
         if proximity_count > 5:
             base = min(base + 0.05, 0.95)
         
         return base
     
     def _calculate_overall_strength(self, confidence, cooccurrence, proximity, relation_count):
-        """Calculate overall strength - PRIORITIZE romantic/family over transactional"""
+        """
+        Calculate overall strength
+        """
         confidence_score = confidence * 0.4
         cooccurrence_score = min(cooccurrence / 10.0, 0.2)
         proximity_score = min(proximity / 20.0, 0.2)
@@ -504,7 +611,9 @@ class RelationExtractor:
         return min(confidence_score + cooccurrence_score + proximity_score + diversity_score, 1.0)
     
     def _build_detailed_graph(self, relations):
-        """Build graph"""
+        """
+        Build graph
+        """
         graph = {'nodes': [], 'edges': []}
         
         if not relations:
@@ -536,7 +645,9 @@ class RelationExtractor:
         return graph
     
     def _empty_result(self):
-        """Return empty result"""
+        """
+        Return empty result
+        """
         return {
             'cooccurrence': {},
             'proximity_pairs': {},
