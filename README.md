@@ -1,1 +1,1 @@
-Mini Project STKI: Analisis karaketr pada karya sastra
+Mini Project STKI: Analisis karakter pada karya sastra
