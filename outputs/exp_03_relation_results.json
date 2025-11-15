@@ -128,12 +128,12 @@
     "graph": {
       "nodes": [
         {
-          "id": "The Officers",
-          "label": "The Officers"
-        },
-        {
           "id": "The Old Man",
           "label": "The Old Man"
+        },
+        {
+          "id": "The Officers",
+          "label": "The Officers"
         },
         {
           "id": "Narrator (I)",
@@ -258,20 +258,20 @@
         "character2": "Narrator (I)",
         "primary_relation": "married-couple",
         "all_relations": [
-          "married-couple",
           "siblings",
-          "extended-family",
-          "enemies",
+          "romantic",
           "lovers",
-          "romantic"
+          "extended-family",
+          "married-couple",
+          "enemies"
         ],
         "relation_types": [
-          "married-couple",
           "siblings",
-          "extended-family",
-          "enemies",
+          "romantic",
           "lovers",
-          "romantic"
+          "extended-family",
+          "married-couple",
+          "enemies"
         ],
         "confidence": 0.75,
         "cooccurrence_count": 30,
@@ -379,24 +379,24 @@
     "graph": {
       "nodes": [
         {
-          "id": "John",
-          "label": "John"
-        },
-        {
           "id": "Narrator (I)",
           "label": "Narrator (I)"
         },
         {
-          "id": "Weir Mitchell",
-          "label": "Weir Mitchell"
+          "id": "Nellie",
+          "label": "Nellie"
+        },
+        {
+          "id": "John",
+          "label": "John"
         },
         {
           "id": "Henry",
           "label": "Henry"
         },
         {
-          "id": "Nellie",
-          "label": "Nellie"
+          "id": "Weir Mitchell",
+          "label": "Weir Mitchell"
         },
         {
           "id": "Jennie",
@@ -453,20 +453,20 @@
           "target": "Narrator (I)",
           "relation": "married-couple",
           "all_relations": [
-            "married-couple",
             "siblings",
-            "extended-family",
-            "enemies",
+            "romantic",
             "lovers",
-            "romantic"
+            "extended-family",
+            "married-couple",
+            "enemies"
           ],
           "types": [
-            "married-couple",
             "siblings",
-            "extended-family",
-            "enemies",
+            "romantic",
             "lovers",
-            "romantic"
+            "extended-family",
+            "married-couple",
+            "enemies"
           ],
           "confidence": 0.75,
           "strength": 0.8999999999999999,

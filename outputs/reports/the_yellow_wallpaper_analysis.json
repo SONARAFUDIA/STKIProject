@@ -1,0 +1,2110 @@
+{
+  "metadata": {
+    "filename": "the_yellow_wallpaper.txt",
+    "processed_at": "2025-11-15T17:35:33.698703",
+    "sentence_count": 390
+  },
+  "characters": {
+    "statistics": {
+      "total_characters": 9,
+      "most_mentioned": [
+        "Narrator (I)",
+        298
+      ],
+      "average_mentions": 45.55555555555556,
+      "character_list": [
+        "Henry",
+        "Jane",
+        "Jennie",
+        "John",
+        "Julia",
+        "Mary",
+        "Narrator (I)",
+        "Nellie",
+        "Weir Mitchell"
+      ]
+    },
+    "details": {
+      "Weir Mitchell": 3,
+      "John": 74,
+      "Jennie": 21,
+      "Henry": 4,
+      "Julia": 4,
+      "Mary": 2,
+      "Nellie": 2,
+      "Jane": 2,
+      "Narrator (I)": 298
+    }
+  },
+  "traits": {
+    "John": {
+      "character": "John",
+      "raw_traits": [
+        "mere",
+        "ordinary",
+        "ancestral",
+        "practical",
+        "practical",
+        "positive_context",
+        "more",
+        "worst",
+        "negative_context",
+        "angry",
+        "negative_context",
+        "negative_context",
+        "real",
+        "nervous",
+        "positive_context",
+        "absurd",
+        "negative_context",
+        "dear",
+        "dear",
+        "dear\\s+john",
+        "negative_context",
+        "lucky",
+        "positive_context",
+        "hard",
+        "asleep",
+        "asleep",
+        "negative_context",
+        "awake",
+        "awake",
+        "good",
+        "positive_context",
+        "little",
+        "afraid",
+        "negative_context",
+        "pleased",
+        "positive_context",
+        "queer",
+        "sure",
+        "sure"
+      ],
+      "trait_frequency": {
+        "mere": 1,
+        "ordinary": 1,
+        "ancestral": 1,
+        "practical": 2,
+        "positive_context": 5,
+        "more": 1,
+        "worst": 1,
+        "negative_context": 7,
+        "angry": 1,
+        "real": 1,
+        "nervous": 1,
+        "absurd": 1,
+        "dear": 2,
+        "dear\\s+john": 1,
+        "lucky": 1,
+        "hard": 1,
+        "asleep": 2,
+        "awake": 2,
+        "good": 1,
+        "little": 1,
+        "afraid": 1,
+        "pleased": 1,
+        "queer": 1,
+        "sure": 2
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_context",
+          "positive_context",
+          "dear",
+          "dear",
+          "positive_context",
+          "good",
+          "positive_context",
+          "positive_context"
+        ],
+        "negative": [
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context"
+        ],
+        "emotional": [
+          "angry",
+          "nervous"
+        ],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "mere",
+          "ordinary",
+          "ancestral",
+          "practical",
+          "practical",
+          "more",
+          "worst",
+          "real",
+          "absurd",
+          "dear\\s+john",
+          "lucky",
+          "hard",
+          "asleep",
+          "asleep",
+          "awake",
+          "awake",
+          "little",
+          "afraid",
+          "pleased",
+          "queer",
+          "sure",
+          "sure"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "It is very seldom that mere ordinary people like John and myself secure ancestral halls for the summer.",
+          "traits": [
+            "mere",
+            "ordinary",
+            "ancestral"
+          ]
+        },
+        {
+          "sentence": "John is practical in the extreme.",
+          "traits": [
+            "practical",
+            "practical"
+          ]
+        },
+        {
+          "sentence": "John is a physician, and perhapsI would not say it to a living soul, of course, but this is dead paper and a great relief to my mindperhaps that is one reason I do not get well faster.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I sometimes fancy that in my condition if I had less opposition and more society and stimulusbut John says the very worst thing I can do is to think about my condition, and I confess it always makes me feel bad.",
+          "traits": [
+            "more",
+            "worst",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I get unreasonably angry with John sometimes.",
+          "traits": [
+            "angry",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "John is away all day, and even some nights when his cases are serious.",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I meant to be such a help to John, such a real rest and comfort, and here I am a comparative burden already!",
+          "traits": [
+            "real"
+          ]
+        },
+        {
+          "sentence": "I suppose John never was nervous in his life.",
+          "traits": [
+            "nervous"
+          ]
+        },
+        {
+          "sentence": "I had a friend who was in his hands once, and she says he is just like John and my brother, only more so!",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "And I know John would think it absurd.",
+          "traits": [
+            "absurd",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "And dear John gathered me up in his arms, and just carried me upstairs and laid me on the bed, and sat by me and read to me till it tired my head.",
+          "traits": [
+            "dear",
+            "dear",
+            "dear\\s+john",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I never thought of it before, but it is lucky that John kept me here after all.",
+          "traits": [
+            "lucky",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "It is so hard to talk with John about my case, because he is so wise, and because he loves me so.",
+          "traits": [
+            "hard"
+          ]
+        },
+        {
+          "sentence": "John was asleep and I hated to waken him, so I kept still and watched the moonlight on that undulating wallpaper till I felt creepy.",
+          "traits": [
+            "asleep",
+            "asleep",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I got up softly and went to feel and see if the paper did move, and when I came back John was awake.",
+          "traits": [
+            "awake",
+            "awake"
+          ]
+        },
+        {
+          "sentence": "John says it is good for me, and to sleep all I can.",
+          "traits": [
+            "good",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "The fact is, I am getting a little afraid of John.",
+          "traits": [
+            "little",
+            "afraid",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "John is so pleased to see me improve!",
+          "traits": [
+            "pleased",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "And John is so queer now, that I dont want to irritate him.",
+          "traits": [
+            "queer"
+          ]
+        },
+        {
+          "sentence": "It only interests me, but I feel sure John and Jennie are secretly affected by it.",
+          "traits": [
+            "sure",
+            "sure"
+          ]
+        }
+      ]
+    },
+    "Narrator (I)": {
+      "character": "Narrator (I)",
+      "raw_traits": [
+        "hereditary",
+        "haunted",
+        "positive_context",
+        "positive_context",
+        "sick",
+        "sick",
+        "negative_context",
+        "congenial",
+        "positive_context",
+        "less",
+        "more",
+        "worst",
+        "negative_context",
+        "alone",
+        "legal",
+        "afraid",
+        "afraid",
+        "afraid",
+        "negative_context",
+        "angry",
+        "negative_context",
+        "sure",
+        "sure",
+        "due",
+        "proper",
+        "ungrateful",
+        "perfect",
+        "positive_context",
+        "worse",
+        "negative_context",
+        "glad",
+        "glad",
+        "positive_context",
+        "comparative",
+        "little",
+        "nervous",
+        "dear",
+        "positive_context",
+        "such",
+        "silly",
+        "lovely",
+        "fancy",
+        "fancy",
+        "excited",
+        "positive_context",
+        "enough",
+        "tired",
+        "tired",
+        "tired",
+        "angry",
+        "negative_context",
+        "much",
+        "awake",
+        "other",
+        "fierce",
+        "such",
+        "negative_context",
+        "strange",
+        "negative_context",
+        "tired",
+        "tired",
+        "negative_context",
+        "positive_context",
+        "fretful",
+        "negative_context",
+        "positive_context",
+        "alone",
+        "good",
+        "positive_context",
+        "little",
+        "great",
+        "positive_context",
+        "good",
+        "positive_context",
+        "thousandth",
+        "thousandth",
+        "pointless",
+        "little",
+        "fancy",
+        "able",
+        "positive_context",
+        "negative_context",
+        "lazy",
+        "able",
+        "able",
+        "positive_context",
+        "nervous",
+        "negative_context",
+        "positive_context",
+        "wise",
+        "wise",
+        "last",
+        "negative_context",
+        "creepy",
+        "asleep",
+        "creepy",
+        "negative_context",
+        "awake",
+        "good",
+        "positive_context",
+        "positive_context",
+        "dear",
+        "dear",
+        "easier",
+        "more",
+        "much",
+        "dear",
+        "stern",
+        "reproachful",
+        "asleep",
+        "asleep",
+        "asleep",
+        "outside",
+        "-",
+        "sure",
+        "positive_context",
+        "bad",
+        "convinced",
+        "negative_context",
+        "awake",
+        "little",
+        "afraid",
+        "negative_context",
+        "innocent",
+        "several",
+        "quiet",
+        "determined",
+        "more",
+        "positive_context",
+        "quiet",
+        "other",
+        "more",
+        "enough",
+        "good",
+        "positive_context",
+        "yellow",
+        "beautiful",
+        "subtlest",
+        "enduring",
+        "positive_context",
+        "negative_context",
+        "only",
+        "great",
+        "positive_context",
+        "same",
+        "long",
+        "dark",
+        "long",
+        "queer",
+        "able",
+        "positive_context",
+        "funny",
+        "funny",
+        "positive_context",
+        "good",
+        "positive_context",
+        "quiet",
+        "quiet",
+        "sure",
+        "sure",
+        "positive_context",
+        "clever",
+        "negative_context",
+        "negative_context",
+        "pure",
+        "negative_context",
+        "tired",
+        "quiet",
+        "empty",
+        "clean",
+        "clean",
+        "lame",
+        "lame",
+        "lame",
+        "angry",
+        "angry",
+        "little",
+        "negative_context",
+        "angry",
+        "negative_context",
+        "positive_context",
+        "positive_context",
+        "positive_context",
+        "gentlest",
+        "several",
+        "same",
+        "positive_context"
+      ],
+      "trait_frequency": {
+        "hereditary": 1,
+        "haunted": 1,
+        "positive_context": 30,
+        "sick": 2,
+        "negative_context": 22,
+        "congenial": 1,
+        "less": 1,
+        "more": 4,
+        "worst": 1,
+        "alone": 2,
+        "legal": 1,
+        "afraid": 4,
+        "angry": 5,
+        "sure": 5,
+        "due": 1,
+        "proper": 1,
+        "ungrateful": 1,
+        "perfect": 1,
+        "worse": 1,
+        "glad": 2,
+        "comparative": 1,
+        "little": 5,
+        "nervous": 2,
+        "dear": 4,
+        "such": 2,
+        "silly": 1,
+        "lovely": 1,
+        "fancy": 3,
+        "excited": 1,
+        "enough": 2,
+        "tired": 6,
+        "much": 2,
+        "awake": 3,
+        "other": 2,
+        "fierce": 1,
+        "strange": 1,
+        "fretful": 1,
+        "good": 5,
+        "great": 2,
+        "thousandth": 2,
+        "pointless": 1,
+        "able": 4,
+        "lazy": 1,
+        "wise": 2,
+        "last": 1,
+        "creepy": 2,
+        "asleep": 4,
+        "easier": 1,
+        "stern": 1,
+        "reproachful": 1,
+        "outside": 1,
+        "-": 1,
+        "bad": 1,
+        "convinced": 1,
+        "innocent": 1,
+        "several": 2,
+        "quiet": 5,
+        "determined": 1,
+        "yellow": 1,
+        "beautiful": 1,
+        "subtlest": 1,
+        "enduring": 1,
+        "only": 1,
+        "same": 2,
+        "long": 2,
+        "dark": 1,
+        "queer": 1,
+        "funny": 2,
+        "clever": 1,
+        "pure": 1,
+        "empty": 1,
+        "clean": 2,
+        "lame": 3,
+        "gentlest": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "dear",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "good",
+          "positive_context",
+          "positive_context",
+          "good",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "wise",
+          "wise",
+          "good",
+          "positive_context",
+          "positive_context",
+          "dear",
+          "dear",
+          "dear",
+          "positive_context",
+          "positive_context",
+          "good",
+          "positive_context",
+          "beautiful",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "good",
+          "positive_context",
+          "positive_context",
+          "clever",
+          "positive_context",
+          "positive_context",
+          "positive_context",
+          "positive_context"
+        ],
+        "negative": [
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "bad",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context",
+          "negative_context"
+        ],
+        "emotional": [
+          "angry",
+          "nervous",
+          "excited",
+          "angry",
+          "nervous",
+          "angry",
+          "angry",
+          "angry"
+        ],
+        "physical": [
+          "dark"
+        ],
+        "behavioral": [
+          "lazy",
+          "quiet",
+          "quiet",
+          "quiet",
+          "quiet",
+          "quiet"
+        ],
+        "other": [
+          "hereditary",
+          "haunted",
+          "sick",
+          "sick",
+          "congenial",
+          "less",
+          "more",
+          "worst",
+          "alone",
+          "legal",
+          "afraid",
+          "afraid",
+          "afraid",
+          "sure",
+          "sure",
+          "due",
+          "proper",
+          "ungrateful",
+          "perfect",
+          "worse",
+          "glad",
+          "glad",
+          "comparative",
+          "little",
+          "such",
+          "silly",
+          "lovely",
+          "fancy",
+          "fancy",
+          "enough",
+          "tired",
+          "tired",
+          "tired",
+          "much",
+          "awake",
+          "other",
+          "fierce",
+          "such",
+          "strange",
+          "tired",
+          "tired",
+          "fretful",
+          "alone",
+          "little",
+          "great",
+          "thousandth",
+          "thousandth",
+          "pointless",
+          "little",
+          "fancy",
+          "able",
+          "able",
+          "able",
+          "last",
+          "creepy",
+          "asleep",
+          "creepy",
+          "awake",
+          "easier",
+          "more",
+          "much",
+          "stern",
+          "reproachful",
+          "asleep",
+          "asleep",
+          "asleep",
+          "outside",
+          "-",
+          "sure",
+          "convinced",
+          "awake",
+          "little",
+          "afraid",
+          "innocent",
+          "several",
+          "determined",
+          "more",
+          "other",
+          "more",
+          "enough",
+          "yellow",
+          "subtlest",
+          "enduring",
+          "only",
+          "great",
+          "same",
+          "long",
+          "long",
+          "queer",
+          "able",
+          "funny",
+          "funny",
+          "sure",
+          "sure",
+          "pure",
+          "tired",
+          "empty",
+          "clean",
+          "clean",
+          "lame",
+          "lame",
+          "lame",
+          "little",
+          "gentlest",
+          "several",
+          "same"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "A colonial mansion, a hereditary estate, I would say a haunted house, and reach the height of romantic felicitybut that would be asking too much of fate!",
+          "traits": [
+            "hereditary",
+            "haunted"
+          ]
+        },
+        {
+          "sentence": "Still I will proudly declare that there is something queer about it.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "John is a physician, and perhapsI would not say it to a living soul, of course, but this is dead paper and a great relief to my mindperhaps that is one reason I do not get well faster.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "You see, he does not believe I am sick!",
+          "traits": [
+            "sick",
+            "sick",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "Personally, I believe that congenial work, with excitement and change, would do me good.",
+          "traits": [
+            "congenial",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I sometimes fancy that in my condition if I had less opposition and more society and stimulusbut John says the very worst thing I can do is to think about my condition, and I confess it always makes me feel bad.",
+          "traits": [
+            "less",
+            "more",
+            "worst",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "So I will let it alone and talk about the house.",
+          "traits": [
+            "alone"
+          ]
+        },
+        {
+          "sentence": "There was some legal trouble, I believe, something about the heirs and co-heirs; anyhow, the place has been empty for years.",
+          "traits": [
+            "legal"
+          ]
+        },
+        {
+          "sentence": "That spoils my ghostliness, I am afraid; but I dont carethere is something strange about the houseI can feel it.",
+          "traits": [
+            "afraid",
+            "afraid",
+            "afraid",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I get unreasonably angry with John sometimes.",
+          "traits": [
+            "angry",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "Im sure I never used to be so sensitive.",
+          "traits": [
+            "sure",
+            "sure"
+          ]
+        },
+        {
+          "sentence": "I think it is due to this nervous condition.",
+          "traits": [
+            "due"
+          ]
+        },
+        {
+          "sentence": "But John says if I feel so I shall neglect proper self-control; so I take pains to control myself,before him, at least,and that makes me very tired.",
+          "traits": [
+            "proper"
+          ]
+        },
+        {
+          "sentence": "I have a schedule prescription for each hour in the day; he takes all care from me, and so I feel basely ungrateful not to value it more.",
+          "traits": [
+            "ungrateful"
+          ]
+        },
+        {
+          "sentence": "He said we came here solely on my account, that I was to have perfect rest and all the air I could get.",
+          "traits": [
+            "perfect",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I never saw a worse paper in my life.",
+          "traits": [
+            "worse",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I am glad my case is not serious!",
+          "traits": [
+            "glad",
+            "glad",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I meant to be such a help to John, such a real rest and comfort, and here I am a comparative burden already!",
+          "traits": [
+            "comparative"
+          ]
+        },
+        {
+          "sentence": "Nobody would believe what an effort it is to do what little I am ableto dress and entertain, and order things.",
+          "traits": [
+            "little"
+          ]
+        },
+        {
+          "sentence": "I suppose John never was nervous in his life.",
+          "traits": [
+            "nervous"
+          ]
+        },
+        {
+          "sentence": "You know the place is doing you good, he said, and really, dear, I dont care to renovate the house just for a three months rental.",
+          "traits": [
+            "dear",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Then do let us go downstairs, I said, there are such pretty rooms there.",
+          "traits": [
+            "such"
+          ]
+        },
+        {
+          "sentence": "It is as airy and comfortable a room as any one need wish, and, of course, I would not be so silly as to make him uncomfortable just for a whim.",
+          "traits": [
+            "silly"
+          ]
+        },
+        {
+          "sentence": "Out of another I get a lovely view of the bay and a little private wharf belonging to the estate.",
+          "traits": [
+            "lovely"
+          ]
+        },
+        {
+          "sentence": "I always fancy I see people walking in these numerous paths and arbors, but John has cautioned me not to give way to fancy in the least.",
+          "traits": [
+            "fancy",
+            "fancy"
+          ]
+        },
+        {
+          "sentence": "He says that with my imaginative power and habit of story-making a nervous weakness like mine is sure to lead to all manner of excited fancies, and that I ought to use my will and good sense to check the tendency.",
+          "traits": [
+            "excited",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I think sometimes that if I were only well enough to write a little it would relieve the press of ideas and rest me.",
+          "traits": [
+            "enough"
+          ]
+        },
+        {
+          "sentence": "But I find I get pretty tired when I try.",
+          "traits": [
+            "tired",
+            "tired",
+            "tired"
+          ]
+        },
+        {
+          "sentence": "I get positively angry with the impertinence of it and the everlastingness.",
+          "traits": [
+            "angry",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I never saw so much expression in an inanimate thing before, and we all know how much expression they have!",
+          "traits": [
+            "much"
+          ]
+        },
+        {
+          "sentence": "I used to lie awake as a child and get more entertainment and terror out of blank walls and plain furniture than most children could find in a toy-store.",
+          "traits": [
+            "awake"
+          ]
+        },
+        {
+          "sentence": "I used to feel that if any of the other things looked too fierce I could always hop into that chair and be safe.",
+          "traits": [
+            "other",
+            "fierce"
+          ]
+        },
+        {
+          "sentence": "I never saw such ravages as the children have made here.",
+          "traits": [
+            "such"
+          ]
+        },
+        {
+          "sentence": "I verily believe she thinks it is the writing which made me sick!",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "But in the places where it isnt faded, and where the sun is just so, I can see a strange, provoking, formless sort of figure, that seems to sulk about behind that silly and conspicuous front design.",
+          "traits": [
+            "strange",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "The people are gone and I am tired out.",
+          "traits": [
+            "tired",
+            "tired",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I had a friend who was in his hands once, and she says he is just like John and my brother, only more so!",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I dont feel as if it was worth while to turn my hand over for anything, and Im getting dreadfully fretful and querulous.",
+          "traits": [
+            "fretful",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I cry at nothing, and cry most of the time.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Of course I dont when John is here, or anybody else, but when I am alone.",
+          "traits": [
+            "alone"
+          ]
+        },
+        {
+          "sentence": "And I am alone a good deal just now.",
+          "traits": [
+            "good",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "So I walk a little in the garden or down that lovely lane, sit on the porch under the roses, and lie down up here a good deal.",
+          "traits": [
+            "little"
+          ]
+        },
+        {
+          "sentence": "I lie here on this great immovable bedit is nailed down, I believeand follow that pattern about by the hour.",
+          "traits": [
+            "great",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "It is as good as gymnastics, I assure you.",
+          "traits": [
+            "good",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I start, well say, at the bottom, down in the corner over there where it has not been touched, and I determine for the thousandth time that I will follow that pointless pattern to some sort of a conclusion.",
+          "traits": [
+            "thousandth",
+            "thousandth",
+            "pointless"
+          ]
+        },
+        {
+          "sentence": "I know a little of the principle of design, and I know this thing was not arranged on any laws of radiation, or alternation, or repetition, or symmetry, or anything else that I ever heard of.",
+          "traits": [
+            "little"
+          ]
+        },
+        {
+          "sentence": "There is one end of the room where it is almost intact, and there, when the cross-lights fade and the low sun shines directly upon it, I can almost fancy radiation after all,the interminable grotesques seem to form around a common centre and rush off in headlong plunges of equal distraction.",
+          "traits": [
+            "fancy"
+          ]
+        },
+        {
+          "sentence": "I dont feel able.",
+          "traits": [
+            "able",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "And I know John would think it absurd.",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "Half the time now I am awfully lazy, and lie down ever so much.",
+          "traits": [
+            "lazy"
+          ]
+        },
+        {
+          "sentence": "But he said I wasnt able to go, nor able to stand it after I got there; and I did not make out a very good case for myself, for I was crying before I had finished.",
+          "traits": [
+            "able",
+            "able",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Just this nervous weakness, I suppose.",
+          "traits": [
+            "nervous"
+          ]
+        },
+        {
+          "sentence": "He says no one but myself can help me out of it, that I must use my will and self-control and not let any silly fancies run away with me.",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I never thought of it before, but it is lucky that John kept me here after all.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Of course I never mention it to them any more,I am too wise,but I keep watch of it all the same.",
+          "traits": [
+            "wise",
+            "wise"
+          ]
+        },
+        {
+          "sentence": "But I tried it last night.",
+          "traits": [
+            "last"
+          ]
+        },
+        {
+          "sentence": "I hate to see it sometimes, it creeps so slowly, and always comes in by one window or another.",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "John was asleep and I hated to waken him, so I kept still and watched the moonlight on that undulating wallpaper till I felt creepy.",
+          "traits": [
+            "creepy",
+            "asleep",
+            "creepy",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I got up softly and went to feel and see if the paper did move, and when I came back John was awake.",
+          "traits": [
+            "awake"
+          ]
+        },
+        {
+          "sentence": "I thought it was a good time to talk, so I told him that I really was not gaining here, and that I wished he would take me away.",
+          "traits": [
+            "good",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Of course if you were in any danger I could and would, but you really are better, dear, whether you can see it or not.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I am a doctor, dear, and I know.",
+          "traits": [
+            "dear",
+            "dear"
+          ]
+        },
+        {
+          "sentence": "I feel really much easier about you.",
+          "traits": [
+            "easier"
+          ]
+        },
+        {
+          "sentence": "I dont weigh a bit more, said I, nor as much; and my appetite may be better in the evening, when you are here, but it is worse in the morning when you are away.",
+          "traits": [
+            "more",
+            "much"
+          ]
+        },
+        {
+          "sentence": "Why, how can I, dear?",
+          "traits": [
+            "dear"
+          ]
+        },
+        {
+          "sentence": "Better in body perhapsI began, and stopped short, for he sat up straight and looked at me with such a stern, reproachful look that I could not say another word.",
+          "traits": [
+            "stern",
+            "reproachful"
+          ]
+        },
+        {
+          "sentence": "He thought I was asleep first, but I wasnt,I lay there for hours trying to decide whether that front pattern and the back pattern really did move together or separately.",
+          "traits": [
+            "asleep",
+            "asleep",
+            "asleep"
+          ]
+        },
+        {
+          "sentence": "The outside pattern I mean, and the woman behind it is as plain as can be.",
+          "traits": [
+            "outside"
+          ]
+        },
+        {
+          "sentence": "I didnt realize for a long time what the thing was that showed behind,that dim sub-pattern,but now I am quite sure it is a woman.",
+          "traits": [
+            "-",
+            "sure"
+          ]
+        },
+        {
+          "sentence": "John says it is good for me, and to sleep all I can.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "It is a very bad habit, I am convinced, for, you see, I dont sleep.",
+          "traits": [
+            "bad",
+            "convinced",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "And that cultivates deceit, for I dont tell them Im awake,oh, no!",
+          "traits": [
+            "awake"
+          ]
+        },
+        {
+          "sentence": "The fact is, I am getting a little afraid of John.",
+          "traits": [
+            "little",
+            "afraid",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I have watched John when he did not know I was looking, and come into the room suddenly on the most innocent excuses, and Ive caught him several times looking at the paper!",
+          "traits": [
+            "innocent",
+            "several"
+          ]
+        },
+        {
+          "sentence": "She didnt know I was in the room, and when I asked her in a quiet, a very quiet voice, with the most restrained manner possible, what she was doing with the paper she turned around as if she had been caught stealing, and looked quite angryasked me why I should frighten her so!",
+          "traits": [
+            "quiet"
+          ]
+        },
+        {
+          "sentence": "But I know she was studying that pattern, and I am determined that nobody shall find it out but myself!",
+          "traits": [
+            "determined"
+          ]
+        },
+        {
+          "sentence": "You see I have something more to expect, to look forward to, to watch.",
+          "traits": [
+            "more",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I really do eat better, and am more quiet than I was.",
+          "traits": [
+            "quiet"
+          ]
+        },
+        {
+          "sentence": "He laughed a little the other day, and said I seemed to be flourishing in spite of my wallpaper.",
+          "traits": [
+            "other"
+          ]
+        },
+        {
+          "sentence": "There is a week more, and I think that will be enough.",
+          "traits": [
+            "more",
+            "enough"
+          ]
+        },
+        {
+          "sentence": "I dont sleep much at night, for it is so interesting to watch developments; but I sleep a good deal in the daytime.",
+          "traits": [
+            "good",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "It makes me think of all the yellow things I ever sawnot beautiful ones like buttercups, but old foul, bad yellow things.",
+          "traits": [
+            "yellow",
+            "beautiful"
+          ]
+        },
+        {
+          "sentence": "It is not badat first, and very gentle, but quite the subtlest, most enduring odor I ever met.",
+          "traits": [
+            "subtlest",
+            "enduring",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I thought seriously of burning the houseto reach the smell.",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "The only thing I can think of that it is like is the color of the paper!",
+          "traits": [
+            "only"
+          ]
+        },
+        {
+          "sentence": "Sometimes I think there are a great many women behind, and sometimes only one, and she crawls around fast, and her crawling shakes it all over.",
+          "traits": [
+            "great"
+          ]
+        },
+        {
+          "sentence": "But nobody could climb through that patternit strangles so; I think that is why it has so many heads.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "It is the same woman, I know, for she is always creeping, and most women do not creep by daylight.",
+          "traits": [
+            "same"
+          ]
+        },
+        {
+          "sentence": "I see her on that long shaded lane, creeping up and down.",
+          "traits": [
+            "long"
+          ]
+        },
+        {
+          "sentence": "I see her in those dark grape arbors, creeping all around the garden.",
+          "traits": [
+            "dark"
+          ]
+        },
+        {
+          "sentence": "I see her on that long road under the trees, creeping along, and when a carriage comes she hides under the blackberry vines.",
+          "traits": [
+            "long"
+          ]
+        },
+        {
+          "sentence": "And John is so queer now, that I dont want to irritate him.",
+          "traits": [
+            "queer"
+          ]
+        },
+        {
+          "sentence": "And though I always see her she may be able to creep faster than I can turn!",
+          "traits": [
+            "able",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "I have found out another funny thing, but I shant tell it this time!",
+          "traits": [
+            "funny",
+            "funny",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "She said I slept a good deal in the daytime.",
+          "traits": [
+            "good",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "John knows I dont sleep very well at night, for all Im so quiet!",
+          "traits": [
+            "quiet",
+            "quiet"
+          ]
+        },
+        {
+          "sentence": "It only interests me, but I feel sure John and Jennie are secretly affected by it.",
+          "traits": [
+            "sure",
+            "sure"
+          ]
+        },
+        {
+          "sentence": "but I told her I should undoubtedly rest better for a night all alone.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "That was clever, for really I wasnt alone a bit!",
+          "traits": [
+            "clever"
+          ]
+        },
+        {
+          "sentence": "As soon as it was moonlight, and that poor thing began to crawl and shake the pattern, I got up and ran to help her.",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "And then when the sun came and that awful pattern began to laugh at me I declared I would finish it to-day!",
+          "traits": [
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "Jennie looked at the wall in amazement, but I told her merrily that I did it out of pure spite at the vicious thing.",
+          "traits": [
+            "pure",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "She laughed and said she wouldnt mind doing it herself, but I must not get tired.",
+          "traits": [
+            "tired"
+          ]
+        },
+        {
+          "sentence": "But I said it was so quiet and empty and clean now that I believed I would lie down again and sleep all I could; and not to wake me even for dinnerI would call when I woke.",
+          "traits": [
+            "quiet",
+            "empty",
+            "clean",
+            "clean"
+          ]
+        },
+        {
+          "sentence": "I tried to lift and push it until I was lame, and then I got so angry I bit off a little piece at one cornerbut it hurt my teeth.",
+          "traits": [
+            "lame",
+            "lame",
+            "lame",
+            "angry",
+            "angry",
+            "little",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I am getting angry enough to do something desperate.",
+          "traits": [
+            "angry",
+            "negative_context"
+          ]
+        },
+        {
+          "sentence": "I dont like to look out of the windows eventhere are so many of those creeping women, and they creep so fast.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "But I am securely fastened now by my well-hidden ropeyou dont get me out in the road there!",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "It is so pleasant to be out in this great room and creep around as I please!",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "said I in the gentlest voice, the key is down by the front steps, under a plantain leaf!",
+          "traits": [
+            "gentlest"
+          ]
+        },
+        {
+          "sentence": "And then I said it again, several times, very gently and slowly, and said it so often that he had to go and see, and he got it, of course, and came in.",
+          "traits": [
+            "several"
+          ]
+        },
+        {
+          "sentence": "I kept on creeping just the same, but I looked at him over my shoulder.",
+          "traits": [
+            "same"
+          ]
+        },
+        {
+          "sentence": "But he did, and right across my path by the wall, so that I had to creep over him every time!",
+          "traits": [
+            "positive_context"
+          ]
+        }
+      ]
+    },
+    "Mary": {
+      "character": "Mary",
+      "raw_traits": [
+        "fortunate",
+        "good",
+        "positive_context"
+      ],
+      "trait_frequency": {
+        "fortunate": 1,
+        "good": 1,
+        "positive_context": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "good",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "fortunate"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "It is fortunate Mary is so good with the baby.",
+          "traits": [
+            "fortunate",
+            "good",
+            "positive_context"
+          ]
+        }
+      ]
+    },
+    "Henry": {
+      "character": "Henry",
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "evidence_sentences": []
+    },
+    "Julia": {
+      "character": "Julia",
+      "raw_traits": [
+        "long"
+      ],
+      "trait_frequency": {
+        "long": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "long"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "When I get really well John says we will ask Cousin Henry and Julia down for a long visit; but he says he would as soon put fire-works in my pillow-case as to let me have those stimulating people about now.",
+          "traits": [
+            "long"
+          ]
+        }
+      ]
+    },
+    "Nellie": {
+      "character": "Nellie",
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "evidence_sentences": []
+    },
+    "Jennie": {
+      "character": "Jennie",
+      "raw_traits": [
+        "serious",
+        "good",
+        "good",
+        "few",
+        "ready",
+        "queer",
+        "inexplicable",
+        "professional",
+        "sure",
+        "negative_context"
+      ],
+      "trait_frequency": {
+        "serious": 1,
+        "good": 2,
+        "few": 1,
+        "ready": 1,
+        "queer": 1,
+        "inexplicable": 1,
+        "professional": 1,
+        "sure": 1,
+        "negative_context": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "good",
+          "good"
+        ],
+        "negative": [
+          "negative_context"
+        ],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "serious",
+          "few",
+          "ready",
+          "queer",
+          "inexplicable",
+          "professional",
+          "sure"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "John is kept in town very often by serious cases, and Jennie is good and lets me alone when I want her to.",
+          "traits": [
+            "serious",
+            "good",
+            "good"
+          ]
+        },
+        {
+          "sentence": "It is only three weeks more and then we will take a nice little trip of a few days while Jennie is getting the house ready.",
+          "traits": [
+            "few",
+            "ready"
+          ]
+        },
+        {
+          "sentence": "He seems very queer sometimes, and even Jennie has an inexplicable look.",
+          "traits": [
+            "queer",
+            "inexplicable"
+          ]
+        },
+        {
+          "sentence": "And I heard him ask Jennie a lot of professional questions about me.",
+          "traits": [
+            "professional"
+          ]
+        },
+        {
+          "sentence": "It only interests me, but I feel sure John and Jennie are secretly affected by it.",
+          "traits": [
+            "sure"
+          ]
+        },
+        {
+          "sentence": "Jennie looked at the wall in amazement, but I told her merrily that I did it out of pure spite at the vicious thing.",
+          "traits": [
+            "negative_context"
+          ]
+        }
+      ]
+    },
+    "Weir Mitchell": {
+      "character": "Weir Mitchell",
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "evidence_sentences": []
+    },
+    "Jane": {
+      "character": "Jane",
+      "raw_traits": [],
+      "trait_frequency": {},
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": []
+      },
+      "evidence_sentences": []
+    }
+  },
+  "relations": {
+    "summary": {
+      "total_relations": 9,
+      "cooccurrence_pairs": 12
+    },
+    "details": [
+      {
+        "character1": "Henry",
+        "character2": "Narrator (I)",
+        "primary_relation": "extended-family",
+        "all_relations": [
+          "romantic",
+          "extended-family"
+        ],
+        "relation_types": [
+          "romantic",
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "cooccurrence_count": 2,
+        "proximity_count": 28,
+        "strength": 0.992,
+        "source": "proximity"
+      },
+      {
+        "character1": "Julia",
+        "character2": "Narrator (I)",
+        "primary_relation": "extended-family",
+        "all_relations": [
+          "romantic",
+          "extended-family"
+        ],
+        "relation_types": [
+          "romantic",
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "cooccurrence_count": 2,
+        "proximity_count": 28,
+        "strength": 0.992,
+        "source": "proximity"
+      },
+      {
+        "character1": "John",
+        "character2": "Narrator (I)",
+        "primary_relation": "married-couple",
+        "all_relations": [
+          "extended-family",
+          "siblings",
+          "romantic",
+          "married-couple",
+          "enemies",
+          "lovers"
+        ],
+        "relation_types": [
+          "extended-family",
+          "siblings",
+          "romantic",
+          "married-couple",
+          "enemies",
+          "lovers"
+        ],
+        "confidence": 0.75,
+        "cooccurrence_count": 30,
+        "proximity_count": 513,
+        "strength": 0.8999999999999999,
+        "source": "proximity"
+      },
+      {
+        "character1": "Henry",
+        "character2": "Julia",
+        "primary_relation": "extended-family",
+        "all_relations": [
+          "extended-family"
+        ],
+        "relation_types": [
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "cooccurrence_count": 2,
+        "proximity_count": 2,
+        "strength": 0.8920000000000001,
+        "source": "proximity"
+      },
+      {
+        "character1": "Henry",
+        "character2": "John",
+        "primary_relation": "extended-family",
+        "all_relations": [
+          "extended-family"
+        ],
+        "relation_types": [
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "cooccurrence_count": 1,
+        "proximity_count": 5,
+        "strength": 0.8919999999999999,
+        "source": "proximity"
+      },
+      {
+        "character1": "John",
+        "character2": "Julia",
+        "primary_relation": "extended-family",
+        "all_relations": [
+          "extended-family"
+        ],
+        "relation_types": [
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "cooccurrence_count": 1,
+        "proximity_count": 5,
+        "strength": 0.8919999999999999,
+        "source": "proximity"
+      },
+      {
+        "character1": "Jennie",
+        "character2": "John",
+        "primary_relation": "siblings",
+        "all_relations": [
+          "siblings"
+        ],
+        "relation_types": [
+          "siblings"
+        ],
+        "confidence": 0.7100000000000001,
+        "cooccurrence_count": 2,
+        "proximity_count": 37,
+        "strength": 0.8840000000000001,
+        "source": "proximity"
+      },
+      {
+        "character1": "John",
+        "character2": "Nellie",
+        "primary_relation": "siblings",
+        "all_relations": [
+          "siblings"
+        ],
+        "relation_types": [
+          "siblings"
+        ],
+        "confidence": 0.66,
+        "cooccurrence_count": 1,
+        "proximity_count": 4,
+        "strength": 0.764,
+        "source": "proximity"
+      },
+      {
+        "character1": "John",
+        "character2": "Weir Mitchell",
+        "primary_relation": "siblings",
+        "all_relations": [
+          "siblings"
+        ],
+        "relation_types": [
+          "siblings"
+        ],
+        "confidence": 0.66,
+        "cooccurrence_count": 1,
+        "proximity_count": 5,
+        "strength": 0.764,
+        "source": "proximity"
+      }
+    ]
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "Henry",
+        "label": "Henry"
+      },
+      {
+        "id": "Weir Mitchell",
+        "label": "Weir Mitchell"
+      },
+      {
+        "id": "Nellie",
+        "label": "Nellie"
+      },
+      {
+        "id": "Narrator (I)",
+        "label": "Narrator (I)"
+      },
+      {
+        "id": "Julia",
+        "label": "Julia"
+      },
+      {
+        "id": "Jennie",
+        "label": "Jennie"
+      },
+      {
+        "id": "John",
+        "label": "John"
+      }
+    ],
+    "edges": [
+      {
+        "source": "Henry",
+        "target": "Narrator (I)",
+        "relation": "extended-family",
+        "all_relations": [
+          "romantic",
+          "extended-family"
+        ],
+        "types": [
+          "romantic",
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "strength": 0.992,
+        "weight": 0.992,
+        "cooccurrence": 2,
+        "proximity": 28,
+        "count": 2,
+        "source_type": "proximity"
+      },
+      {
+        "source": "Julia",
+        "target": "Narrator (I)",
+        "relation": "extended-family",
+        "all_relations": [
+          "romantic",
+          "extended-family"
+        ],
+        "types": [
+          "romantic",
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "strength": 0.992,
+        "weight": 0.992,
+        "cooccurrence": 2,
+        "proximity": 28,
+        "count": 2,
+        "source_type": "proximity"
+      },
+      {
+        "source": "John",
+        "target": "Narrator (I)",
+        "relation": "married-couple",
+        "all_relations": [
+          "extended-family",
+          "siblings",
+          "romantic",
+          "married-couple",
+          "enemies",
+          "lovers"
+        ],
+        "types": [
+          "extended-family",
+          "siblings",
+          "romantic",
+          "married-couple",
+          "enemies",
+          "lovers"
+        ],
+        "confidence": 0.75,
+        "strength": 0.8999999999999999,
+        "weight": 0.8999999999999999,
+        "cooccurrence": 30,
+        "proximity": 513,
+        "count": 30,
+        "source_type": "proximity"
+      },
+      {
+        "source": "Henry",
+        "target": "Julia",
+        "relation": "extended-family",
+        "all_relations": [
+          "extended-family"
+        ],
+        "types": [
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "strength": 0.8920000000000001,
+        "weight": 0.8920000000000001,
+        "cooccurrence": 2,
+        "proximity": 2,
+        "count": 2,
+        "source_type": "proximity"
+      },
+      {
+        "source": "Henry",
+        "target": "John",
+        "relation": "extended-family",
+        "all_relations": [
+          "extended-family"
+        ],
+        "types": [
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "strength": 0.8919999999999999,
+        "weight": 0.8919999999999999,
+        "cooccurrence": 1,
+        "proximity": 5,
+        "count": 1,
+        "source_type": "proximity"
+      },
+      {
+        "source": "John",
+        "target": "Julia",
+        "relation": "extended-family",
+        "all_relations": [
+          "extended-family"
+        ],
+        "types": [
+          "extended-family"
+        ],
+        "confidence": 0.98,
+        "strength": 0.8919999999999999,
+        "weight": 0.8919999999999999,
+        "cooccurrence": 1,
+        "proximity": 5,
+        "count": 1,
+        "source_type": "proximity"
+      },
+      {
+        "source": "Jennie",
+        "target": "John",
+        "relation": "siblings",
+        "all_relations": [
+          "siblings"
+        ],
+        "types": [
+          "siblings"
+        ],
+        "confidence": 0.7100000000000001,
+        "strength": 0.8840000000000001,
+        "weight": 0.8840000000000001,
+        "cooccurrence": 2,
+        "proximity": 37,
+        "count": 2,
+        "source_type": "proximity"
+      },
+      {
+        "source": "John",
+        "target": "Nellie",
+        "relation": "siblings",
+        "all_relations": [
+          "siblings"
+        ],
+        "types": [
+          "siblings"
+        ],
+        "confidence": 0.66,
+        "strength": 0.764,
+        "weight": 0.764,
+        "cooccurrence": 1,
+        "proximity": 4,
+        "count": 1,
+        "source_type": "proximity"
+      },
+      {
+        "source": "John",
+        "target": "Weir Mitchell",
+        "relation": "siblings",
+        "all_relations": [
+          "siblings"
+        ],
+        "types": [
+          "siblings"
+        ],
+        "confidence": 0.66,
+        "strength": 0.764,
+        "weight": 0.764,
+        "cooccurrence": 1,
+        "proximity": 5,
+        "count": 1,
+        "source_type": "proximity"
+      }
+    ]
+  }
+}
