@@ -2,32 +2,61 @@
   "the_gift_of_magi.txt": {
     "summary": {
       "total_characters": 4,
-      "total_relations": 1,
+      "total_relations": 4,
       "characters": [
         "James Dillingham Young",
         "Jim",
         "Della",
         "Sofronie"
-      ],
-      "proximity_pairs": 5,
-      "specific_relations": 1
+      ]
     },
     "relations": [
       {
         "character1": "Della",
         "character2": "Jim",
-        "primary_relation": "lovers",
-        "all_relations": [
-          "lovers"
-        ],
+        "cooccurrence_count": 36,
+        "proximity_count": 35,
+        "direct_count": 1,
         "relation_types": [
-          "lovers"
+          "social",
+          "romantic",
+          "professional"
         ],
-        "confidence": 0.73,
-        "cooccurrence_count": 1,
-        "proximity_count": 65,
-        "strength": 0.792,
-        "source": "proximity"
+        "strength": 1.0
+      },
+      {
+        "character1": "James Dillingham Young",
+        "character2": "Jim",
+        "cooccurrence_count": 6,
+        "proximity_count": 5,
+        "direct_count": 1,
+        "relation_types": [
+          "social",
+          "romantic"
+        ],
+        "strength": 0.6666666666666667
+      },
+      {
+        "character1": "Della",
+        "character2": "James Dillingham Young",
+        "cooccurrence_count": 9,
+        "proximity_count": 8,
+        "direct_count": 1,
+        "relation_types": [
+          "professional"
+        ],
+        "strength": 0.6166666666666667
+      },
+      {
+        "character1": "Della",
+        "character2": "Sofronie",
+        "cooccurrence_count": 2,
+        "proximity_count": 2,
+        "direct_count": 0,
+        "relation_types": [
+          "professional"
+        ],
+        "strength": 0.21666666666666667
       }
     ],
     "graph": {
@@ -39,26 +68,55 @@
         {
           "id": "Della",
           "label": "Della"
+        },
+        {
+          "id": "James Dillingham Young",
+          "label": "James Dillingham Young"
+        },
+        {
+          "id": "Sofronie",
+          "label": "Sofronie"
         }
       ],
       "edges": [
         {
           "source": "Della",
           "target": "Jim",
-          "relation": "lovers",
-          "all_relations": [
-            "lovers"
-          ],
+          "weight": 1.0,
           "types": [
-            "lovers"
+            "social",
+            "romantic",
+            "professional"
           ],
-          "confidence": 0.73,
-          "strength": 0.792,
-          "weight": 0.792,
-          "cooccurrence": 1,
-          "proximity": 65,
-          "count": 1,
-          "source_type": "proximity"
+          "count": 36
+        },
+        {
+          "source": "James Dillingham Young",
+          "target": "Jim",
+          "weight": 0.6666666666666667,
+          "types": [
+            "social",
+            "romantic"
+          ],
+          "count": 6
+        },
+        {
+          "source": "Della",
+          "target": "James Dillingham Young",
+          "weight": 0.6166666666666667,
+          "types": [
+            "professional"
+          ],
+          "count": 9
+        },
+        {
+          "source": "Della",
+          "target": "Sofronie",
+          "weight": 0.21666666666666667,
+          "types": [
+            "professional"
+          ],
+          "count": 2
         }
       ]
     }
@@ -71,58 +129,45 @@
         "Narrator (I)",
         "The Old Man",
         "The Officers"
-      ],
-      "proximity_pairs": 3,
-      "specific_relations": 3
+      ]
     },
     "relations": [
       {
         "character1": "Narrator (I)",
         "character2": "The Old Man",
-        "primary_relation": "victim-perpetrator",
-        "all_relations": [
-          "victim-perpetrator"
-        ],
+        "cooccurrence_count": 107,
+        "proximity_count": 98,
+        "direct_count": 9,
         "relation_types": [
-          "victim-perpetrator"
+          "professional",
+          "romantic",
+          "social"
         ],
-        "confidence": 0.98,
-        "cooccurrence_count": 9,
-        "proximity_count": 179,
-        "strength": 0.992,
-        "source": "proximity"
+        "strength": 1.0
       },
       {
         "character1": "Narrator (I)",
         "character2": "The Officers",
-        "primary_relation": "victim-perpetrator",
-        "all_relations": [
-          "victim-perpetrator"
-        ],
+        "cooccurrence_count": 33,
+        "proximity_count": 32,
+        "direct_count": 1,
         "relation_types": [
-          "victim-perpetrator"
+          "cooccurrence"
         ],
-        "confidence": 0.77,
-        "cooccurrence_count": 1,
-        "proximity_count": 62,
-        "strength": 0.808,
-        "source": "proximity"
+        "strength": 0.6000000000000001
       },
       {
         "character1": "The Officers",
         "character2": "The Old Man",
-        "primary_relation": "victim-perpetrator",
-        "all_relations": [
-          "victim-perpetrator"
-        ],
+        "cooccurrence_count": 2,
+        "proximity_count": 2,
+        "direct_count": 0,
         "relation_types": [
-          "victim-perpetrator"
+          "professional",
+          "romantic",
+          "social"
         ],
-        "confidence": 0.82,
-        "cooccurrence_count": 0,
-        "proximity_count": 3,
-        "strength": 0.6779999999999999,
-        "source": "proximity"
+        "strength": 0.5166666666666666
       }
     ],
     "graph": {
@@ -132,68 +177,45 @@
           "label": "The Officers"
         },
         {
-          "id": "The Old Man",
-          "label": "The Old Man"
-        },
-        {
           "id": "Narrator (I)",
           "label": "Narrator (I)"
+        },
+        {
+          "id": "The Old Man",
+          "label": "The Old Man"
         }
       ],
       "edges": [
         {
           "source": "Narrator (I)",
           "target": "The Old Man",
-          "relation": "victim-perpetrator",
-          "all_relations": [
-            "victim-perpetrator"
-          ],
+          "weight": 1.0,
           "types": [
-            "victim-perpetrator"
+            "professional",
+            "romantic",
+            "social"
           ],
-          "confidence": 0.98,
-          "strength": 0.992,
-          "weight": 0.992,
-          "cooccurrence": 9,
-          "proximity": 179,
-          "count": 9,
-          "source_type": "proximity"
+          "count": 107
         },
         {
           "source": "Narrator (I)",
           "target": "The Officers",
-          "relation": "victim-perpetrator",
-          "all_relations": [
-            "victim-perpetrator"
-          ],
+          "weight": 0.6000000000000001,
           "types": [
-            "victim-perpetrator"
+            "cooccurrence"
           ],
-          "confidence": 0.77,
-          "strength": 0.808,
-          "weight": 0.808,
-          "cooccurrence": 1,
-          "proximity": 62,
-          "count": 1,
-          "source_type": "proximity"
+          "count": 33
         },
         {
           "source": "The Officers",
           "target": "The Old Man",
-          "relation": "victim-perpetrator",
-          "all_relations": [
-            "victim-perpetrator"
-          ],
+          "weight": 0.5166666666666666,
           "types": [
-            "victim-perpetrator"
+            "professional",
+            "romantic",
+            "social"
           ],
-          "confidence": 0.82,
-          "strength": 0.6779999999999999,
-          "weight": 0.6779999999999999,
-          "cooccurrence": 0,
-          "proximity": 3,
-          "count": 0,
-          "source_type": "proximity"
+          "count": 2
         }
       ]
     }
@@ -201,7 +223,7 @@
   "the_yellow_wallpaper.txt": {
     "summary": {
       "total_characters": 9,
-      "total_relations": 9,
+      "total_relations": 18,
       "characters": [
         "Weir Mitchell",
         "John",
@@ -212,176 +234,224 @@
         "Nellie",
         "Jane",
         "Narrator (I)"
-      ],
-      "proximity_pairs": 18,
-      "specific_relations": 13
+      ]
     },
     "relations": [
       {
+        "character1": "Jennie",
+        "character2": "John",
+        "cooccurrence_count": 25,
+        "proximity_count": 23,
+        "direct_count": 2,
+        "relation_types": [
+          "social",
+          "family",
+          "romantic"
+        ],
+        "strength": 1.0
+      },
+      {
+        "character1": "John",
+        "character2": "Narrator (I)",
+        "cooccurrence_count": 309,
+        "proximity_count": 279,
+        "direct_count": 30,
+        "relation_types": [
+          "social",
+          "family",
+          "romantic"
+        ],
+        "strength": 1.0
+      },
+      {
         "character1": "Henry",
         "character2": "Narrator (I)",
-        "primary_relation": "extended-family",
-        "all_relations": [
-          "extended-family",
-          "romantic"
-        ],
+        "cooccurrence_count": 17,
+        "proximity_count": 15,
+        "direct_count": 2,
         "relation_types": [
-          "extended-family",
-          "romantic"
+          "family"
         ],
-        "confidence": 0.98,
-        "cooccurrence_count": 2,
-        "proximity_count": 28,
-        "strength": 0.992,
-        "source": "proximity"
+        "strength": 0.85
       },
       {
         "character1": "Julia",
         "character2": "Narrator (I)",
-        "primary_relation": "extended-family",
-        "all_relations": [
-          "extended-family",
-          "romantic"
-        ],
+        "cooccurrence_count": 17,
+        "proximity_count": 15,
+        "direct_count": 2,
         "relation_types": [
-          "extended-family",
-          "romantic"
+          "family"
         ],
-        "confidence": 0.98,
-        "cooccurrence_count": 2,
-        "proximity_count": 28,
-        "strength": 0.992,
-        "source": "proximity"
-      },
-      {
-        "character1": "John",
-        "character2": "Narrator (I)",
-        "primary_relation": "married-couple",
-        "all_relations": [
-          "married-couple",
-          "siblings",
-          "extended-family",
-          "enemies",
-          "lovers",
-          "romantic"
-        ],
-        "relation_types": [
-          "married-couple",
-          "siblings",
-          "extended-family",
-          "enemies",
-          "lovers",
-          "romantic"
-        ],
-        "confidence": 0.75,
-        "cooccurrence_count": 30,
-        "proximity_count": 513,
-        "strength": 0.8999999999999999,
-        "source": "proximity"
-      },
-      {
-        "character1": "Henry",
-        "character2": "Julia",
-        "primary_relation": "extended-family",
-        "all_relations": [
-          "extended-family"
-        ],
-        "relation_types": [
-          "extended-family"
-        ],
-        "confidence": 0.98,
-        "cooccurrence_count": 2,
-        "proximity_count": 2,
-        "strength": 0.8920000000000001,
-        "source": "proximity"
+        "strength": 0.85
       },
       {
         "character1": "Henry",
         "character2": "John",
-        "primary_relation": "extended-family",
-        "all_relations": [
-          "extended-family"
-        ],
-        "relation_types": [
-          "extended-family"
-        ],
-        "confidence": 0.98,
-        "cooccurrence_count": 1,
-        "proximity_count": 5,
-        "strength": 0.8919999999999999,
-        "source": "proximity"
-      },
-      {
-        "character1": "John",
-        "character2": "Julia",
-        "primary_relation": "extended-family",
-        "all_relations": [
-          "extended-family"
-        ],
-        "relation_types": [
-          "extended-family"
-        ],
-        "confidence": 0.98,
-        "cooccurrence_count": 1,
-        "proximity_count": 5,
-        "strength": 0.8919999999999999,
-        "source": "proximity"
-      },
-      {
-        "character1": "Jennie",
-        "character2": "John",
-        "primary_relation": "siblings",
-        "all_relations": [
-          "siblings"
-        ],
-        "relation_types": [
-          "siblings"
-        ],
-        "confidence": 0.7100000000000001,
-        "cooccurrence_count": 2,
-        "proximity_count": 37,
-        "strength": 0.8840000000000001,
-        "source": "proximity"
-      },
-      {
-        "character1": "John",
-        "character2": "Nellie",
-        "primary_relation": "siblings",
-        "all_relations": [
-          "siblings"
-        ],
-        "relation_types": [
-          "siblings"
-        ],
-        "confidence": 0.66,
-        "cooccurrence_count": 1,
+        "cooccurrence_count": 5,
         "proximity_count": 4,
-        "strength": 0.764,
-        "source": "proximity"
+        "direct_count": 1,
+        "relation_types": [
+          "social",
+          "family",
+          "romantic"
+        ],
+        "strength": 0.7833333333333333
+      },
+      {
+        "character1": "John",
+        "character2": "Julia",
+        "cooccurrence_count": 5,
+        "proximity_count": 4,
+        "direct_count": 1,
+        "relation_types": [
+          "social",
+          "family",
+          "romantic"
+        ],
+        "strength": 0.7833333333333333
       },
       {
         "character1": "John",
         "character2": "Weir Mitchell",
-        "primary_relation": "siblings",
-        "all_relations": [
-          "siblings"
-        ],
+        "cooccurrence_count": 4,
+        "proximity_count": 3,
+        "direct_count": 1,
         "relation_types": [
-          "siblings"
+          "social",
+          "family",
+          "romantic"
         ],
-        "confidence": 0.66,
-        "cooccurrence_count": 1,
+        "strength": 0.75
+      },
+      {
+        "character1": "John",
+        "character2": "Nellie",
+        "cooccurrence_count": 3,
+        "proximity_count": 2,
+        "direct_count": 1,
+        "relation_types": [
+          "social",
+          "family",
+          "romantic"
+        ],
+        "strength": 0.7166666666666666
+      },
+      {
+        "character1": "Jennie",
+        "character2": "Narrator (I)",
+        "cooccurrence_count": 84,
+        "proximity_count": 78,
+        "direct_count": 6,
+        "relation_types": [
+          "cooccurrence"
+        ],
+        "strength": 0.7
+      },
+      {
+        "character1": "John",
+        "character2": "Mary",
+        "cooccurrence_count": 2,
+        "proximity_count": 2,
+        "direct_count": 0,
+        "relation_types": [
+          "social",
+          "family",
+          "romantic"
+        ],
+        "strength": 0.5166666666666666
+      },
+      {
+        "character1": "Henry",
+        "character2": "Julia",
+        "cooccurrence_count": 4,
+        "proximity_count": 2,
+        "direct_count": 2,
+        "relation_types": [
+          "family"
+        ],
+        "strength": 0.5166666666666666
+      },
+      {
+        "character1": "Narrator (I)",
+        "character2": "Weir Mitchell",
+        "cooccurrence_count": 8,
+        "proximity_count": 7,
+        "direct_count": 1,
+        "relation_types": [
+          "cooccurrence"
+        ],
+        "strength": 0.43333333333333335
+      },
+      {
+        "character1": "Jane",
+        "character2": "Narrator (I)",
+        "cooccurrence_count": 5,
+        "proximity_count": 4,
+        "direct_count": 1,
+        "relation_types": [
+          "cooccurrence"
+        ],
+        "strength": 0.33333333333333337
+      },
+      {
+        "character1": "Narrator (I)",
+        "character2": "Nellie",
+        "cooccurrence_count": 5,
         "proximity_count": 5,
-        "strength": 0.764,
-        "source": "proximity"
+        "direct_count": 0,
+        "relation_types": [
+          "family"
+        ],
+        "strength": 0.31666666666666665
+      },
+      {
+        "character1": "Nellie",
+        "character2": "Weir Mitchell",
+        "cooccurrence_count": 1,
+        "proximity_count": 1,
+        "direct_count": 0,
+        "relation_types": [
+          "family"
+        ],
+        "strength": 0.18333333333333332
+      },
+      {
+        "character1": "Jennie",
+        "character2": "Nellie",
+        "cooccurrence_count": 1,
+        "proximity_count": 1,
+        "direct_count": 0,
+        "relation_types": [
+          "family"
+        ],
+        "strength": 0.18333333333333332
+      },
+      {
+        "character1": "Mary",
+        "character2": "Narrator (I)",
+        "cooccurrence_count": 5,
+        "proximity_count": 5,
+        "direct_count": 0,
+        "relation_types": [
+          "cooccurrence"
+        ],
+        "strength": 0.16666666666666666
+      },
+      {
+        "character1": "Jennie",
+        "character2": "Weir Mitchell",
+        "cooccurrence_count": 1,
+        "proximity_count": 1,
+        "direct_count": 0,
+        "relation_types": [
+          "cooccurrence"
+        ],
+        "strength": 0.03333333333333333
       }
     ],
     "graph": {
       "nodes": [
-        {
-          "id": "John",
-          "label": "John"
-        },
         {
           "id": "Narrator (I)",
           "label": "Narrator (I)"
@@ -391,198 +461,210 @@
           "label": "Weir Mitchell"
         },
         {
+          "id": "Nellie",
+          "label": "Nellie"
+        },
+        {
+          "id": "Julia",
+          "label": "Julia"
+        },
+        {
           "id": "Henry",
           "label": "Henry"
         },
         {
-          "id": "Nellie",
-          "label": "Nellie"
+          "id": "Jane",
+          "label": "Jane"
+        },
+        {
+          "id": "Mary",
+          "label": "Mary"
         },
         {
           "id": "Jennie",
           "label": "Jennie"
         },
         {
-          "id": "Julia",
-          "label": "Julia"
+          "id": "John",
+          "label": "John"
         }
       ],
       "edges": [
         {
+          "source": "Jennie",
+          "target": "John",
+          "weight": 1.0,
+          "types": [
+            "social",
+            "family",
+            "romantic"
+          ],
+          "count": 25
+        },
+        {
+          "source": "John",
+          "target": "Narrator (I)",
+          "weight": 1.0,
+          "types": [
+            "social",
+            "family",
+            "romantic"
+          ],
+          "count": 309
+        },
+        {
           "source": "Henry",
           "target": "Narrator (I)",
-          "relation": "extended-family",
-          "all_relations": [
-            "extended-family",
-            "romantic"
-          ],
+          "weight": 0.85,
           "types": [
-            "extended-family",
-            "romantic"
+            "family"
           ],
-          "confidence": 0.98,
-          "strength": 0.992,
-          "weight": 0.992,
-          "cooccurrence": 2,
-          "proximity": 28,
-          "count": 2,
-          "source_type": "proximity"
+          "count": 17
         },
         {
           "source": "Julia",
           "target": "Narrator (I)",
-          "relation": "extended-family",
-          "all_relations": [
-            "extended-family",
-            "romantic"
-          ],
+          "weight": 0.85,
           "types": [
-            "extended-family",
-            "romantic"
+            "family"
           ],
-          "confidence": 0.98,
-          "strength": 0.992,
-          "weight": 0.992,
-          "cooccurrence": 2,
-          "proximity": 28,
-          "count": 2,
-          "source_type": "proximity"
-        },
-        {
-          "source": "John",
-          "target": "Narrator (I)",
-          "relation": "married-couple",
-          "all_relations": [
-            "married-couple",
-            "siblings",
-            "extended-family",
-            "enemies",
-            "lovers",
-            "romantic"
-          ],
-          "types": [
-            "married-couple",
-            "siblings",
-            "extended-family",
-            "enemies",
-            "lovers",
-            "romantic"
-          ],
-          "confidence": 0.75,
-          "strength": 0.8999999999999999,
-          "weight": 0.8999999999999999,
-          "cooccurrence": 30,
-          "proximity": 513,
-          "count": 30,
-          "source_type": "proximity"
-        },
-        {
-          "source": "Henry",
-          "target": "Julia",
-          "relation": "extended-family",
-          "all_relations": [
-            "extended-family"
-          ],
-          "types": [
-            "extended-family"
-          ],
-          "confidence": 0.98,
-          "strength": 0.8920000000000001,
-          "weight": 0.8920000000000001,
-          "cooccurrence": 2,
-          "proximity": 2,
-          "count": 2,
-          "source_type": "proximity"
+          "count": 17
         },
         {
           "source": "Henry",
           "target": "John",
-          "relation": "extended-family",
-          "all_relations": [
-            "extended-family"
-          ],
+          "weight": 0.7833333333333333,
           "types": [
-            "extended-family"
+            "social",
+            "family",
+            "romantic"
           ],
-          "confidence": 0.98,
-          "strength": 0.8919999999999999,
-          "weight": 0.8919999999999999,
-          "cooccurrence": 1,
-          "proximity": 5,
-          "count": 1,
-          "source_type": "proximity"
+          "count": 5
         },
         {
           "source": "John",
           "target": "Julia",
-          "relation": "extended-family",
-          "all_relations": [
-            "extended-family"
-          ],
+          "weight": 0.7833333333333333,
           "types": [
-            "extended-family"
+            "social",
+            "family",
+            "romantic"
           ],
-          "confidence": 0.98,
-          "strength": 0.8919999999999999,
-          "weight": 0.8919999999999999,
-          "cooccurrence": 1,
-          "proximity": 5,
-          "count": 1,
-          "source_type": "proximity"
-        },
-        {
-          "source": "Jennie",
-          "target": "John",
-          "relation": "siblings",
-          "all_relations": [
-            "siblings"
-          ],
-          "types": [
-            "siblings"
-          ],
-          "confidence": 0.7100000000000001,
-          "strength": 0.8840000000000001,
-          "weight": 0.8840000000000001,
-          "cooccurrence": 2,
-          "proximity": 37,
-          "count": 2,
-          "source_type": "proximity"
-        },
-        {
-          "source": "John",
-          "target": "Nellie",
-          "relation": "siblings",
-          "all_relations": [
-            "siblings"
-          ],
-          "types": [
-            "siblings"
-          ],
-          "confidence": 0.66,
-          "strength": 0.764,
-          "weight": 0.764,
-          "cooccurrence": 1,
-          "proximity": 4,
-          "count": 1,
-          "source_type": "proximity"
+          "count": 5
         },
         {
           "source": "John",
           "target": "Weir Mitchell",
-          "relation": "siblings",
-          "all_relations": [
-            "siblings"
-          ],
+          "weight": 0.75,
           "types": [
-            "siblings"
+            "social",
+            "family",
+            "romantic"
           ],
-          "confidence": 0.66,
-          "strength": 0.764,
-          "weight": 0.764,
-          "cooccurrence": 1,
-          "proximity": 5,
-          "count": 1,
-          "source_type": "proximity"
+          "count": 4
+        },
+        {
+          "source": "John",
+          "target": "Nellie",
+          "weight": 0.7166666666666666,
+          "types": [
+            "social",
+            "family",
+            "romantic"
+          ],
+          "count": 3
+        },
+        {
+          "source": "Jennie",
+          "target": "Narrator (I)",
+          "weight": 0.7,
+          "types": [
+            "cooccurrence"
+          ],
+          "count": 84
+        },
+        {
+          "source": "John",
+          "target": "Mary",
+          "weight": 0.5166666666666666,
+          "types": [
+            "social",
+            "family",
+            "romantic"
+          ],
+          "count": 2
+        },
+        {
+          "source": "Henry",
+          "target": "Julia",
+          "weight": 0.5166666666666666,
+          "types": [
+            "family"
+          ],
+          "count": 4
+        },
+        {
+          "source": "Narrator (I)",
+          "target": "Weir Mitchell",
+          "weight": 0.43333333333333335,
+          "types": [
+            "cooccurrence"
+          ],
+          "count": 8
+        },
+        {
+          "source": "Jane",
+          "target": "Narrator (I)",
+          "weight": 0.33333333333333337,
+          "types": [
+            "cooccurrence"
+          ],
+          "count": 5
+        },
+        {
+          "source": "Narrator (I)",
+          "target": "Nellie",
+          "weight": 0.31666666666666665,
+          "types": [
+            "family"
+          ],
+          "count": 5
+        },
+        {
+          "source": "Nellie",
+          "target": "Weir Mitchell",
+          "weight": 0.18333333333333332,
+          "types": [
+            "family"
+          ],
+          "count": 1
+        },
+        {
+          "source": "Jennie",
+          "target": "Nellie",
+          "weight": 0.18333333333333332,
+          "types": [
+            "family"
+          ],
+          "count": 1
+        },
+        {
+          "source": "Mary",
+          "target": "Narrator (I)",
+          "weight": 0.16666666666666666,
+          "types": [
+            "cooccurrence"
+          ],
+          "count": 5
+        },
+        {
+          "source": "Jennie",
+          "target": "Weir Mitchell",
+          "weight": 0.03333333333333333,
+          "types": [
+            "cooccurrence"
+          ],
+          "count": 1
         }
       ]
     }
