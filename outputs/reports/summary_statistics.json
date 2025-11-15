@@ -1,10 +1,25 @@
 {
-  "total_documents": 1,
+  "total_documents": 4,
   "documents": {
+    "owl_creek_bridge": {
+      "sentences": 200,
+      "characters": 1,
+      "relations": 0
+    },
     "the_gift_of_magi": {
       "sentences": 156,
-      "characters": 6,
+      "characters": 4,
       "relations": 4
+    },
+    "the_tell_tale_heart": {
+      "sentences": 150,
+      "characters": 3,
+      "relations": 3
+    },
+    "the_yellow_wallpaper": {
+      "sentences": 390,
+      "characters": 9,
+      "relations": 18
     }
   }
 }

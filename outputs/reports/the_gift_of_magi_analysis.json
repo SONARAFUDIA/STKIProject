@@ -1,33 +1,29 @@
 {
   "metadata": {
     "filename": "the_gift_of_magi.txt",
-    "processed_at": "2025-11-12T15:57:17.340256",
+    "processed_at": "2025-11-15T23:12:28.562500",
     "sentence_count": 156
   },
   "characters": {
     "statistics": {
-      "total_characters": 6,
+      "total_characters": 4,
       "most_mentioned": [
         "Jim",
         44
       ],
-      "average_mentions": 14.333333333333334,
+      "average_mentions": 20.5,
       "character_list": [
         "Della",
         "James Dillingham Young",
         "Jim",
-        "Sheba",
-        "Sofronie",
-        "Solomon"
+        "Sofronie"
       ]
     },
     "details": {
       "James Dillingham Young": 14,
       "Jim": 44,
       "Della": 21,
-      "Sofronie": 3,
-      "Sheba": 2,
-      "Solomon": 2
+      "Sofronie": 3
     }
   },
   "traits": {
@@ -202,47 +198,6 @@
         }
       ]
     },
-    "Sheba": {
-      "character": "Sheba",
-      "raw_traits": [
-        "flat"
-      ],
-      "trait_frequency": {
-        "flat": 1
-      },
-      "classified_traits": {
-        "positive": [],
-        "negative": [],
-        "emotional": [],
-        "physical": [],
-        "behavioral": [],
-        "other": [
-          "flat"
-        ]
-      },
-      "evidence_sentences": [
-        {
-          "sentence": "Had the queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majestys jewels and gifts.",
-          "traits": [
-            "flat"
-          ]
-        }
-      ]
-    },
-    "Solomon": {
-      "character": "Solomon",
-      "raw_traits": [],
-      "trait_frequency": {},
-      "classified_traits": {
-        "positive": [],
-        "negative": [],
-        "emotional": [],
-        "physical": [],
-        "behavioral": [],
-        "other": []
-      },
-      "evidence_sentences": []
-    },
     "Sofronie": {
       "character": "Sofronie",
       "raw_traits": [
@@ -337,12 +292,12 @@
         "label": "James Dillingham Young"
       },
       {
-        "id": "Jim",
-        "label": "Jim"
-      },
-      {
         "id": "Sofronie",
         "label": "Sofronie"
+      },
+      {
+        "id": "Jim",
+        "label": "Jim"
       }
     ],
     "edges": [
