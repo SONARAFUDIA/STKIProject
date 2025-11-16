@@ -1,0 +1,7 @@
+spacy
+nltk
+textblob
+networkx
+matplotlib
+pandas
+numpy
