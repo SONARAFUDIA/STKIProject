@@ -1,13 +1,13 @@
-# 📚 Analisis Karakter pada Karya Sastra
+# Analisis Karakter pada Karya Sastra
 
 **Mini Project STKI (Sistem Temu Kembali Informasi)**  
-Sistem ekstraksi dan analisis karakter otomatis dalam cerita berbahasa Inggris menggunakan Natural Language Processing (NLP).
+Sistem ekstraksi dan analisis karakter dalam karya sastra berbahasa Inggris
 
 ---
 
-## 🎯 Tujuan Proyek
+## Tujuan Proyek
 
-Project ini bertujuan untuk informasi dari karya sastra yang terdiri dari:
+Project ini bertujuan untuk ekstraksi informasi dari karya sastra yang terdiri dari:
 
 1. **Tokoh/Karakter** yang muncul dalam cerita
 2. **Watak/Trait** dari setiap karakter
@@ -16,13 +16,13 @@ Project ini bertujuan untuk informasi dari karya sastra yang terdiri dari:
 
 ---
 
-## 🗂️ Struktur Proyek
+## Struktur Proyek
 
 ```
 STKIProject/
 │
-├── data/                           # Data cerita untuk analisis
-│   ├── raw/                        # Cerita asli (format .txt)
+├── data/                           # Data cerita
+│   ├── raw/                        # Dokumen  (format .txt)
 │   │   ├── owl_creek_bridge.txt
 │   │   ├── the_gift_of_magi.txt
 │   │   ├── the_tell_tale_heart.txt
@@ -55,29 +55,28 @@ STKIProject/
 │
 ├── main.py                         # Script utama untuk menjalankan sistem
 ├── requirements.txt                # Dependencies Python
-└── README.md                       # Dokumentasi (file ini)
+└── README.md                       # Dokumentasi
 ```
 
 ---
 
-## 🧪 Eksperimen yang Dikerjakan
+## Eksperimen yang Dikerjakan
 
-### **Eksperimen 1: Character Extraction (NER)**
+### **Eksperimen 1: Ekstraksi Nama**
 
-📁 `experiments/exp_01_ner_testing.py`
+`experiments/exp_01_ner_testing.py`
 
 **Tujuan:** Menguji akurasi deteksi karakter dari cerita menggunakan Named Entity Recognition (NER).
 
 **Metode:**
 
--   Ekstraksi menggunakan **spaCy NER** (untuk nama proper)
--   **Pattern matching** untuk role-based characters (e.g., "The Old Man", "Narrator")
--   **Normalisasi nama** untuk merge variants (e.g., "Jim" → "James Dillingham Young")
+-   Ekstraksi menggunakan **spaCy NER**
+-   **Pattern matching** untuk role-based characters (contoh: "The Old Man", "Narrator")
+-   **Normalisasi nama** untuk merge variants (contoh: "Jim" → "James Dillingham Young")
 
 **Hasil yang Diharapkan:**
 
--   Daftar karakter utama dengan jumlah sebutan masing-masing
--   Akurasi deteksi: target **90%+**
+-   Daftar karakter dengan jumlah sebutan masing-masing
 
 **Output:**
 
@@ -85,7 +84,7 @@ STKIProject/
 ✓ Characters found: 4
 ✓ Most mentioned: Della (45 mentions)
 
-📋 Main Characters:
+Characters:
   - Della: 45 mentions
   - Jim: 38 mentions
   - James Dillingham Young: 12 mentions
@@ -94,9 +93,8 @@ STKIProject/
 
 ---
 
-### **Eksperimen 2: Trait Extraction**
-
-📁 `experiments/exp_02_trait_testing.py`
+### **Eksperimen 2: Ekstraksi Watak**
+`experiments/exp_02_trait_testing.py`
 
 **Tujuan:** Mengekstrak sifat/watak karakter dari konteks kalimat.
 
@@ -119,11 +117,11 @@ STKIProject/
 **Output:**
 
 ```
-🎭 Analyzing character: Della
+Analyzing character: Della
   ✓ Total trait mentions: 23
   ✓ Unique traits: 12
 
-📊 Top 5 Traits:
+Top 5 Traits:
   - beautiful: 5x
   - poor: 3x
   - loving: 3x
@@ -133,9 +131,9 @@ STKIProject/
 
 ---
 
-### **Eksperimen 3: Relation Extraction** ⭐
+### **Eksperimen 3: Ekstraksi Hubungan**
 
-📁 `experiments/exp_03_relation_testing.py`
+`experiments/exp_03_relation_testing.py`
 
 **Tujuan:** Mendeteksi dan mengklasifikasi hubungan antar karakter.
 
@@ -157,7 +155,7 @@ STKIProject/
 **Output:**
 
 ```
-🔗 Detected Relations:
+Detected Relations:
 
 1. Della ↔ Jim
    Primary Relation: lovers
@@ -173,7 +171,7 @@ STKIProject/
    Strength: 0.99
 ```
 
-**Visualisasi:** Graf jaringan hubungan karakter (NetworkX + Matplotlib)
+**Output Visualisasi:** Graf jaringan hubungan karakter (NetworkX + Matplotlib)
 
 ---
 
@@ -199,7 +197,7 @@ STKIProject/
 
 ---
 
-## 🚀 Cara Menjalankan
+## Cara Menjalankan
 
 ### **1. Install Dependencies**
 
@@ -238,13 +236,13 @@ python main.py --mode experiment --experiment full
 
 ---
 
-## 📊 Hasil Analisis
+## Hasil Ejstraksi
 
 ### **Output Files**
 
-#### **1. JSON Reports** (`outputs/reports/*.json`)
+#### ** JSON Reports** (`outputs/reports/*.json`) ✅
 
-Hasil analisis dalam format JSON untuk pemrosesan lebih lanjut.
+Hasil ekstraksi dalam format JSON untuk pemrosesan lebih lanjut.
 
 ```json
 {
@@ -266,15 +264,7 @@ Hasil analisis dalam format JSON untuk pemrosesan lebih lanjut.
 }
 ```
 
-#### **2. Markdown Reports** (`outputs/reports/*.md`)
-
-Laporan human-readable dalam format Markdown.
-
-#### **3. HTML Reports** (`outputs/reports/*.html`)
-
-Laporan interaktif dengan styling untuk presentasi.
-
-#### **4. Visualisasi Graf** (`outputs/visualizations/*.png`)
+#### ** Visualisasi Graf** (`outputs/visualizations/*.png`) ✅
 
 Grafik jaringan hubungan karakter:
 
@@ -285,7 +275,7 @@ Grafik jaringan hubungan karakter:
 
 ---
 
-## 🔧 Teknologi yang Digunakan
+## 🔧 Library yang Digunakan
 
 | Library        | Fungsi                                      |
 | -------------- | ------------------------------------------- |
@@ -299,97 +289,35 @@ Grafik jaringan hubungan karakter:
 
 ---
 
-## 📈 Evaluasi & Hasil
+## Kekurangan dan batasan:
 
-### **Metrics yang Diukur**
+### **1. Deteksi Nama**
 
--   **Character Detection**: Precision, Recall, F1-Score
--   **Trait Classification**: Accuracy per kategori
--   **Relation Detection**: Accuracy, Strength score
-
-### **Hasil Eksperimen (Summary)**
-
-| Story                    | Characters | Relations | Top Relation                            |
-| ------------------------ | ---------- | --------- | --------------------------------------- |
-| **The Gift of Magi**     | 4          | 1         | Della ↔ Jim (lovers)                    |
-| **The Tell-Tale Heart**  | 3          | 3         | Narrator ↔ Old Man (victim-perpetrator) |
-| **The Yellow Wallpaper** | 9          | 9         | John ↔ Narrator (married-couple)        |
-| **Owl Creek Bridge**     | 1\*        | 0\*       | _(GAGAL - perlu fix)_                   |
-
-**Catatan:** Owl Creek Bridge memiliki issue deteksi karakter yang perlu diperbaiki.
-
----
-
-## ⚠️ Known Issues & Limitations
-
-### **1. Character Detection**
-
--   **Military ranks** (Captain, Sergeant) kadang ter-filter sebagai titles
+-   Deteksi nama yang menggunakan gelar terkadang tidak muncul
 -   **Generic references** ("the man", "the soldier") tidak di-track
 -   Butuh story-specific role detection
 
-### **2. Relation Classification**
+### **2. Klasifikasi Hubungan**
 
--   Relasi yang **bertentangan** bisa muncul bersamaan (e.g., `married-couple` + `siblings`)
--   Butuh conflict resolution mechanism
--   Context story (genre, tema) belum dimanfaatkan optimal
+-   Deteksi hubungan yang masih **generic**, menampilkan hubungan sederhana
 
-### **3. Trait Extraction**
+### **3. Ekstraksi Watak**
 
 -   Terbatas pada adjectives yang ada di keyword dictionary
 -   Trait inference dari action verb masih sederhana
--   Butuh deeper semantic analysis
+-   Butuh semantic analysis yang mendalam
 
----
+### **4. Limitasi Bahasa**
 
-## 🔮 Future Work
-
-### **High Priority**
-
-1. ✅ Fix character detection di "Owl Creek Bridge"
-2. ✅ Implement relation conflict resolution
-3. ✅ Add story context awareness (genre detection)
-4. ✅ Enhanced trait inference menggunakan pre-trained models
-
-### **Medium Priority**
-
-5. 📊 Character arc tracking (perubahan karakter sepanjang cerita)
-6. 💬 Dialog analysis (speech pattern per karakter)
-7. 🧠 Coreference resolution yang lebih baik
-8. 🌐 Web interface dengan Streamlit/Dash
-
-### **Low Priority**
-
-9. 🤖 ML-based character archetype classification
-10. 📈 Comparative analysis antar cerita
-11. 🚀 REST API deployment
-12. 🐳 Docker containerization
-
----
-
-## 👥 Tim Pengembang
-
-**Mini Project STKI**  
-Universitas: [Nama Universitas]  
-Mata Kuliah: Sistem Temu Kembali Informasi  
-Tahun: 2024/2025
+-   Hanya dapat men-ekstraksi dokumen dalam Bahasa Inggris
 
 ---
 
 ## 📝 License
 
-Proyek ini dibuat untuk keperluan akademis dan pembelajaran.
+-
 
 ---
-
-## 📚 Referensi
-
-### **Papers & Resources:**
-
-1. **Named Entity Recognition**: spaCy Documentation
-2. **Character Network Analysis**: Network Science by Albert-László Barabási
-3. **Trait Extraction**: Personality and Social Psychology Literature
-4. **Relation Extraction**: Information Extraction in NLP
 
 ### **Cerita yang Digunakan:**
 
@@ -397,50 +325,3 @@ Proyek ini dibuat untuk keperluan akademis dan pembelajaran.
 -   **"The Gift of the Magi"** - O. Henry (1905)
 -   **"The Tell-Tale Heart"** - Edgar Allan Poe (1843)
 -   **"The Yellow Wallpaper"** - Charlotte Perkins Gilman (1892)
-
----
-
-## 🆘 Troubleshooting
-
-### **Error: Model 'en_core_web_lg' not found**
-
-```bash
-python -m spacy download en_core_web_lg
-```
-
-### **Error: No module named 'textblob'**
-
-```bash
-pip install textblob
-python -m textblob.download_corpora
-```
-
-### **Visualisasi tidak muncul**
-
-Pastikan matplotlib backend sudah ter-set:
-
-```python
-import matplotlib
-matplotlib.use('Agg')  # Untuk save file tanpa display
-```
-
-### **Character detection terlalu sedikit**
-
-Coba turunkan `min_mentions` threshold:
-
-```python
-char_extractor.extract_characters(text, sentences, min_mentions=1)
-```
-
----
-
-## 📧 Kontak
-
-Untuk pertanyaan atau kontribusi, silakan hubungi:
-
--   **Email**: [email@example.com]
--   **GitHub**: [github.com/username/project]
-
----
-
-**Happy Analyzing! 🎭📖**
