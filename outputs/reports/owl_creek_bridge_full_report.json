@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "filename": "owl_creek_bridge.txt",
+    "processed_at": "2025-11-16T11:31:22.699507",
+    "sentence_count": 200
+  },
+  "characters": {
+    "statistics": {
+      "total_characters": 1,
+      "most_mentioned": [
+        "Peyton Farquhar",
+        18
+      ],
+      "average_mentions": 18.0,
+      "character_list": [
+        "Peyton Farquhar"
+      ]
+    },
+    "details": {
+      "Peyton Farquhar": 18
+    },
+    "contexts": {
+      "Peyton Farquhar": [
+        {
+          "sentence_id": 55,
+          "sentence": "II Peyton Farquhar was a well to do planter, of an old and highly respected Alabama family."
+        },
+        {
+          "sentence_id": 82,
+          "sentence": "III As Peyton Farquhar fell straight downward through the bridge he lost consciousness and was as one already dead."
+        },
+        {
+          "sentence_id": 199,
+          "sentence": "Peyton Farquhar was dead; his body, with a broken neck, swung gently from side to side beneath the timbers of the Owl Creek bridge."
+        }
+      ]
+    }
+  },
+  "traits": {
+    "Peyton Farquhar": {
+      "character": "Peyton Farquhar",
+      "raw_traits": [
+        "dead",
+        "dead",
+        "dead"
+      ],
+      "trait_frequency": {
+        "dead": 3
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "dead",
+          "dead",
+          "dead"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Peyton Farquhar was dead; his body, with a broken neck, swung gently from side to side beneath the timbers of the Owl Creek bridge.",
+          "traits": [
+            "dead",
+            "dead",
+            "dead"
+          ]
+        }
+      ]
+    }
+  },
+  "relations": {
+    "summary": {
+      "total_relations": 0,
+      "cooccurrence_pairs": 0
+    },
+    "details": [],
+    "graph": {
+      "nodes": [],
+      "edges": []
+    }
+  }
+}
