@@ -1,0 +1,467 @@
+{
+  "metadata": {
+    "filename": "the_gift_of_magi.txt",
+    "processed_at": "2025-11-16T11:30:42.752861",
+    "sentence_count": 156
+  },
+  "characters": {
+    "statistics": {
+      "total_characters": 4,
+      "most_mentioned": [
+        "Jim",
+        44
+      ],
+      "average_mentions": 20.5,
+      "character_list": [
+        "Della",
+        "James Dillingham Young",
+        "Jim",
+        "Sofronie"
+      ]
+    },
+    "details": {
+      "James Dillingham Young": 14,
+      "Jim": 44,
+      "Della": 21,
+      "Sofronie": 3
+    },
+    "contexts": {
+      "Della": [
+        {
+          "sentence_id": 4,
+          "sentence": "Three times Della counted it."
+        },
+        {
+          "sentence_id": 8,
+          "sentence": "So Della did it."
+        },
+        {
+          "sentence_id": 16,
+          "sentence": "Now, when the income was shrunk to 20, though, they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called Jim and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della."
+        },
+        {
+          "sentence_id": 18,
+          "sentence": "Della finished her cry and attended to her cheeks with the powder rag."
+        },
+        {
+          "sentence_id": 31,
+          "sentence": "Della, being slender, had mastered the art."
+        },
+        {
+          "sentence_id": 38,
+          "sentence": "Had the queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majestys jewels and gifts."
+        },
+        {
+          "sentence_id": 48,
+          "sentence": "One flight up Della ran, and collected herself, panting."
+        },
+        {
+          "sentence_id": 51,
+          "sentence": "asked Della."
+        },
+        {
+          "sentence_id": 56,
+          "sentence": "Give it to me quick, said Della."
+        },
+        {
+          "sentence_id": 71,
+          "sentence": "When Della reached home her intoxication gave way a little to prudence and reason."
+        },
+        {
+          "sentence_id": 81,
+          "sentence": "Della doubled the fob chain in her hand and sat on the corner of the table near the door that he always entered."
+        },
+        {
+          "sentence_id": 89,
+          "sentence": "His eyes were fixed upon Della, and there was an expression in them that she could not read, and it terrified her."
+        },
+        {
+          "sentence_id": 92,
+          "sentence": "Della wriggled off the table and went for him."
+        },
+        {
+          "sentence_id": 103,
+          "sentence": "Cut it off and sold it, said Della."
+        },
+        {
+          "sentence_id": 109,
+          "sentence": "You neednt look for it, said Della."
+        },
+        {
+          "sentence_id": 116,
+          "sentence": "He enfolded his Della."
+        },
+        {
+          "sentence_id": 129,
+          "sentence": "For there lay The Combsthe set of combs, side and back, that Della had worshipped long in a Broadway window."
+        },
+        {
+          "sentence_id": 134,
+          "sentence": "And then Della leaped up like a little singed cat and cried, Oh, oh!"
+        }
+      ],
+      "James Dillingham Young": [
+        {
+          "sentence_id": 14,
+          "sentence": "Also appertaining thereunto was a card bearing the name Mr. James Dillingham Young."
+        },
+        {
+          "sentence_id": 16,
+          "sentence": "Now, when the income was shrunk to 20, though, they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called Jim and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della."
+        }
+      ],
+      "Jim": [
+        {
+          "sentence_id": 16,
+          "sentence": "Now, when the income was shrunk to 20, though, they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called Jim and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della."
+        },
+        {
+          "sentence_id": 20,
+          "sentence": "Tomorrow would be Christmas Day, and she had only 1.87 with which to buy Jim a present."
+        },
+        {
+          "sentence_id": 25,
+          "sentence": "Only 1.87 to buy a present for Jim."
+        },
+        {
+          "sentence_id": 27,
+          "sentence": "Something fine and rare and sterlingsomething just a little bit near to being worthy of the honor of being owned by Jim."
+        },
+        {
+          "sentence_id": 39,
+          "sentence": "Had King Solomon been the janitor, with all his treasures piled up in the basement, Jim would have pulled out his watch every time he passed, just to see him pluck at his beard from envy."
+        },
+        {
+          "sentence_id": 61,
+          "sentence": "It surely had been made for Jim and no one else."
+        },
+        {
+          "sentence_id": 69,
+          "sentence": "With that chain on his watch Jim might be properly anxious about the time in any company."
+        },
+        {
+          "sentence_id": 76,
+          "sentence": "If Jim doesnt kill me, she said to herself, before he takes a second look at me, hell say I look like a Coney Island chorus girl."
+        },
+        {
+          "sentence_id": 80,
+          "sentence": "Jim was never late."
+        },
+        {
+          "sentence_id": 84,
+          "sentence": "The door opened and Jim stepped in and closed it."
+        },
+        {
+          "sentence_id": 88,
+          "sentence": "Jim stopped inside the door, as immovable as a setter at the scent of quail."
+        },
+        {
+          "sentence_id": 93,
+          "sentence": "Jim, darling, she cried, dont look at me that way."
+        },
+        {
+          "sentence_id": 99,
+          "sentence": "Jim, and lets be happy."
+        },
+        {
+          "sentence_id": 102,
+          "sentence": "asked Jim, laboriously, as if he had not arrived at that patent fact yet even after the hardest mental labor."
+        },
+        {
+          "sentence_id": 106,
+          "sentence": "Jim looked about the room curiously."
+        },
+        {
+          "sentence_id": 114,
+          "sentence": "Shall I put the chops on, Jim?"
+        },
+        {
+          "sentence_id": 115,
+          "sentence": "Out of his trance Jim seemed quickly to wake."
+        },
+        {
+          "sentence_id": 122,
+          "sentence": "Jim drew a package from his overcoat pocket and threw it upon the table."
+        },
+        {
+          "sentence_id": 133,
+          "sentence": "But she hugged them to her bosom, and at length she was able to look up with dim eyes and a smile and say: My hair grows so fast, Jim!"
+        },
+        {
+          "sentence_id": 135,
+          "sentence": "Jim had not yet seen his beautiful present."
+        },
+        {
+          "sentence_id": 138,
+          "sentence": "Isnt it a dandy, Jim?"
+        },
+        {
+          "sentence_id": 143,
+          "sentence": "Instead of obeying, Jim tumbled down on the couch and put his hands under the back of his head and smiled."
+        }
+      ],
+      "Sofronie": [
+        {
+          "sentence_id": 49,
+          "sentence": "Madame, large, too white, chilly, hardly looked the Sofronie."
+        }
+      ]
+    }
+  },
+  "traits": {
+    "Della": {
+      "character": "Della",
+      "raw_traits": [
+        "slender",
+        "flat",
+        "quick",
+        "positive_context",
+        "little"
+      ],
+      "trait_frequency": {
+        "slender": 1,
+        "flat": 1,
+        "quick": 1,
+        "positive_context": 1,
+        "little": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "quick",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [],
+        "physical": [
+          "slender"
+        ],
+        "behavioral": [],
+        "other": [
+          "flat",
+          "little"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Della, being slender, had mastered the art.",
+          "traits": [
+            "slender"
+          ]
+        },
+        {
+          "sentence": "Had the queen of Sheba lived in the flat across the airshaft, Della would have let her hair hang out the window some day to dry just to depreciate Her Majestys jewels and gifts.",
+          "traits": [
+            "flat"
+          ]
+        },
+        {
+          "sentence": "Give it to me quick, said Della.",
+          "traits": [
+            "quick",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "And then Della leaped up like a little singed cat and cried, Oh, oh!",
+          "traits": [
+            "little"
+          ]
+        }
+      ]
+    },
+    "James Dillingham Young": {
+      "character": "James Dillingham Young",
+      "raw_traits": [
+        "unassuming"
+      ],
+      "trait_frequency": {
+        "unassuming": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "unassuming"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Now, when the income was shrunk to 20, though, they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called Jim and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della.",
+          "traits": [
+            "unassuming"
+          ]
+        }
+      ]
+    },
+    "Jim": {
+      "character": "Jim",
+      "raw_traits": [
+        "flat",
+        "positive_context",
+        "anxious",
+        "late",
+        "happy",
+        "positive_context",
+        "positive_context",
+        "positive_context"
+      ],
+      "trait_frequency": {
+        "flat": 1,
+        "positive_context": 4,
+        "anxious": 1,
+        "late": 1,
+        "happy": 1
+      },
+      "classified_traits": {
+        "positive": [
+          "positive_context",
+          "happy",
+          "positive_context",
+          "positive_context",
+          "positive_context"
+        ],
+        "negative": [],
+        "emotional": [
+          "anxious"
+        ],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "flat",
+          "late"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Now, when the income was shrunk to 20, though, they were thinking seriously of contracting to a modest and unassuming D. But whenever Mr. James Dillingham Young came home and reached his flat above he was called Jim and greatly hugged by Mrs. James Dillingham Young, already introduced to you as Della.",
+          "traits": [
+            "flat"
+          ]
+        },
+        {
+          "sentence": "It surely had been made for Jim and no one else.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "With that chain on his watch Jim might be properly anxious about the time in any company.",
+          "traits": [
+            "anxious"
+          ]
+        },
+        {
+          "sentence": "Jim was never late.",
+          "traits": [
+            "late"
+          ]
+        },
+        {
+          "sentence": "Jim, and lets be happy.",
+          "traits": [
+            "happy",
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Out of his trance Jim seemed quickly to wake.",
+          "traits": [
+            "positive_context"
+          ]
+        },
+        {
+          "sentence": "Jim had not yet seen his beautiful present.",
+          "traits": [
+            "positive_context"
+          ]
+        }
+      ]
+    },
+    "Sofronie": {
+      "character": "Sofronie",
+      "raw_traits": [
+        "chilly"
+      ],
+      "trait_frequency": {
+        "chilly": 1
+      },
+      "classified_traits": {
+        "positive": [],
+        "negative": [],
+        "emotional": [],
+        "physical": [],
+        "behavioral": [],
+        "other": [
+          "chilly"
+        ]
+      },
+      "evidence_sentences": [
+        {
+          "sentence": "Madame, large, too white, chilly, hardly looked the Sofronie.",
+          "traits": [
+            "chilly"
+          ]
+        }
+      ]
+    }
+  },
+  "relations": {
+    "summary": {
+      "total_relations": 1,
+      "cooccurrence_pairs": 3
+    },
+    "details": [
+      {
+        "character1": "Della",
+        "character2": "Jim",
+        "primary_relation": "lovers",
+        "all_relations": [
+          "lovers"
+        ],
+        "relation_types": [
+          "lovers"
+        ],
+        "confidence": 0.73,
+        "cooccurrence_count": 1,
+        "proximity_count": 65,
+        "strength": 0.792,
+        "source": "proximity"
+      }
+    ],
+    "graph": {
+      "nodes": [
+        {
+          "id": "Jim",
+          "label": "Jim"
+        },
+        {
+          "id": "Della",
+          "label": "Della"
+        }
+      ],
+      "edges": [
+        {
+          "source": "Della",
+          "target": "Jim",
+          "relation": "lovers",
+          "all_relations": [
+            "lovers"
+          ],
+          "types": [
+            "lovers"
+          ],
+          "confidence": 0.73,
+          "strength": 0.792,
+          "weight": 0.792,
+          "cooccurrence": 1,
+          "proximity": 65,
+          "count": 1,
+          "source_type": "proximity"
+        }
+      ]
+    }
+  }
+}
