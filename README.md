@@ -177,7 +177,7 @@ Detected Relations:
 
 ### **Eksperimen 4: Full Pipeline**
 
-📁 `experiments/exp_04_full_pipeline.py`
+`experiments/exp_04_full_pipeline.py`
 
 **Tujuan:** Menjalankan seluruh pipeline analisis end-to-end.
 
@@ -240,7 +240,7 @@ python main.py --mode experiment --experiment full
 
 ### **Output Files**
 
-#### ** JSON Reports** (`outputs/reports/*.json`) ✅
+#### **JSON Reports** (`outputs/reports/*.json`) ✅
 
 Hasil ekstraksi dalam format JSON untuk pemrosesan lebih lanjut.
 
@@ -264,7 +264,7 @@ Hasil ekstraksi dalam format JSON untuk pemrosesan lebih lanjut.
 }
 ```
 
-#### ** Visualisasi Graf** (`outputs/visualizations/*.png`) ✅
+#### **Visualisasi Graf** (`outputs/visualizations/*.png`) ✅
 
 Grafik jaringan hubungan karakter:
 
@@ -272,6 +272,12 @@ Grafik jaringan hubungan karakter:
 -   Edge = Hubungan (dengan label tipe relasi)
 -   Thickness = Kekuatan hubungan
 -   Color = Tingkat kepercayaan
+
+#### **Markdown Reports** (`outputs/reports/*.md`)
+Laporan human-readable dalam format Markdown.
+
+#### **HTML Reports** (`outputs/reports/*.html`)
+Laporan interaktif dengan styling untuk presentasi.
 
 ---
 
