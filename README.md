@@ -1,7 +1,7 @@
 # Analisis Karakter pada Karya Sastra
 
 **Mini Project STKI (Sistem Temu Kembali Informasi)**  
-Sistem ekstraksi dan analisis karakter dalam karya sastra berbahasa Inggris
+Sistem ekstraksi dan analisis hubungan karakter dalam karya sastra berbahasa Inggris
 
 ---
 
@@ -17,45 +17,61 @@ Project ini bertujuan untuk ekstraksi informasi dari karya sastra yang terdiri d
 ---
 
 ## Struktur Proyek
+Updated at 23:51 - 15/12/2025
 
 ```
 STKIProject/
 │
-├── data/                           # Data cerita
-│   ├── raw/                        # Dokumen  (format .txt)
-│   │   ├── owl_creek_bridge.txt
-│   │   ├── the_gift_of_magi.txt
-│   │   ├── the_tell_tale_heart.txt
-│   │   └── the_yellow_wallpaper.txt
-│   ├── processed/                  # Data hasil preprocessing (Output dihasilkan ketika menjalankan main.py)
-│   └── results/                    # Hasil analisis (Output dihasilkan ketika menjalankan main.py)
+├── data/                           # Data cerita (tidak berubah)
+│   ├── raw/                        # Dokumen (format .txt)
+│   ├── processed/
+│   └── results/
 │
-├── src/                            # Source code utama sebagai proses ekstraksi
+├── src/                            # Source code
 │   ├── __init__.py
-│   ├── preprocessing.py            # Pembersihan & segmentasi teks
-│   ├── ner_extraction.py           # Ekstraksi nama karakter
-│   ├── trait_extraction.py         # Ekstraksi watak karakter
-│   ├── relation_extraction.py      # Ekstraksi hubungan antar karakter
-│   ├── name_normalizer.py          # Normalisasi variasi nama
-│   └── utils.py                    # Utility & report generator
+│   ├── preprocessing.py            # Pembersihan & segmentasi teks (ENHANCED - tambah POS & n-gram)
+│   ├── entity_extraction/          # NEW MODULE
+│   │   ├── __init__.py
+│   │   ├── base_extractor.py       # 🆕 Abstract base class
+│   │   ├── method1_capitalization.py  # 🆕 Method 1
+│   │   ├── method2_tfidf.py        # 🆕 Method 2
+│   │   ├── method3_embeddings.py   # 🆕 Method 3
+│   │   ├── ensemble_voter.py       # 🆕 Voting & fusion logic
+│   │   └── entity_validator.py     # 🆕 Blacklist & validation
+│   ├── trait_extraction.py         # (To be changed)
+│   ├── relation_extraction.py      # (To be changed)
+│   ├── name_normalizer.py          # ❌
+│   └── utils.py                    # (To be changed)
 │
-├── experiments/                    # Code eksperimen & testing
+├── experiments/                    # Experiments - UPDATED
 │   ├── __init__.py
-│   ├── exp_01_ner_testing.py       # Eksperimen 1: Tes NER
-│   ├── exp_02_trait_testing.py     # Eksperimen 2: Tes Ekstraksi watak
-│   ├── exp_03_relation_testing.py  # Eksperimen 3: Tes Ekstraksi hubungan
-│   ├── exp_04_full_pipeline.py     # Eksperimen 4: Full Pipeline
-│   ├── debug_cooccurrence.py       # Debug co-occurrence detection
-│   └── test_della_problem.py       # Debug character detection
+│   ├── exp_05_entity_extraction.py # (To be added)
+│   ├── exp_06_method_comparison.py # (To be added)
+│   ├── exp_07_ensemble_tuning.py   # (To be added)
+│   └── ground_truth/               # (To be added)
+│       ├── the_gift_of_magi_gt.json
+│       ├── owl_creek_bridge_gt.json
+│       └── ...
 │
-├── outputs/                        # Hasil analisis & visualisasi
-│   ├── reports/                    # Laporan JSON, Markdown, HTML
-│   ├── visualizations/             # Grafik relasi karakter (PNG)
-│   └── exp_*.json                  # Hasil eksperimen
+├── configs/                        # (To be added)
+│   ├── default_config.yaml         # (To be added)
+│   ├── method1_config.yaml         # (To be added)
+│   ├── method2_config.yaml
+│   └── method3_config.yaml
 │
-├── main.py                         # Script utama untuk menjalankan sistem
-├── requirements.txt                # Dependencies Python
-└── README.md                       # Dokumentasi
+├── models/                         # (To be added)
+│   └── embeddings/                 # (To be added)
+│       └── all-MiniLM-L6-v2/
+│
+├── outputs/                        # Outputs
+│   ├── reports/
+│   ├── visualizations/
+│   ├── metrics/                    # (To be changed)
+│   └── debug/                      # (To be changed)
+│
+├── main.py                         # (To be changed)
+├── requirements.txt                # (To be changed)
+└── README.md                       # (To be changed)
 ```
 
 ---
@@ -64,15 +80,17 @@ STKIProject/
 
 ### **Eksperimen 1: Ekstraksi Nama**
 
-`experiments/exp_01_ner_testing.py`
+`/src/entity_extraction`
 
-**Tujuan:** Menguji akurasi deteksi karakter dari cerita menggunakan Named Entity Recognition (NER).
+**Tujuan:** Menguji akurasi deteksi karakter dari cerita
 
 **Metode:**
 
--   Ekstraksi menggunakan **spaCy NER**
--   **Pattern matching** untuk role-based characters (contoh: "The Old Man", "Narrator")
--   **Normalisasi nama** untuk merge variants (contoh: "Jim" → "James Dillingham Young")
+Ekstraksi menggunakan:
+1. Capitalization Mining (unsupervised)
+2. TF-IDF Ranking (unsupervised)
+3. BERTopic Clustering (unsupervised embeddings)
+4. Voting mechanism dari 3 metode
 
 **Hasil yang Diharapkan:**
 
