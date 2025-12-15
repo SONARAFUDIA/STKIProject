@@ -1,0 +1,212 @@
+# Default Configuration for Hybrid Ensemble Entity Extraction
+# File: configs/default_config.yaml
+
+# ============================================================================
+# PREPROCESSING CONFIGURATION
+# ============================================================================
+preprocessing:
+  ngram_range: [1, 3]        # Extract 1-3 word n-grams
+  min_propn_length: 2        # Minimum length for proper nouns
+  track_positions: true      # Track mention positions in text
+
+# ============================================================================
+# METHOD 1: CAPITALIZATION-BASED EXTRACTION
+# ============================================================================
+method1:
+  min_mentions: 3            # Minimum mentions to consider
+  consistency_threshold: 0.65 # Minimum capitalization consistency
+  
+  position_weights:
+    sentence_start: 0.5      # Weight for sentence-start mentions
+    mid_sentence: 1.0        # Weight for mid-sentence mentions (strong signal)
+    after_punctuation: 0.7   # Weight after punctuation
+  
+  # Blacklist (non-character entities)
+  blacklist:
+    # Temporal
+    - christmas
+    - monday
+    - tuesday
+    - wednesday
+    - thursday
+    - friday
+    - saturday
+    - sunday
+    - january
+    - february
+    - march
+    - april
+    - may
+    - june
+    - july
+    - august
+    - september
+    - october
+    - november
+    - december
+    - today
+    - tomorrow
+    - yesterday
+    
+    # Religious/Mythological
+    - god
+    - lord
+    - jesus
+    - christ
+    - moses
+    - magi
+    - wise men
+    
+    # Geographic
+    - america
+    - american
+    - alabama
+    - england
+    - english
+    
+    # Political/Military
+    - federal
+    - yankee
+    - yanks
+    - confederate
+    - union
+    
+    # Common false positives
+    - dear
+    - young
+    - old
+    
+    # Story-specific references
+    - sheba
+    - solomon
+    - king solomon
+    - queen of sheba
+  
+  # Title patterns (boost confidence)
+  title_patterns:
+    - "^(Mr|Mrs|Miss|Ms|Dr|Sir|Madam|Mme)\\.?\\s+\\w+"
+    - "^The\\s+[A-Z]\\w+(\\s+[A-Z]\\w+)*$"
+
+# ============================================================================
+# METHOD 2: TF-IDF STATISTICAL RANKING
+# ============================================================================
+method2:
+  min_tfidf_score: 0.10      # Minimum TF-IDF score threshold
+  max_df: 0.8                # Max document frequency (filter common words)
+  min_df: 2                  # Min document frequency (filter rare)
+  top_k: 15                  # Top K entities per document
+  similarity_threshold: 0.6  # Threshold for variant detection
+  min_mentions: 2            # Minimum mentions
+  cross_doc_penalty: 0.15    # Penalty for appearing in many docs
+  vocabulary_type: propn_only # Use only proper nouns in vocabulary
+
+# ============================================================================
+# METHOD 3: EMBEDDINGS & SEMANTIC CLUSTERING
+# ============================================================================
+method3:
+  # Embedding model (Sentence-BERT)
+  embedding_model: all-MiniLM-L6-v2  # Fast & efficient (384-dim)
+  # Alternatives:
+  # - all-mpnet-base-v2 (768-dim, more accurate but slower)
+  # - paraphrase-MiniLM-L6-v2 (384-dim)
+  
+  context_window: 5          # Tokens before/after mention for context
+  
+  # Clustering parameters (HDBSCAN)
+  min_cluster_size: 2        # Minimum cluster size
+  min_samples: 1             # Minimum samples for core points
+  cluster_selection_epsilon: 0.3  # Distance threshold
+  
+  similarity_threshold: 0.7  # Cosine similarity for fallback clustering
+  min_mentions: 2            # Minimum mentions
+  
+  # Special character detection
+  detect_narrator: true      # Detect first-person narrator
+  detect_roles: true         # Detect role-based characters
+  
+  pronoun_weight: 0.2        # Weight for pronoun association
+  
+  # Role patterns
+  role_patterns:
+    old_man:
+      - "\\bold man\\b"
+      - "\\bthe old man\\b"
+    old_woman:
+      - "\\bold woman\\b"
+      - "\\bthe old woman\\b"
+    officers:
+      - "\\bofficers?\\b"
+      - "\\bpolice\\b"
+      - "\\bpolicemen\\b"
+    soldiers:
+      - "\\bsoldiers?\\b"
+      - "\\bprivates?\\b"
+    neighbor:
+      - "\\bneighbou?rs?\\b"
+    servant:
+      - "\\bservants?\\b"
+      - "\\bmaids?\\b"
+    doctor:
+      - "\\bdoctors?\\b"
+      - "\\bphysicians?\\b"
+    narrator:
+      - "\\bnarrator\\b"
+      - "\\bi\\s+(?:am|was|feel|thought|saw)\\b"
+
+# ============================================================================
+# ENSEMBLE VOTING & FUSION
+# ============================================================================
+ensemble:
+  # Method weights (must sum to 1.0)
+  method_weights:
+    Method1_Capitalization: 0.30
+    Method2_TFIDF: 0.30
+    Method3_Embeddings: 0.40  # Higher weight for semantic understanding
+  
+  # Confidence thresholds (adaptive by entity type)
+  min_confidence: 0.50           # Base minimum confidence
+  single_word_confidence_boost: 0.75   # Higher threshold for single words
+  multi_word_confidence_boost: 0.60    # Standard for multi-word names
+  role_based_confidence_boost: 0.50    # Lower for role-based characters
+  
+  min_mentions: 2              # Minimum total mentions
+  alignment_strategy: fuzzy    # 'fuzzy' or 'strict' entity alignment
+  conflict_resolution: weighted # 'weighted' or 'majority' voting
+  similarity_threshold: 0.7    # For variant matching
+
+# ============================================================================
+# EXECUTION SETTINGS
+# ============================================================================
+execution:
+  parallel: false             # Parallel method execution (future feature)
+  save_intermediate: true     # Save intermediate results
+  save_debug_info: true       # Save debug information
+
+# ============================================================================
+# OUTPUT SETTINGS
+# ============================================================================
+output:
+  formats:
+    - json
+    - markdown
+    - html
+  
+  visualization:
+    create_graphs: true       # Create relation graphs
+    graph_format: png         # png, svg, pdf
+    dpi: 300                  # Graph resolution
+
+# ============================================================================
+# EVALUATION SETTINGS
+# ============================================================================
+evaluation:
+  metrics:
+    - precision
+    - recall
+    - f1_score
+  
+  confidence_bins:
+    - 0.9                     # Very high
+    - 0.8                     # High
+    - 0.6                     # Medium
+    - 0.0                     # Low
