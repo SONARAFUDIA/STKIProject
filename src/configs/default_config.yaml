@@ -88,17 +88,23 @@ method1:
     - "^The\\s+[A-Z]\\w+(\\s+[A-Z]\\w+)*$"
 
 # ============================================================================
-# METHOD 2: TF-IDF STATISTICAL RANKING
+# METHOD 2: TF-ISF STATISTICAL RANKING (Updated from TF-IDF)
 # ============================================================================
 method2:
-  min_tfidf_score: 0.10      # Minimum TF-IDF score threshold
-  max_df: 0.8                # Max document frequency (filter common words)
-  min_df: 2                  # Min document frequency (filter rare)
-  top_k: 15                  # Top K entities per document
+  min_tfisf_score: 0.015     # Minimum TF-ISF score threshold
+  max_sf: 0.8                # Max sentence frequency ratio (filter too common)
+  min_sf: 2                  # Min sentence frequency (filter rare mentions)
+  top_k: 15                  # Top K entities
   similarity_threshold: 0.6  # Threshold for variant detection
-  min_mentions: 2            # Minimum mentions
-  cross_doc_penalty: 0.15    # Penalty for appearing in many docs
+  min_mentions: 2            # Minimum total mentions
+  prominence_boost: 0.1      # Boost for prominent characters (10-30% SF)
   vocabulary_type: propn_only # Use only proper nouns in vocabulary
+  
+  # TF-ISF vs TF-IDF:
+  # - Sentence-level granularity (not document-level)
+  # - Better for single-document analysis
+  # - ISF = log(total_sentences / sentences_containing_term)
+  # - More discriminative for character importance
 
 # ============================================================================
 # METHOD 3: EMBEDDINGS & SEMANTIC CLUSTERING
@@ -160,7 +166,7 @@ ensemble:
   # Method weights (must sum to 1.0)
   method_weights:
     Method1_Capitalization: 0.30
-    Method2_TFIDF: 0.30
+    Method2_TFISF: 0.30          # Updated from TFIDF
     Method3_Embeddings: 0.40  # Higher weight for semantic understanding
   
   # Confidence thresholds (adaptive by entity type)
