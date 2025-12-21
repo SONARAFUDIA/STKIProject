@@ -34,7 +34,7 @@ STKIProject/
 │   │   ├── __init__.py
 │   │   ├── base_extractor.py       # 🆕 Abstract base class
 │   │   ├── method1_capitalization.py  # 🆕 Method 1
-│   │   ├── method2_tfidf.py        # 🆕 Method 2
+│   │   ├── method2_tfisf.py        # 🆕 Method 2
 │   │   ├── method3_embeddings.py   # 🆕 Method 3
 │   │   ├── ensemble_voter.py       # 🆕 Voting & fusion logic
 │   │   └── entity_validator.py     # 🆕 Blacklist & validation
@@ -87,9 +87,9 @@ STKIProject/
 **Metode:**
 
 Ekstraksi menggunakan:
-1. Capitalization Mining (unsupervised)
-2. TF-IDF Ranking (unsupervised)
-3. BERTopic Clustering (unsupervised embeddings)
+1. Capitalization Mining
+2. TF-ISF Ranking
+3. BERTopic Clustering
 4. Voting mechanism dari 3 metode
 
 **Hasil yang Diharapkan:**

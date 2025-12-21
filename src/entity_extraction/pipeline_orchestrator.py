@@ -18,7 +18,7 @@ from preprocessing import EnhancedTextPreprocessor
 
 # Import extraction methods
 from entity_extraction.method1_capitalization import CapitalizationExtractor
-from entity_extraction.method2_tfidf import TFIDFExtractor
+from entity_extraction.method2_tfisf import TFISFExtractor
 from entity_extraction.method3_embeddings import EmbeddingsExtractor
 from entity_extraction.ensemble_voter import EnsembleVoter
 
@@ -133,9 +133,9 @@ class EntityExtractionPipeline:
                 config=self.config.get('method1')
             )
             
-            # Method 2: TF-IDF
-            self.logger.info("  → Initializing Method 2 (TF-IDF)...")
-            self.method2 = TFIDFExtractor(
+            # Method 2: TF-ISF
+            self.logger.info("  → Initializing Method 2 (TF-ISF)...")
+            self.method2 = TFISFExtractor(
                 config=self.config.get('method2')
             )
             
@@ -285,18 +285,18 @@ class EntityExtractionPipeline:
             self.logger.error(f"    ✗ Method 1 failed: {e}")
             method_results['Method1_Capitalization'] = {'candidates': []}
         
-        # Method 2: TF-IDF
-        self.logger.info("\n  [Method 2] TF-IDF Statistical Ranking")
+        # Method 2: TF-ISF
+        self.logger.info("\n  [Method 2] TF-ISF Statistical Ranking")
         stage_start = time.time()
         try:
             method2_results = self.method2.extract(preprocessed)
-            method_results['Method2_TFIDF'] = method2_results
+            method_results['Method2_TFISF'] = method2_results
             elapsed = time.time() - stage_start
             self.timing_stats['method2'] = elapsed
             self.logger.info(f"    ✓ Found {len(method2_results['candidates'])} candidates ({elapsed:.2f}s)")
         except Exception as e:
             self.logger.error(f"    ✗ Method 2 failed: {e}")
-            method_results['Method2_TFIDF'] = {'candidates': []}
+            method_results['Method2_TFISF'] = {'candidates': []}
         
         # Method 3: Embeddings
         self.logger.info("\n  [Method 3] Semantic Embeddings & Clustering")
