@@ -12,10 +12,10 @@ import json
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from entity_extraction.pipeline_orchestrator import EntityExtractionPipeline
-from trait_extraction import TraitExtractor
-from relation_extraction import RelationExtractor
-from utils import ReportGenerator
+from src.entity_extraction.pipeline_orchestrator import EntityExtractionPipeline
+from src.trait_extraction import TraitExtractor
+from src.relation_extraction import RelationExtractor
+from src.utils import ReportGenerator
 
 def setup_directories():
     """Setup required directories"""
