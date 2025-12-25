@@ -1,592 +1,482 @@
 """
-Ensemble Voting & Fusion Mechanism
-File: src/entity_extraction/ensemble_voter.py
+Method 3: Semantic Embeddings & Clustering for Entity Extraction
+File: src/entity_extraction/method3_embeddings.py
+
+Uses:
+- Sentence-BERT embeddings for semantic representation
+- HDBSCAN clustering for grouping similar mentions
+- Context-aware character detection (narrator, roles)
 """
 
-from typing import Dict, List, Any, Tuple, Optional
+from typing import Dict, List, Any, Tuple
 import numpy as np
 from collections import defaultdict, Counter
 import re
-from sklearn.metrics.pairwise import cosine_similarity
-import logging
+from .base_extractor import BaseEntityExtractor
 
-class EnsembleVoter:
+# Sentence transformers
+try:
+    from sentence_transformers import SentenceTransformer
+    SENTENCE_TRANSFORMERS_AVAILABLE = True
+except ImportError:
+    SENTENCE_TRANSFORMERS_AVAILABLE = False
+    print("⚠️  sentence-transformers not installed. Method 3 will use fallback mode.")
+
+# Clustering
+try:
+    from sklearn.cluster import HDBSCAN
+    HDBSCAN_AVAILABLE = True
+except ImportError:
+    try:
+        import hdbscan
+        HDBSCAN_AVAILABLE = True
+    except ImportError:
+        HDBSCAN_AVAILABLE = False
+        print("⚠️  HDBSCAN not installed. Method 3 will use fallback clustering.")
+
+from sklearn.metrics.pairwise import cosine_similarity
+
+class EmbeddingsExtractor(BaseEntityExtractor):
     """
-    Ensemble voting mechanism untuk menggabungkan hasil dari 3 methods
+    Extract entities using semantic embeddings and clustering
     
     Features:
-    - Multi-method alignment & matching
-    - Weighted voting with confidence calibration
-    - Conflict resolution strategy
-    - Variant merging across methods
-    - Quality control & filtering
+    - Context-aware embeddings for each mention
+    - Semantic clustering to group variants
+    - Special character detection (narrator, roles)
+    - Pronoun association for unnamed characters
     """
-    
-    def __init__(self, config: Dict[str, Any] = None):
-        """
-        Initialize ensemble voter
-        
-        Args:
-            config: Configuration dict with:
-                - method_weights: Dict of weights per method
-                - min_confidence: Minimum confidence threshold
-                - alignment_strategy: 'fuzzy' or 'strict'
-                - conflict_resolution: 'majority' or 'weighted'
-        """
-        self.config = config or self.get_default_config()
-        self.logger = self._setup_logger()
     
     def get_default_config(self) -> Dict[str, Any]:
         """Default configuration"""
         return {
-            'method_weights': {
-                'Method1_Capitalization': 0.30,
-                'Method2_TFISF': 0.30,  # Updated from TFIDF
-                'Method3_Embeddings': 0.40  # Higher weight for semantic
-            },
-            'min_confidence': 0.50,
-            'min_mentions': 2,
-            'alignment_strategy': 'fuzzy',  # or 'strict'
-            'conflict_resolution': 'weighted',  # or 'majority'
+            'embedding_model': 'all-MiniLM-L6-v2',
+            'context_window': 5,
+            'min_cluster_size': 2,
+            'min_samples': 1,
+            'cluster_selection_epsilon': 0.3,
             'similarity_threshold': 0.7,
-            'single_word_confidence_boost': 0.75,  # Require higher for single words
-            'multi_word_confidence_boost': 0.60,
-            'role_based_confidence_boost': 0.50
+            'min_mentions': 2,
+            'detect_narrator': True,
+            'detect_roles': True,
+            'pronoun_weight': 0.2,
+            'role_patterns': {
+                'old_man': [r'\bold man\b', r'\bthe old man\b'],
+                'old_woman': [r'\bold woman\b', r'\bthe old woman\b'],
+                'officers': [r'\bofficers?\b', r'\bpolice\b', r'\bpolicemen\b'],
+                'soldiers': [r'\bsoldiers?\b', r'\bprivates?\b'],
+                'neighbor': [r'\bneighbou?rs?\b'],
+                'servant': [r'\bservants?\b', r'\bmaids?\b'],
+                'doctor': [r'\bdoctors?\b', r'\bphysicians?\b'],
+                'narrator': [r'\bnarrator\b', r'\bi\s+(?:am|was|feel|thought|saw)\b']
+            }
         }
     
-    def _setup_logger(self) -> logging.Logger:
-        """Setup logger"""
-        logger = logging.getLogger('EnsembleVoter')
-        if not logger.handlers:
-            handler = logging.StreamHandler()
-            formatter = logging.Formatter('[%(levelname)s] Ensemble: %(message)s')
-            handler.setFormatter(formatter)
-            logger.addHandler(handler)
-            logger.setLevel(logging.INFO)
-        return logger
+    def get_method_name(self) -> str:
+        return "Method3_Embeddings"
     
-    def vote(self, 
-             method_results: Dict[str, Dict[str, Any]],
-             preprocessed_data: Dict[str, Any]) -> Dict[str, Any]:
+    def extract(self, preprocessed_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Main voting function - combines results from all methods
+        Extract entities using embeddings and clustering
         
-        Args:
-            method_results: Dict mapping method_name -> extraction results
-            preprocessed_data: Original preprocessed data
-        
-        Returns:
-            Dict with ensemble results
+        Pipeline:
+        1. Load embedding model
+        2. Build context embeddings for candidates
+        3. Cluster embeddings to group variants
+        4. Detect special characters (narrator, roles)
+        5. Score and rank candidates
         """
-        self.logger.info("="*70)
-        self.logger.info("Starting Ensemble Voting")
-        self.logger.info("="*70)
+        self.validate_input(preprocessed_data)
+        self.logger.info("Starting embeddings-based extraction...")
         
-        # Step 1: Validate inputs
-        self._validate_inputs(method_results)
+        sentences = preprocessed_data['sentences']
+        propn_candidates = preprocessed_data['propn_candidates']
         
-        # Step 2: Align entities across methods
-        alignment = self._align_entities(method_results)
-        self.logger.info(f"  ✓ Aligned {len(alignment)} unique entities")
+        # Check if libraries available
+        if not SENTENCE_TRANSFORMERS_AVAILABLE:
+            self.logger.warning("  Sentence transformers not available, using fallback")
+            return self._fallback_extraction(preprocessed_data)
         
-        # Step 3: Calculate ensemble scores
-        scored_entities = self._calculate_ensemble_scores(
-            alignment,
-            method_results
+        # Step 1: Load model
+        self.logger.info(f"  Loading embedding model: {self.config['embedding_model']}")
+        try:
+            self.model = SentenceTransformer(self.config['embedding_model'])
+        except Exception as e:
+            self.logger.error(f"  Failed to load model: {e}")
+            return self._fallback_extraction(preprocessed_data)
+        
+        # Step 2: Build context embeddings
+        self.logger.info("  Building context embeddings...")
+        candidate_embeddings = self._build_context_embeddings(
+            propn_candidates,
+            sentences
         )
-        self.logger.info(f"  ✓ Calculated scores for {len(scored_entities)} entities")
+        self.logger.info(f"    → {len(candidate_embeddings)} candidates with embeddings")
         
-        # Step 4: Resolve conflicts
-        resolved_entities = self._resolve_conflicts(scored_entities)
-        self.logger.info(f"  ✓ Resolved conflicts: {len(resolved_entities)} entities")
+        if not candidate_embeddings:
+            self.logger.warning("  No candidates with embeddings found")
+            return self._fallback_extraction(preprocessed_data)
         
-        # Step 5: Merge variants
-        merged_entities = self._merge_variants(resolved_entities)
-        self.logger.info(f"  ✓ Merged variants: {len(merged_entities)} final entities")
+        # Step 3: Cluster embeddings
+        self.logger.info("  Clustering embeddings...")
+        clusters = self._cluster_embeddings(candidate_embeddings)
+        self.logger.info(f"    → {len(set(clusters.values()))} clusters formed")
         
-        # Step 6: Quality control & filtering
-        filtered_entities = self._quality_control(
-            merged_entities,
-            preprocessed_data
+        # Step 4: Build candidates from clusters
+        cluster_candidates = self._build_candidates_from_clusters(
+            clusters,
+            candidate_embeddings
         )
-        self.logger.info(f"  ✓ Quality control: {len(filtered_entities)} entities passed")
+        self.logger.info(f"    → {len(cluster_candidates)} cluster candidates")
         
-        # Step 7: Sort by confidence
-        final_entities = sorted(
-            filtered_entities,
-            key=lambda x: x['confidence'],
-            reverse=True
-        )
+        # Step 5: Detect special characters
+        special_candidates = []
         
-        # Generate statistics
-        stats = self._generate_statistics(
-            final_entities,
-            method_results,
-            alignment
-        )
+        if self.config['detect_narrator']:
+            narrator = self._detect_narrator(sentences)
+            if narrator:
+                special_candidates.append(narrator)
+                self.logger.info(f"    → Narrator detected: {narrator['name']}")
         
-        self.logger.info("="*70)
-        self.logger.info(f"Ensemble Complete: {len(final_entities)} final entities")
-        self.logger.info("="*70)
+        if self.config['detect_roles']:
+            roles = self._detect_role_based_characters(sentences)
+            special_candidates.extend(roles)
+            if roles:
+                self.logger.info(f"    → {len(roles)} role-based characters detected")
+        
+        # Step 6: Combine and score
+        all_candidates = cluster_candidates + special_candidates
+        scored_candidates = self._score_candidates(all_candidates)
+        
+        # Step 7: Filter and sort
+        filtered = [c for c in scored_candidates if c['mentions'] >= self.config['min_mentions']]
+        final_candidates = sorted(filtered, key=lambda x: x['score'], reverse=True)
+        
+        self.logger.info(f"  Final: {len(final_candidates)} candidates")
         
         return {
-            'entities': final_entities,
-            'statistics': stats,
-            'alignment': alignment,
-            'method_contributions': self._analyze_method_contributions(
-                final_entities
-            )
+            'candidates': final_candidates,
+            'method_name': self.get_method_name(),
+            'statistics': self.get_statistics({'candidates': final_candidates}),
+            'clusters': clusters,
+            'special_characters': [c['name'] for c in special_candidates]
         }
     
-    def _validate_inputs(self, method_results: Dict[str, Dict[str, Any]]):
-        """Validate that all expected methods are present"""
-        expected_methods = list(self.config['method_weights'].keys())
-        
-        for method in expected_methods:
-            if method not in method_results:
-                self.logger.warning(f"Missing results from {method}")
-            elif 'candidates' not in method_results[method]:
-                raise ValueError(f"{method} results missing 'candidates' field")
-    
-    def _align_entities(self, 
-                       method_results: Dict[str, Dict[str, Any]]) -> Dict[str, Dict]:
+    def _build_context_embeddings(self, 
+                                  candidates: set, 
+                                  sentences: List[str]) -> Dict[str, List[Dict]]:
         """
-        Align entities across methods using fuzzy/strict matching
+        Build context embeddings for each candidate mention
         
         Returns:
-            Dict mapping canonical_name -> {
-                'method1_name': str,
-                'method2_name': str,
-                'method3_name': str,
-                'detected_by': List[str],
-                'all_variants': List[str]
-            }
+            Dict mapping candidate -> list of mention embeddings with context
         """
-        # Collect all candidates from all methods
-        all_candidates = {}
+        candidate_embeddings = defaultdict(list)
+        context_window = self.config['context_window']
         
-        for method_name, results in method_results.items():
-            candidates = results.get('candidates', [])
-            all_candidates[method_name] = {
-                c['name']: c for c in candidates
-            }
-        
-        # Build alignment matrix
-        alignment = {}
-        processed = set()
-        
-        # Get list of all unique names across methods
-        all_names = set()
-        for method_candidates in all_candidates.values():
-            all_names.update(method_candidates.keys())
-        
-        for name in all_names:
-            if name in processed:
-                continue
+        for sent_id, sentence in enumerate(sentences):
+            tokens = sentence.split()
             
-            # Find matches across methods
-            matches = self._find_cross_method_matches(
-                name,
-                all_candidates
+            for token_id, token in enumerate(tokens):
+                # Check if token is a candidate
+                candidate = None
+                if token in candidates:
+                    candidate = token
+                elif token.lower().capitalize() in candidates:
+                    candidate = token.lower().capitalize()
+                
+                if candidate:
+                    # Extract context
+                    start = max(0, token_id - context_window)
+                    end = min(len(tokens), token_id + context_window + 1)
+                    context = ' '.join(tokens[start:end])
+                    
+                    # Get embedding
+                    try:
+                        embedding = self.model.encode(context)
+                        
+                        candidate_embeddings[candidate].append({
+                            'embedding': embedding,
+                            'context': context,
+                            'sentence_id': sent_id,
+                            'token_id': token_id
+                        })
+                    except Exception as e:
+                        self.logger.debug(f"    Failed to encode context for {candidate}: {e}")
+        
+        return dict(candidate_embeddings)
+    
+    def _cluster_embeddings(self, candidate_embeddings: Dict[str, List[Dict]]) -> Dict[str, int]:
+        """
+        Cluster candidate embeddings to group variants
+        
+        Returns:
+            Dict mapping candidate -> cluster_id
+        """
+        # Collect all embeddings with labels
+        all_embeddings = []
+        labels = []
+        
+        for candidate, mentions in candidate_embeddings.items():
+            for mention in mentions:
+                all_embeddings.append(mention['embedding'])
+                labels.append(candidate)
+        
+        if len(all_embeddings) < 2:
+            # Not enough data to cluster
+            return {labels[0]: 0} if labels else {}
+        
+        all_embeddings = np.array(all_embeddings)
+        
+        # Try HDBSCAN first
+        if HDBSCAN_AVAILABLE:
+            try:
+                clusterer = hdbscan.HDBSCAN(
+                    min_cluster_size=self.config['min_cluster_size'],
+                    min_samples=self.config['min_samples'],
+                    cluster_selection_epsilon=self.config['cluster_selection_epsilon'],
+                    metric='euclidean'
+                )
+                cluster_labels = clusterer.fit_predict(all_embeddings)
+                
+                # Map candidates to clusters
+                clusters = {}
+                for label, cluster_id in zip(labels, cluster_labels):
+                    if label not in clusters:
+                        clusters[label] = cluster_id
+                
+                return clusters
+            except Exception as e:
+                self.logger.warning(f"  HDBSCAN failed: {e}, using fallback")
+        
+        # Fallback: similarity-based clustering
+        return self._fallback_clustering(labels, all_embeddings)
+    
+    def _fallback_clustering(self, labels: List[str], embeddings: np.ndarray) -> Dict[str, int]:
+        """
+        Fallback clustering using cosine similarity
+        """
+        # Average embeddings per candidate
+        candidate_avg_embeddings = {}
+        
+        for label, emb in zip(labels, embeddings):
+            if label not in candidate_avg_embeddings:
+                candidate_avg_embeddings[label] = []
+            candidate_avg_embeddings[label].append(emb)
+        
+        # Average
+        for label in candidate_avg_embeddings:
+            candidate_avg_embeddings[label] = np.mean(
+                candidate_avg_embeddings[label], 
+                axis=0
             )
-            
-            if not matches:
-                continue
-            
-            # Determine canonical name
-            canonical = self._select_canonical_name(matches)
-            
-            # Build alignment entry
-            alignment[canonical] = {
-                'matches': matches,
-                'detected_by': list(matches.keys()),
-                'all_variants': self._collect_variants(matches),
-                'detection_count': len(matches)
-            }
-            
-            # Mark as processed
-            processed.add(canonical)
-            for method_matches in matches.values():
-                processed.update(method_matches)
         
-        return alignment
-    
-    def _find_cross_method_matches(self,
-                                   name: str,
-                                   all_candidates: Dict[str, Dict]) -> Dict[str, List[str]]:
-        """
-        Find matching names across methods
+        # Compute similarity matrix
+        candidates = list(candidate_avg_embeddings.keys())
+        embeddings_matrix = np.array([candidate_avg_embeddings[c] for c in candidates])
         
-        Returns:
-            Dict mapping method_name -> list of matching names in that method
-        """
-        matches = {}
+        similarity_matrix = cosine_similarity(embeddings_matrix)
         
-        for method_name, candidates_dict in all_candidates.items():
-            method_matches = []
-            
-            for candidate_name in candidates_dict.keys():
-                if self._are_same_entity(name, candidate_name):
-                    method_matches.append(candidate_name)
-            
-            if method_matches:
-                matches[method_name] = method_matches
-        
-        return matches
-    
-    def _are_same_entity(self, name1: str, name2: str) -> bool:
-        """
-        Determine if two names refer to the same entity
-        
-        Uses multiple strategies:
-        - Exact match
-        - Case-insensitive match
-        - Substring match
-        - First name match
-        - Variant patterns (Jim vs James)
-        """
-        n1_lower = name1.lower().strip()
-        n2_lower = name2.lower().strip()
-        
-        # Exact match
-        if n1_lower == n2_lower:
-            return True
-        
-        # Substring match
-        if n1_lower in n2_lower or n2_lower in n1_lower:
-            # But check it's meaningful (not just 1-2 chars)
-            shorter = min(len(n1_lower), len(n2_lower))
-            if shorter >= 3:
-                return True
-        
-        # First name match (for multi-word names)
-        parts1 = n1_lower.split()
-        parts2 = n2_lower.split()
-        
-        if len(parts1) > 0 and len(parts2) > 0:
-            if parts1[0] == parts2[0] and len(parts1[0]) >= 3:
-                return True
-        
-        # Special case: possessive forms
-        # "Jim" vs "Jims" or "Jim's"
-        n1_clean = re.sub(r"'?s$", "", n1_lower)
-        n2_clean = re.sub(r"'?s$", "", n2_lower)
-        
-        if n1_clean == n2_clean:
-            return True
-        
-        return False
-    
-    def _select_canonical_name(self, matches: Dict[str, List[str]]) -> str:
-        """
-        Select canonical name from matches
-        
-        Priority:
-        1. Full names (multi-word) over single names
-        2. Names from Method3 (semantic clustering result)
-        3. Most frequent variant
-        4. Longest name
-        """
-        all_names = []
-        for method_names in matches.values():
-            all_names.extend(method_names)
-        
-        # Priority 1: Multi-word names
-        multi_word = [n for n in all_names if len(n.split()) > 1]
-        if multi_word:
-            # Priority 2: From Method3
-            method3_matches = matches.get('Method3_Embeddings', [])
-            for name in method3_matches:
-                if name in multi_word:
-                    return name
-            
-            # Priority 4: Longest
-            return max(multi_word, key=len)
-        
-        # Single word names
-        # Priority 2: From Method3
-        method3_matches = matches.get('Method3_Embeddings', [])
-        if method3_matches:
-            return method3_matches[0]
-        
-        # Priority 4: Longest
-        return max(all_names, key=len)
-    
-    def _collect_variants(self, matches: Dict[str, List[str]]) -> List[str]:
-        """Collect all unique variants from matches"""
-        variants = set()
-        for method_matches in matches.values():
-            variants.update(method_matches)
-        return sorted(list(variants))
-    
-    def _calculate_ensemble_scores(self,
-                                   alignment: Dict[str, Dict],
-                                   method_results: Dict[str, Dict[str, Any]]) -> List[Dict]:
-        """
-        Calculate ensemble confidence scores using weighted voting
-        
-        Formula:
-        confidence = Σ(method_score × method_weight) / Σ(weights)
-        
-        Only sum over methods that detected the entity
-        """
-        scored_entities = []
-        
-        for canonical_name, alignment_data in alignment.items():
-            matches = alignment_data['matches']
-            detected_by = alignment_data['detected_by']
-            
-            # Collect scores from each method
-            method_scores = {}
-            total_mentions = 0
-            
-            for method_name in detected_by:
-                # Get candidate data from method results
-                method_candidates = method_results[method_name]['candidates']
-                
-                # Find matching candidate
-                matched_names = matches[method_name]
-                for candidate in method_candidates:
-                    if candidate['name'] in matched_names:
-                        method_scores[method_name] = candidate['score']
-                        total_mentions += candidate['mentions']
-                        break
-            
-            # Calculate weighted score
-            if method_scores:
-                weighted_sum = 0.0
-                weight_sum = 0.0
-                
-                for method_name, score in method_scores.items():
-                    weight = self.config['method_weights'].get(method_name, 0.3)
-                    weighted_sum += score * weight
-                    weight_sum += weight
-                
-                ensemble_confidence = weighted_sum / weight_sum if weight_sum > 0 else 0.0
-            else:
-                ensemble_confidence = 0.0
-            
-            # Build entity dict
-            scored_entities.append({
-                'name': canonical_name,
-                'confidence': ensemble_confidence,
-                'mentions': total_mentions,
-                'detected_by': detected_by,
-                'detection_count': len(detected_by),
-                'variants': alignment_data['all_variants'],
-                'method_scores': method_scores
-            })
-        
-        return scored_entities
-    
-    def _resolve_conflicts(self, scored_entities: List[Dict]) -> List[Dict]:
-        """
-        Resolve conflicts between methods
-        
-        Conflicts:
-        1. Different canonical names for same entity
-        2. One method has false positive
-        3. Borderline entities (low agreement)
-        """
-        resolved = []
-        
-        for entity in scored_entities:
-            detection_count = entity['detection_count']
-            confidence = entity['confidence']
-            
-            # Rule 1: Majority vote (2 out of 3)
-            if detection_count >= 2:
-                # Accept entity
-                resolved.append(entity)
-            
-            # Rule 2: Single method detection
-            elif detection_count == 1:
-                detected_method = entity['detected_by'][0]
-                
-                # Special cases: Trust Method3 for special characters
-                if detected_method == 'Method3_Embeddings':
-                    # Check if it's a special character (narrator, role-based)
-                    name = entity['name']
-                    if 'Narrator' in name or 'The ' in name:
-                        # Accept with lower confidence
-                        entity['confidence'] = confidence * 0.75
-                        resolved.append(entity)
-                    elif confidence >= 0.7:
-                        # High confidence from Method3 alone
-                        entity['confidence'] = confidence * 0.80
-                        resolved.append(entity)
-                
-                # Method1 or Method2 alone: require very high confidence
-                elif confidence >= 0.85:
-                    entity['confidence'] = confidence * 0.70
-                    resolved.append(entity)
-        
-        return resolved
-    
-    def _merge_variants(self, entities: List[Dict]) -> List[Dict]:
-        """
-        Final variant merging pass
-        
-        Check if any entities should be merged based on:
-        - Similar names
-        - Overlapping variants
-        """
-        merged = []
+        # Simple clustering: group if similarity > threshold
+        clusters = {}
+        cluster_id = 0
         processed = set()
         
-        for i, entity in enumerate(entities):
-            if i in processed:
+        for i, candidate in enumerate(candidates):
+            if candidate in processed:
                 continue
             
-            canonical = entity['name']
-            merged_entity = entity.copy()
-            processed.add(i)
+            # Start new cluster
+            clusters[candidate] = cluster_id
+            processed.add(candidate)
             
-            # Check for mergeable entities
-            for j, other_entity in enumerate(entities[i+1:], start=i+1):
-                if j in processed:
+            # Find similar candidates
+            for j, other_candidate in enumerate(candidates):
+                if other_candidate in processed:
                     continue
                 
-                other_name = other_entity['name']
-                
-                # Check if should merge
-                if self._should_merge(entity, other_entity):
-                    # Merge
-                    merged_entity['mentions'] += other_entity['mentions']
-                    merged_entity['variants'].extend(other_entity['variants'])
-                    merged_entity['variants'] = list(set(merged_entity['variants']))
-                    
-                    # Update confidence (weighted by mentions)
-                    total_mentions = merged_entity['mentions']
-                    entity_weight = entity['mentions'] / total_mentions
-                    other_weight = other_entity['mentions'] / total_mentions
-                    
-                    merged_entity['confidence'] = (
-                        entity['confidence'] * entity_weight +
-                        other_entity['confidence'] * other_weight
-                    )
-                    
-                    # Merge detected_by
-                    merged_entity['detected_by'] = list(set(
-                        merged_entity['detected_by'] + other_entity['detected_by']
-                    ))
-                    merged_entity['detection_count'] = len(merged_entity['detected_by'])
-                    
-                    processed.add(j)
+                if similarity_matrix[i][j] > self.config['similarity_threshold']:
+                    clusters[other_candidate] = cluster_id
+                    processed.add(other_candidate)
             
-            merged.append(merged_entity)
+            cluster_id += 1
         
-        return merged
+        return clusters
     
-    def _should_merge(self, entity1: Dict, entity2: Dict) -> bool:
-        """Determine if two entities should be merged"""
-        name1 = entity1['name']
-        name2 = entity2['name']
-        
-        # Use same logic as _are_same_entity
-        return self._are_same_entity(name1, name2)
-    
-    def _quality_control(self,
-                        entities: List[Dict],
-                        preprocessed_data: Dict[str, Any]) -> List[Dict]:
+    def _build_candidates_from_clusters(self,
+                                       clusters: Dict[str, int],
+                                       candidate_embeddings: Dict[str, List[Dict]]) -> List[Dict]:
         """
-        Final quality control and filtering
-        
-        Apply:
-        - Minimum confidence threshold (adaptive)
-        - Minimum mentions threshold
-        - Blacklist check
-        - Special rules for different entity types
+        Build final candidates from clusters
         """
-        filtered = []
+        cluster_groups = defaultdict(list)
         
-        for entity in entities:
-            name = entity['name']
-            confidence = entity['confidence']
-            mentions = entity['mentions']
-            detection_count = entity['detection_count']
-            
-            # Determine adaptive threshold based on entity type
-            if len(name.split()) == 1:
-                # Single word: require higher confidence
-                required_confidence = self.config['single_word_confidence_boost']
-            elif 'The ' in name or 'Narrator' in name:
-                # Role-based: lower threshold
-                required_confidence = self.config['role_based_confidence_boost']
-            else:
-                # Multi-word names: standard threshold
-                required_confidence = self.config['multi_word_confidence_boost']
-            
-            # Apply filters
-            if confidence < required_confidence:
-                continue
-            
-            if mentions < self.config['min_mentions']:
-                continue
-            
-            # Blacklist check (delegate to validator if needed)
-            if self._is_blacklisted(name):
-                continue
-            
-            # Passed all filters
-            filtered.append(entity)
+        for candidate, cluster_id in clusters.items():
+            if cluster_id != -1:  # -1 is noise in HDBSCAN
+                cluster_groups[cluster_id].append(candidate)
         
-        return filtered
+        candidates = []
+        
+        for cluster_id, members in cluster_groups.items():
+            # Choose canonical name (longest or most frequent)
+            mention_counts = {m: len(candidate_embeddings.get(m, [])) for m in members}
+            canonical = max(members, key=lambda x: (mention_counts[x], len(x)))
+            
+            # Count total mentions
+            total_mentions = sum(mention_counts.values())
+            
+            # Collect all variants
+            variants = members
+            
+            candidates.append({
+                'name': canonical,
+                'mentions': total_mentions,
+                'variants': variants,
+                'cluster_id': cluster_id,
+                'metadata': {
+                    'cluster_size': len(members),
+                    'mention_counts': mention_counts
+                }
+            })
+        
+        return candidates
     
-    def _is_blacklisted(self, name: str) -> bool:
-        """Check if entity is blacklisted"""
-        blacklist = {
-            'christmas', 'god', 'lord', 'jesus', 'magi',
-            'monday', 'tuesday', 'wednesday', 'thursday', 'friday',
-            'saturday', 'sunday', 'dear', 'young'
-        }
+    def _detect_narrator(self, sentences: List[str]) -> Dict:
+        """
+        Detect first-person narrator
+        """
+        text = ' '.join(sentences).lower()
         
-        name_lower = name.lower()
+        # Count first-person pronouns
+        i_count = len(re.findall(r'\bi\b', text))
+        my_count = len(re.findall(r'\bmy\b', text))
+        me_count = len(re.findall(r'\bme\b', text))
         
-        # Check if any blacklisted word is in name
-        for blacklisted in blacklist:
-            if blacklisted == name_lower or blacklisted in name_lower.split():
-                return True
+        total_first_person = i_count + my_count + me_count
         
-        return False
-    
-    def _generate_statistics(self,
-                            final_entities: List[Dict],
-                            method_results: Dict[str, Dict[str, Any]],
-                            alignment: Dict[str, Dict]) -> Dict[str, Any]:
-        """Generate ensemble statistics"""
-        stats = {
-            'total_entities': len(final_entities),
-            'average_confidence': np.mean([e['confidence'] for e in final_entities]) if final_entities else 0.0,
-            'high_confidence_entities': sum(1 for e in final_entities if e['confidence'] >= 0.8),
-            'medium_confidence_entities': sum(1 for e in final_entities if 0.6 <= e['confidence'] < 0.8),
-            'low_confidence_entities': sum(1 for e in final_entities if e['confidence'] < 0.6),
-            'method_counts': {
-                '3_methods': sum(1 for e in final_entities if e['detection_count'] == 3),
-                '2_methods': sum(1 for e in final_entities if e['detection_count'] == 2),
-                '1_method': sum(1 for e in final_entities if e['detection_count'] == 1)
-            },
-            'method_results': {
-                method: len(results.get('candidates', []))
-                for method, results in method_results.items()
+        # Threshold: if >20 first-person pronouns, likely has narrator
+        if total_first_person >= 20:
+            return {
+                'name': 'Narrator (I)',
+                'mentions': i_count,
+                'score': min(i_count / 50.0, 1.0),
+                'metadata': {
+                    'type': 'narrator',
+                    'i_count': i_count,
+                    'my_count': my_count,
+                    'me_count': me_count
+                }
             }
-        }
         
-        return stats
+        return None
     
-    def _analyze_method_contributions(self, final_entities: List[Dict]) -> Dict[str, Dict]:
-        """Analyze how much each method contributed"""
-        contributions = defaultdict(lambda: {'total': 0, 'unique': 0, 'shared': 0})
+    def _detect_role_based_characters(self, sentences: List[str]) -> List[Dict]:
+        """
+        Detect role-based characters (The Old Man, The Officers, etc.)
+        """
+        text = ' '.join(sentences).lower()
+        role_candidates = []
         
-        for entity in final_entities:
-            detected_by = entity['detected_by']
+        for role_name, patterns in self.config['role_patterns'].items():
+            count = 0
+            for pattern in patterns:
+                matches = re.findall(pattern, text)
+                count += len(matches)
             
-            for method in detected_by:
-                contributions[method]['total'] += 1
+            if count >= 3:  # Minimum mentions
+                # Capitalize properly
+                display_name = 'The ' + role_name.replace('_', ' ').title()
                 
-                if len(detected_by) == 1:
-                    contributions[method]['unique'] += 1
-                else:
-                    contributions[method]['shared'] += 1
+                role_candidates.append({
+                    'name': display_name,
+                    'mentions': count,
+                    'score': min(count / 20.0, 0.9),
+                    'metadata': {
+                        'type': 'role_based',
+                        'role': role_name
+                    }
+                })
         
-        return dict(contributions)
+        return role_candidates
+    
+    def _score_candidates(self, candidates: List[Dict]) -> List[Dict]:
+        """
+        Calculate final scores for candidates
+        """
+        scored = []
+        
+        for candidate in candidates:
+            mentions = candidate['mentions']
+            
+            # Base score from mentions
+            base_score = min(mentions / 30.0, 0.7)
+            
+            # Type-based adjustments
+            ctype = candidate.get('metadata', {}).get('type')
+            
+            if ctype == 'narrator':
+                # Boost narrator if many mentions
+                if mentions >= 30:
+                    base_score = min(base_score + 0.2, 0.95)
+            elif ctype == 'role_based':
+                # Role-based: moderate score
+                base_score = min(base_score + 0.1, 0.85)
+            else:
+                # Cluster-based: check cluster size
+                cluster_size = candidate.get('metadata', {}).get('cluster_size', 1)
+                if cluster_size > 1:
+                    # Boost if multiple variants detected
+                    base_score = min(base_score + 0.1, 0.90)
+            
+            candidate['score'] = base_score
+            scored.append(candidate)
+        
+        return scored
+    
+    def _fallback_extraction(self, preprocessed_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Fallback extraction when embeddings not available
+        (Just use PROPN candidates with frequency)
+        """
+        self.logger.warning("  Using fallback extraction (no embeddings)")
+        
+        propn_candidates = preprocessed_data['propn_candidates']
+        sentences = preprocessed_data['sentences']
+        
+        # Count mentions
+        mention_counts = Counter()
+        
+        for sentence in sentences:
+            for candidate in propn_candidates:
+                if candidate.lower() in sentence.lower():
+                    mention_counts[candidate] += 1
+        
+        # Build candidates
+        candidates = []
+        for name, count in mention_counts.items():
+            if count >= self.config['min_mentions']:
+                candidates.append({
+                    'name': name,
+                    'mentions': count,
+                    'score': min(count / 20.0, 0.75),
+                    'metadata': {'fallback': True}
+                })
+        
+        # Detect narrator
+        if self.config['detect_narrator']:
+            narrator = self._detect_narrator(sentences)
+            if narrator:
+                candidates.append(narrator)
+        
+        candidates = sorted(candidates, key=lambda x: x['score'], reverse=True)
+        
+        return {
+            'candidates': candidates,
+            'method_name': self.get_method_name(),
+            'statistics': self.get_statistics({'candidates': candidates}),
+            'fallback_mode': True
+        }
+    
+    def get_confidence_score(self, candidate: str, metadata: Dict) -> float:
+        """Calculate confidence score"""
+        return metadata.get('score', 0.0)
