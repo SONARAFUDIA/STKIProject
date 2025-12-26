@@ -1,3 +1,8 @@
+# Ekstrasi Karakter dalam karya sastra berbahasa Inggris
+
+Changelog: [Link]
+
+
 ```
 STKIProject/
 │
@@ -5,6 +10,7 @@ STKIProject/
 ├── 📄 requirements.txt             # Python dependencies
 ├── 📄 README.md                    # Main documentation
 ├── 📄 main.py                      # CLI entry point
+├── 📄 __init__.py
 │
 ├── 📂 src/                         # Source code
 │   ├── 📄 __init__.py
@@ -28,12 +34,9 @@ STKIProject/
 │   │
 │   └── 📂 visualizations/          # Graphs (future, generated)
 │
-├── 📂 tests/                       # Unit tests (future)
+├── 📂 tests/                       # Unit tests (future, not yet made)
 │   ├── 📄 __init__.py
 │   └── 📄 test_extractor.py
-│
-├── 📂 configs/                     # Configuration files (optional future)
-│   └── 📄 default.yaml
 │
 └── 📂 stki/                        # Virtual environment (auto-generated)
     └── (excluded from git)
